@@ -4,11 +4,12 @@
     Settings
 {% endblock %}
 
+{% load crispy_forms_tags %}
 {% block content %}
     <h1>User Settings</h1>
     <form class="d-flex flex-column" action="{% url 'users:settings' %}" method="post">
         {% csrf_token %}
-        {{ form }}
+        {{ form|crispy }}
         <button class="btn btn-secondary mt-5">Save</button>
     </form>
 {% endblock %}

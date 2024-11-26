@@ -4,11 +4,12 @@
     Register
 {% endblock %}
 
+{% load crispy_forms_tags %}
 {% block content %}
     <h1>Register a New User</h1>
     <form class="d-flex flex-column" action="{% url 'users:register' %}" method="post">
         {% csrf_token %}
-        {{ form }}
+        {{ form|crispy }}
         {% if request.GET.next %}
             <input type="hidden" name="next" value="{{ request.GET.next }}" />
         {% endif %}

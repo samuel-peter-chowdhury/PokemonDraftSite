@@ -12,3 +12,12 @@ nav {
 main {
     color: var(--font-color) !important;
 }
+
+.notification {
+    position: relative;
+    z-index: 1;
+    height: 0;
+    top: -1rem;
+    transition: opacity 0.3s;
+    opacity: 1;
+}
