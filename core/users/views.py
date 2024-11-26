@@ -1,11 +1,10 @@
 from django.shortcuts import render, redirect 
-from django.contrib.auth.forms import AuthenticationForm 
-from django.contrib.auth import login, logout
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
+from django.contrib.auth import login, logout, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 from .forms import CustomUserCreationForm, CustomUserChangeForm
-
 # Create your views here.
 def register_view(request):
     if request.method == "POST": 
@@ -32,6 +31,22 @@ def login_view(request):
     else: 
         form = AuthenticationForm()
     return render(request, "users/login.html", { "form": form })
+
+@login_required(login_url="/users/login/")
+def change_password_view(request, id):
+    if int(id) != int(request.user.id):
+        messages.error(request, 'Not Permitted URL')
+        return redirect("users:settings")
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Successful Update')
+            return redirect("users:settings")
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'users/change_password.html', { 'form': form })
 
 @login_required(login_url="/users/login/")
 def logout_view(request):
