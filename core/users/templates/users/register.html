@@ -1,12 +1,12 @@
 {% extends 'layout.html' %}
 
 {% block title %}
-    Register a New User
+    Register
 {% endblock %}
 
 {% block content %}
     <h1>Register a New User</h1>
-    <form class="d-inline-flex flex-column" action="{% url 'users:register' %}" method="post">
+    <form class="d-flex flex-column" action="{% url 'users:register' %}" method="post">
         {% csrf_token %}
         {{ form }}
         {% if request.GET.next %}

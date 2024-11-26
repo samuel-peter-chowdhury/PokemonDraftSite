@@ -5,10 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>
+        PDS - 
         {% block title %}
-            Pokemon Draft Site
         {% endblock %}
     </title>
+    <link rel="icon" href="{% static 'icons/poke_ball_icon.svg' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <script src="{% static 'js/main.js' %}" defer></script>
     {% load bootstrap5 %}
@@ -16,12 +17,15 @@
     {% bootstrap_javascript %}
 </head>
 <body class="bg-dark">
-    <nav class="navbar navbar-expand-sm bg-secondary navbar-dark">
+    <nav class="navbar navbar-expand bg-secondary navbar-dark">
         <div class="container-fluid">
             <ul class="navbar-nav">
                 {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'users:settings' %}">Settings</a>
                     </li>
                     <li class="nav-item">
                         <form action="{% url 'users:logout' %}" method="post">
@@ -40,7 +44,25 @@
             </ul>
         </div>
     </nav>
-    <main>
+    {% if messages %}
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    {% for message in messages %}
+                        {% if message.tags == 'error' %}
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {% else %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        {% endif %}
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <main class="container d-flex flex-column justify-content-center py-5">
         {% block content %}
         {% endblock %}
     </main>

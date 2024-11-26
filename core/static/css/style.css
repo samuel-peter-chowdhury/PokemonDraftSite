@@ -2,16 +2,6 @@
     --font-color: #e3e3e3;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    min-height: 100vh;
-}
-
 nav {
     button.non-button {
         background-color: transparent;
@@ -20,14 +10,5 @@ nav {
 }
 
 main {
-    padding: 1rem;
     color: var(--font-color) !important;
-}
-
-form {
-    width: fit-content;
-
-    label {
-        margin-top: 1rem;
-    }
 }
