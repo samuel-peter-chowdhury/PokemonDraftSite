@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Register a New User
+{% endblock %}
+
+{% block content %}
+    <h1>Register a New User</h1>
+    <form class="d-inline-flex flex-column" action="{% url 'users:register' %}" method="post">
+        {% csrf_token %}
+        {{ form }}
+        {% if request.GET.next %}
+            <input type="hidden" name="next" value="{{ request.GET.next }}" />
+        {% endif %}
+        <button class="btn btn-secondary mt-5">Submit</button>
+    </form>
+{% endblock %}

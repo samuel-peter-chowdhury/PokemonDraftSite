@@ -1,0 +1,36 @@
+:root {
+    --dark-grey: #202124;
+    --light-grey: #3c3c3c;
+    --font-color: #e3e3e3;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background-color: var(--dark-grey);
+    color: var(--font-color);
+}
+
+nav {
+    button.non-button {
+        background-color: transparent;
+        border: none;
+    }
+}
+
+main {
+    padding: 1rem;
+}
+
+form {
+    width: fit-content;
+
+    label {
+        margin-top: 1rem;
+    }
+}
