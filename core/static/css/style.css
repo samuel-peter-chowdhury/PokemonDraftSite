@@ -3,6 +3,24 @@ nav {
         background-color: transparent;
         border: none;
     }
+
+    .nav-link-logo {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        &:hover {
+            img {
+                filter: brightness(125%);
+            }
+        }
+
+        img {
+            height: 1rem;
+            margin-right: 0.5rem;
+            transition: all 0.15s;
+        }
+    }
 }
 
 .no-padding {
@@ -16,10 +34,6 @@ nav {
     width: 0;
     border-bottom-right-radius: 10px;
 
-    &:hover {
-        filter: brightness(125%);
-    }
-
     i {
         font-size: 1.5rem;
         padding: 1rem;
@@ -28,7 +42,7 @@ nav {
 }
 
 .parent-content-container {
-    background-color: #e3e3e3;
+    background-color: var(--bs-gray-100);
 }
 
 #wrapper {

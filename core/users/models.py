@@ -10,3 +10,6 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.username
+    
+    def has_league(self, league_id):
+        return league_id in [league.id for league in self.member_leagues.all()] or league_id in [league.id for league in self.moderator_leagues.all()]

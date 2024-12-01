@@ -28,6 +28,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/">Home</a>
                     </li>
+                    {% for league in user.member_leagues.all %}
+                        <li class="nav-item">
+                            <a class="nav-link nav-link-logo" href="{%  url 'leagues:league' id=league.id %}"><img src="{{ league.logo.url }}">{{ league.abbreviation }}</a>
+                        </li>
+                    {% endfor %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'users:settings' %}">Settings</a>
                     </li>
