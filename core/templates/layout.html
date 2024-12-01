@@ -11,13 +11,17 @@
     </title>
     <link rel="icon" href="{% static 'icons/poke_ball_icon.svg' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{% static 'js/main.js' %}" defer></script>
     {% load bootstrap5 %}
     {% bootstrap_css %}
     {% bootstrap_javascript %}
+    <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
 </head>
-<body class="bg-dark">
-    <nav class="navbar navbar-expand bg-secondary navbar-dark">
+<body>
+    <nav class="navbar navbar-expand bg-dark navbar-dark shadow-sm">
         <div class="container-fluid">
             <ul class="navbar-nav">
                 {% if user.is_authenticated %}
@@ -44,27 +48,34 @@
             </ul>
         </div>
     </nav>
-    {% if messages %}
-        <div class="container notification">
-            <div class="row">
-                <div class="col-md-8 offset-md-2">
-                    {% for message in messages %}
-                        {% if message.tags == 'error' %}
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        {% else %}
-                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                        {% endif %}
-                        {{ message }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    {% endfor %}
-                </div>
+    <div class="bg-secondary container-fluid no-padding">
+        <div class="d-flex" id="wrapper">
+            <!-- Sidebar -->
+            {% block sidebar %}
+            {% endblock %}
+
+            <!-- Page Content -->
+            <div id="page-content-wrapper">
+                <main class="container d-flex flex-column justify-content-center">
+                    {% block content %}
+                    {% endblock %}
+                </main>
             </div>
         </div>
+    </div>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+                <div class="alert {{ message.tags }} shadow fade show" role="alert">
+                    <div class="alert-body">
+                        {{ message | safe }}
+                        <i class="fa-solid fa-circle-xmark" data-bs-dismiss="alert"></i>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
     {% endif %}
-    <main class="container d-flex flex-column justify-content-center py-5">
-        {% block content %}
-        {% endblock %}
-    </main>
 </body>
 </html>
+
+<!-- class="position-fixed bottom-0 end-0 p-3" style="z-index: 11"-->
