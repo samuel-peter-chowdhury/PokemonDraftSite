@@ -30,16 +30,25 @@ ALLOWED_HOSTS = ["localhost","127.0.0.1"]
 # Application definition
 
 INSTALLED_APPS = [
+    #Django Apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Project Apps
     'users',
+    'leagues',
+    'pokemons',
+
+    # Third-Party Apps
     'bootstrap5',
     'crispy_forms',
     'crispy_bootstrap5',
+    'django_extensions',
+    'django_htmx'
 ]
 
 MIDDLEWARE = [

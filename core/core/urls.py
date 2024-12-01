@@ -29,4 +29,6 @@ urlpatterns = [
     path('users/', include('users.urls')),
     path('users/', include('django.contrib.auth.urls')),
     re_path(r'^(?P<id>\w+)/password/$', user_views.change_password_view, name='change_password'),
+    path('leagues/', include('leagues.urls')),
+    path('pokemons/', include('pokemons.urls')),
 ]
