@@ -1,16 +1,8 @@
-:root {
-    --font-color: #e3e3e3;
-}
-
 nav {
     button.non-button {
         background-color: transparent;
         border: none;
     }
-}
-
-main {
-    color: var(--font-color) !important;
 }
 
 .no-padding {
@@ -33,6 +25,10 @@ main {
         padding: 1rem;
         cursor: pointer;
     }
+}
+
+.parent-content-container {
+    background-color: #e3e3e3;
 }
 
 #wrapper {
