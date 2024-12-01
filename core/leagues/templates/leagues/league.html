@@ -25,4 +25,9 @@
 
 {% block content %}
     <h1>Welcome to {{ league.name }}</h1>
+    {% if activeSeason %}
+        <h3>{{ activeSeason.name }}</h3>
+    {% else %}
+        <h3>No active season</h3>
+    {% endif %}
 {% endblock %}

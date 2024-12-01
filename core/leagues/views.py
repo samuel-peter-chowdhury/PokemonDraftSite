@@ -19,6 +19,7 @@ def create_view(request):
 def league_view(request, id):
     if request.user.has_league(id):
         league = League.objects.get(id=id)
-        return render(request, "leagues/league.html", {'league': league})
+        activeSeason = league.get_active_season()
+        return render(request, "leagues/league.html", {'league': league, 'activeSeason': activeSeason})
     else:
         return redirect("/")
