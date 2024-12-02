@@ -4,30 +4,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        PDS - 
-        {% block title %}
-        {% endblock %}
-    </title>
+    <title>PDS - {% block title %}{% endblock %}</title>
     <link rel="icon" href="{% static 'icons/poke_ball_icon.svg' %}">
+
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Custom Javascript -->
     <script src="{% static 'js/main.js' %}" defer></script>
+
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Bootstrap -->
     {% load bootstrap5 %}
     {% bootstrap_css %}
     {% bootstrap_javascript %}
+
+    <!-- Font Awesome -->
     <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- HTMX -->
+    <script src="https://unpkg.com/htmx.org@1.6.0"></script>
 </head>
 <body>
     <nav class="navbar navbar-expand bg-dark navbar-dark shadow-sm">
         <div class="container-fluid justify-space-between">
             {% if user.is_authenticated %}
                 <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Home</a>
-                    </li>
                     {% for league in user.member_leagues.all %}
                         <li class="nav-item">
                             <a class="nav-link nav-link-logo" href="{%  url 'leagues:league' id=league.id %}"><img src="{{ league.logo.url }}" alt="League Logo">{{ league.abbreviation }}</a>
@@ -65,7 +71,7 @@
 
             <!-- Page Content -->
             <div id="page-content-wrapper">
-                <main class="container d-flex flex-column justify-content-center">
+                <main class="container-fluid d-flex flex-column justify-content-center">
                     {% block content %}
                     {% endblock %}
                 </main>
@@ -86,5 +92,3 @@
     {% endif %}
 </body>
 </html>
-
-<!-- class="position-fixed bottom-0 end-0 p-3" style="z-index: 11"-->

@@ -111,27 +111,31 @@ nav {
 
     table {
         tr {
-            height: 5rem;
-            min-height: 5rem;
-            max-height: 5rem;
+            height: 5.5rem;
+            min-height: 5.5rem;
+            max-height: 5.5rem;
         }
 
         th,
         td {
-            height: 5rem;
-            min-height: 5rem;
-            max-height: 5rem;
-            max-width: 10rem;
+            height: 5.5rem;
+            min-height: 5.5rem;
+            max-height: 5.5rem;
+            max-width: 11rem;
             padding: 1rem;
             text-align: left;
             vertical-align: middle;
 
             &.table-cell-small {
                 width: 5.5rem;
+                min-width: 5.5rem;
+                max-width: 5.5rem;
             }
 
             &.table-cell-medium {
                 width: 8rem;
+                min-width: 8rem;
+                max-width: 8rem;
             }
 
             a {
@@ -146,10 +150,13 @@ nav {
         }
 
         .pokemon-sprite {
-            width: 5rem;
-            height: 5rem;
-            max-height: 5rem;
-            min-height: 5rem;
+            padding: 0;
+            width: 5.5rem;
+            max-width: 5.5rem;
+            min-width: 5.5rem;
+            height: 5.5rem;
+            max-height: 5.5rem;
+            min-height: 5.5rem;
 
             div {
                 display: flex;

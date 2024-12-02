@@ -1,0 +1,12 @@
+{% extends 'leagues/base.html' %}
+
+{% block content %}
+    <h1>Pokemon Tiers</h1>
+    <div class="d-inline-flex w-100 overflow-auto bg-dark" style="max-height: 85vh">
+        {% for tier in tiers %}
+            <div hx-get="{%  url 'leagues:leaguePokemonTier' league_id=league.id tier=tier %}" hx-trigger="load" hx-target="#pokemon-tier-{{tier}}" hx-swap="outerHTML">
+                <div id="pokemon-tier-{{tier}}"></div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    {{ league.abbreviation }}
+{% endblock %}
+
+{% block sidebar %}
+    <nav class="navbar-dark shadow-sm" id="sidebar">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{%  url 'leagues:league' id=league.id %}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{%  url 'leagues:leaguePokemonTiers' id=league.id %}">Pokemon Tiers</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{%  url 'leagues:leaguePokemonList' id=league.id %}">Pokemon List</a>
+            </li>
+        </ul>
+    </nav>
+    <div class="sidebar-toggle" id="menu-toggle">
+        <i class="fa-solid fa-bars"></i>
+    </div>
+{% endblock %}
+
+{% block content %}
+{% endblock %}

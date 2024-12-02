@@ -7,6 +7,7 @@ from django.core.paginator import Paginator
 import os
 import json
 import requests
+import csv
 
 from .forms import LeagueCreationForm
 from .models import League, Season
@@ -28,14 +29,38 @@ def league_view(request, id):
     if request.user.has_league(id):
         league = League.objects.get(id=id)
         activeSeason = league.get_active_season()
+        return render(request, "leagues/league.html", {'league': league, 'activeSeason': activeSeason})
+    else:
+        return redirect("/")
+    
+def league_pokemon_list_view(request, id):
+    if request.user.has_league(id):
+        league = League.objects.get(id=id)
+        activeSeason = league.get_active_season()
         page = request.GET.get('page', '1')
         pageSize = request.GET.get('page_size', '10')
         orderBy = request.GET.get('order_by', 'name')
         pokemon = Pokemon.objects.defer('pokemon_type_effectives', 'pokemon_coverage_moves', 'pokemon_special_moves', 'pokemon_moves').filter(season=activeSeason).order_by(orderBy)
         p = Paginator(pokemon, pageSize)
-        return render(request, "leagues/league.html", {'league': league, 'activeSeason': activeSeason, 'pokemonPage': p.page(page), 'lastPage': p.num_pages, 'pageSize': pageSize, 'orderBy': orderBy})
+        return render(request, "leagues/league_pokemon_list.html", {'league': league, 'activeSeason': activeSeason, 'pokemonPage': p.page(page), 'lastPage': p.num_pages, 'pageSize': pageSize, 'orderBy': orderBy})
     else:
         return redirect("/")
+    
+def league_pokemon_tiers_view(request, id):
+    if request.user.has_league(id):
+        league = League.objects.get(id=id)
+        activeSeason = league.get_active_season()
+        tiers = [20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+        return render(request, "leagues/league_pokemon_tiers.html", {'league': league, 'activeSeason': activeSeason, 'tiers': tiers})
+    else:
+        return redirect("/")
+    
+def get_tier(request, league_id, tier):
+    league = League.objects.get(id=league_id)
+    activeSeason = league.get_active_season()
+    orderBy = request.GET.get('order_by', 'name')
+    pokemon = Pokemon.objects.defer('pokemon_type_effectives', 'pokemon_coverage_moves', 'pokemon_special_moves', 'pokemon_moves').filter(season=activeSeason, point_value=tier).order_by(orderBy)
+    return render(request, "leagues/league_pokemon_tier.html", {'league': league, 'tier': tier, 'pokemon': pokemon, 'orderBy': orderBy})
     
 @user_passes_test(lambda u: u.is_superuser)
 def initialize_season_view(request, id):
@@ -101,6 +126,69 @@ def initialize_season_view(request, id):
                         pokemon_type_effective.value = value
                         pokemon_type_effective.save()
 
+            return HttpResponse(status=204)
+        else:
+            return HttpResponse(status=404)
+    return HttpResponse(status=400)
+
+@user_passes_test(lambda u: u.is_superuser)
+def initialize_point_data_view(request, id):
+    if request.method == "POST":
+        season = Season.objects.get(id=id)
+        if season:
+            with open(os.path.join(settings.BASE_DIR, 'point_data.tsv'), 'r') as f:
+                tsv_file = csv.reader(f, delimiter="\t")
+                for line in tsv_file:
+                    pokemon_name = line[0].strip().lower()
+                    if 'mega ' in pokemon_name:
+                        suffix = ''
+                        if ' x' in pokemon_name:
+                            pokemon_name = pokemon_name.split(' x')[0]
+                            suffix += '-x'
+                        if ' y' in pokemon_name:
+                            pokemon_name = pokemon_name.split(' y')[0]
+                            suffix += '-y'
+                        pokemon_name = pokemon_name.split('mega ')[1] + '-mega' + suffix
+                    if 'galarian ' in pokemon_name:
+                        pokemon_name = pokemon_name.split('galarian ')[1] + '-galar'
+                    if 'hisuian ' in pokemon_name:
+                        pokemon_name = pokemon_name.split('hisuian ')[1] + '-hisui'
+                    if 'alolan ' in pokemon_name:
+                        pokemon_name = pokemon_name.split('alolan ')[1] + '-alola'
+                    if 'paldean ' in pokemon_name:
+                        suffix = ''
+                        if ' (fire)' in pokemon_name:
+                            pokemon_name = pokemon_name.split(' (fire)')[0]
+                            suffix += '-blaze'
+                        if ' (water)' in pokemon_name:
+                            pokemon_name = pokemon_name.split(' (water)')[0]
+                            suffix += '-aqua'
+                        pokemon_name = pokemon_name.split('paldean ')[1] + '-paldea' + suffix
+                    if '-male' in pokemon_name:
+                        pokemon_name = pokemon_name.split('-male')[0] + '-m'
+                    if 'urshifu-single-strike' == pokemon_name:
+                        pokemon_name = 'urshifu'
+                    if 'ursaluna-bm' == pokemon_name:
+                        pokemon_name = 'ursaluna-bloodmoon'
+                    if 'ogerpon-h' == pokemon_name:
+                        pokemon_name = 'ogerpon-hearthflame'
+                    if 'ogerpon-c' == pokemon_name:
+                        pokemon_name = 'ogerpon-cornerstone'
+                    if 'ogerpon-w' == pokemon_name:
+                        pokemon_name = 'ogerpon-wellspring'
+                    if 'ogerpon-t' == pokemon_name:
+                        pokemon_name = 'ogerpon'
+                    if 'zygarde-50%' == pokemon_name:
+                        pokemon_name = 'zygarde'
+                    if 'lycanroc-midday' == pokemon_name:
+                        pokemon_name = 'lycanroc'
+                    if 'oricorio-baile' == pokemon_name:
+                        pokemon_name = 'oricorio'
+                    if 'tauros-paldea' == pokemon_name:
+                        pokemon_name = 'tauros-paldea-combat'
+                    pokemon = Pokemon.objects.get(season=season, name=pokemon_name)
+                    pokemon.point_value = int(line[1].strip()) + 1
+                    pokemon.save()
             return HttpResponse(status=204)
         else:
             return HttpResponse(status=404)

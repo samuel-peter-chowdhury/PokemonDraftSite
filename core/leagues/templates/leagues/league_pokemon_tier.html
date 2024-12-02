@@ -1,0 +1,43 @@
+<div id="pokemon-tier-column-{{tier}}">
+    <div class="d-flex align-items-center justify-content-center bg-dark text-secondary"><h1>{{tier}}<h1></div>
+    <div class="pokemon-table">
+        <table class="table table-dark table-striped table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th class="pokemon-sprite"></th>
+                    <th class="table-cell-medium">
+                        {% if orderBy == 'name' %}
+                            <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:leaguePokemonTier' league_id=league.id tier=tier %}?order_by=-name" hx-trigger="click" hx-target="#pokemon-tier-column-{{tier}}" hx-swap="outerHTML">Name<i class="fa-solid fa-arrow-up ms-2"></i></a>
+                        {% elif orderBy == '-name' %}
+                            <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:leaguePokemonTier' league_id=league.id tier=tier %}?order_by=name" hx-trigger="click" hx-target="#pokemon-tier-column-{{tier}}" hx-swap="outerHTML">Name<i class="fa-solid fa-arrow-down ms-2"></i></a>
+                        {% else %}
+                            <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:leaguePokemonTier' league_id=league.id tier=tier %}?order_by=name" hx-trigger="click" hx-target="#pokemon-tier-column-{{tier}}" hx-swap="outerHTML">Name</a>
+                        {% endif %}
+                    </th>
+                    <th class="table-cell-small">
+                        {% if orderBy == 'speed' %}
+                            <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:leaguePokemonTier' league_id=league.id tier=tier %}?order_by=-speed" hx-trigger="click" hx-target="#pokemon-tier-column-{{tier}}" hx-swap="outerHTML">Spd<i class="fa-solid fa-arrow-up ms-2"></i></a>
+                        {% elif orderBy == '-speed' %}
+                            <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:leaguePokemonTier' league_id=league.id tier=tier %}?order_by=speed" hx-trigger="click" hx-target="#pokemon-tier-column-{{tier}}" hx-swap="outerHTML">Spd<i class="fa-solid fa-arrow-down ms-2"></i></a>
+                        {% else %}
+                            <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:leaguePokemonTier' league_id=league.id tier=tier %}?order_by=-speed" hx-trigger="click" hx-target="#pokemon-tier-column-{{tier}}" hx-swap="outerHTML">Spd</a>
+                        {% endif %}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in pokemon %}
+                    <tr>
+                        <td class="pokemon-sprite">
+                            <div>
+                                <img src="{{ p.sprite_url }}" alt="Pokemon Sprite">
+                            </div>
+                        </td>
+                        <td class="table-cell-medium">{{ p.name }}</td>
+                        <td class="table-cell-small">{{ p.speed }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
