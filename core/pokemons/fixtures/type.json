@@ -1,0 +1,182 @@
+[
+    {
+      "model": "pokemons.type",
+      "pk": 1,
+      "fields": {
+        "name": "normal",
+        "color": "#A8A77A",
+        "created_at": "2024-12-01 12:00:00",
+        "updated_at": "2024-12-01 12:00:00"
+      }
+    },
+    {
+        "model": "pokemons.type",
+        "pk": 2,
+        "fields": {
+          "name": "fire",
+          "color": "#EE8130",
+          "created_at": "2024-12-01 12:00:00",
+          "updated_at": "2024-12-01 12:00:00"
+        }
+    },
+    {
+        "model": "pokemons.type",
+        "pk": 3,
+        "fields": {
+          "name": "water",
+          "color": "#6390F0",
+          "created_at": "2024-12-01 12:00:00",
+          "updated_at": "2024-12-01 12:00:00"
+        }
+    },
+    {
+        "model": "pokemons.type",
+        "pk": 4,
+        "fields": {
+          "name": "electric",
+          "color": "#F7D02C",
+          "created_at": "2024-12-01 12:00:00",
+          "updated_at": "2024-12-01 12:00:00"
+        }
+    },
+    {
+        "model": "pokemons.type",
+        "pk": 5,
+        "fields": {
+          "name": "grass",
+          "color": "#7AC74C",
+          "created_at": "2024-12-01 12:00:00",
+          "updated_at": "2024-12-01 12:00:00"
+        }
+    },
+    {
+        "model": "pokemons.type",
+        "pk": 6,
+        "fields": {
+          "name": "ice",
+          "color": "#96D9D6",
+          "created_at": "2024-12-01 12:00:00",
+          "updated_at": "2024-12-01 12:00:00"
+        }
+    },
+    {
+        "model": "pokemons.type",
+        "pk": 7,
+        "fields": {
+          "name": "fighting",
+          "color": "#C22E28",
+          "created_at": "2024-12-01 12:00:00",
+          "updated_at": "2024-12-01 12:00:00"
+        }
+    },
+    {
+        "model": "pokemons.type",
+        "pk": 8,
+        "fields": {
+          "name": "poison",
+          "color": "#A33EA1",
+          "created_at": "2024-12-01 12:00:00",
+          "updated_at": "2024-12-01 12:00:00"
+        }
+    },
+    {
+        "model": "pokemons.type",
+        "pk": 9,
+        "fields": {
+          "name": "ground",
+          "color": "#E2BF65",
+          "created_at": "2024-12-01 12:00:00",
+          "updated_at": "2024-12-01 12:00:00"
+        }
+    },
+    {
+        "model": "pokemons.type",
+        "pk": 10,
+        "fields": {
+          "name": "flying",
+          "color": "#A98FF3",
+          "created_at": "2024-12-01 12:00:00",
+          "updated_at": "2024-12-01 12:00:00"
+        }
+    },
+    {
+        "model": "pokemons.type",
+        "pk": 11,
+        "fields": {
+          "name": "psychic",
+          "color": "#F95587",
+          "created_at": "2024-12-01 12:00:00",
+          "updated_at": "2024-12-01 12:00:00"
+        }
+    },
+    {
+        "model": "pokemons.type",
+        "pk": 12,
+        "fields": {
+          "name": "bug",
+          "color": "#A6B91A",
+          "created_at": "2024-12-01 12:00:00",
+          "updated_at": "2024-12-01 12:00:00"
+        }
+    },
+    {
+        "model": "pokemons.type",
+        "pk": 13,
+        "fields": {
+          "name": "rock",
+          "color": "#B6A136",
+          "created_at": "2024-12-01 12:00:00",
+          "updated_at": "2024-12-01 12:00:00"
+        }
+    },
+    {
+        "model": "pokemons.type",
+        "pk": 14,
+        "fields": {
+          "name": "ghost",
+          "color": "#735797",
+          "created_at": "2024-12-01 12:00:00",
+          "updated_at": "2024-12-01 12:00:00"
+        }
+    },
+    {
+        "model": "pokemons.type",
+        "pk": 15,
+        "fields": {
+          "name": "dragon",
+          "color": "#6F35FC",
+          "created_at": "2024-12-01 12:00:00",
+          "updated_at": "2024-12-01 12:00:00"
+        }
+    },
+    {
+        "model": "pokemons.type",
+        "pk": 16,
+        "fields": {
+          "name": "dark",
+          "color": "#705746",
+          "created_at": "2024-12-01 12:00:00",
+          "updated_at": "2024-12-01 12:00:00"
+        }
+    },
+    {
+        "model": "pokemons.type",
+        "pk": 17,
+        "fields": {
+          "name": "steel",
+          "color": "#B7B7CE",
+          "created_at": "2024-12-01 12:00:00",
+          "updated_at": "2024-12-01 12:00:00"
+        }
+    },
+    {
+        "model": "pokemons.type",
+        "pk": 18,
+        "fields": {
+          "name": "fairy",
+          "color": "#D685AD",
+          "created_at": "2024-12-01 12:00:00",
+          "updated_at": "2024-12-01 12:00:00"
+        }
+    }
+]
