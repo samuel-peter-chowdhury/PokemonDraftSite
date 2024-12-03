@@ -70,7 +70,12 @@
             {% endblock %}
 
             <!-- Page Content -->
+            {% block sidebar_page %}
             <div id="page-content-wrapper">
+            {% endblock %}
+            {% block non_sidebar_page %}
+            <div id="page-content-wrapper" class="no-sidebar">
+            {% endblock %}
                 <main class="container-fluid d-flex flex-column justify-content-center">
                     {% block content %}
                     {% endblock %}
