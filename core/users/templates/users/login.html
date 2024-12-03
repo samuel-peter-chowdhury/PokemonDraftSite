@@ -6,13 +6,15 @@
 
 {% load crispy_forms_tags %}
 {% block content %}
-    <h1>User Login</h1>
-    <form class="d-flex flex-column" action="{% url 'users:login' %}" method="post">
-        {% csrf_token %}
-        {{ form|crispy }}
-        {% if request.GET.next %}
-            <input type="hidden" name="next" value="{{ request.GET.next }}" />
-        {% endif %}
-        <button class="btn btn-secondary mt-5">Submit</button>
-    </form>
+    <div class="container">
+        <h1>User Login</h1>
+        <form class="d-flex flex-column" action="{% url 'users:login' %}" method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            {% if request.GET.next %}
+                <input type="hidden" name="next" value="{{ request.GET.next }}" />
+            {% endif %}
+            <button class="btn btn-secondary my-5">Submit</button>
+        </form>
+    </div>
 {% endblock %}

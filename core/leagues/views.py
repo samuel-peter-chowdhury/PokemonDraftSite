@@ -65,6 +65,26 @@ def get_tier(request, league_id, tier):
     else:
         return HttpResponse(status=400)
     
+def league_pokemon_type_tiers_view(request, id):
+    if request.user.has_league(id):
+        league = League.objects.get(id=id)
+        activeSeason = league.get_active_season()
+        types = Type.objects.all()
+        return render(request, "leagues/league_pokemon_type_tiers.html", {'league': league, 'activeSeason': activeSeason, 'types': types})
+    else:
+        return redirect("/")
+    
+def get_type_tier(request, league_id, type_id):
+    if request.user.has_league(league_id):
+        league = League.objects.get(id=league_id)
+        activeSeason = league.get_active_season()
+        orderBy = request.GET.get('order_by', 'name')
+        pokemon = Pokemon.objects.defer('pokemon_type_effectives', 'pokemon_coverage_moves', 'pokemon_special_moves', 'pokemon_moves').filter(season=activeSeason, point_value__isnull=False, pokemon_types__type__id=type_id).order_by(orderBy)
+        type = Type.objects.get(id=type_id)
+        return render(request, "leagues/league_pokemon_type_tier.html", {'league': league, 'type': type, 'pokemon': pokemon, 'orderBy': orderBy})
+    else:
+        return HttpResponse(status=400)
+    
 @user_passes_test(lambda u: u.is_superuser)
 def initialize_season_view(request, id):
     if request.method == "POST":
