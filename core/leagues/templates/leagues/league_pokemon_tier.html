@@ -1,6 +1,6 @@
 <div id="pokemon-tier-column-{{tier}}">
     <div class="d-flex align-items-center justify-content-center bg-dark text-secondary"><h1>{{tier}}<h1></div>
-    <div class="pokemon-table">
+    <div class="pokemon-table compact">
         <table class="table table-dark table-striped table-hover table-bordered">
             <thead>
                 <tr>
@@ -33,7 +33,7 @@
                                 <img src="{{ p.sprite_url }}" alt="Pokemon Sprite">
                             </div>
                         </td>
-                        <td class="table-cell-medium">{{ p.name }}</td>
+                        <td class="table-cell-medium text-capitalize">{{ p.name }}</td>
                         <td class="table-cell-small">{{ p.speed }}</td>
                     </tr>
                 {% endfor %}

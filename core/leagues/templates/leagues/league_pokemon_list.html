@@ -1,7 +1,7 @@
 {% extends 'leagues/base.html' %}
 
 {% block content %}
-    <h1>Pokemon List</h1>
+    <h1>Pokedex</h1>
     <!--<form action="{% url 'leagues:initializePointData' id=activeSeason.id %}" method="post">
         {% csrf_token %}
         <button class="btn btn-primary" aria-label="Initialize Point Data" title="Initialize Point Data">Initialize Point Data</button>
@@ -126,9 +126,21 @@
                                 <img src="{{ pokemon.sprite_url }}" alt="Pokemon Sprite">
                             </div>
                         </td>
-                        <td class="table-cell-medium">{{ pokemon.name }}</td>
-                        <td class="table-cell-medium">{{ pokemon.get_types_string }}</td>
-                        <td>{{ pokemon.get_abilities_string }}</td>
+                        <td class="table-cell-medium text-capitalize">{{ pokemon.name }}</td>
+                        <td class="table-cell-large">
+                            <div class="pokemon-types-container">
+                                {% for t in pokemon.pokemon_types.all %}
+                                    <div class="pokemon-pill" style="background-color: {{t.type.color}}">{{ t.type.name }}</div>
+                                {% endfor %}
+                            </div>
+                        </td>
+                        <td>
+                            <div class="pokemon-abilities-container">
+                                {% for a in pokemon.pokemon_abilities.all %}
+                                    <div class="pokemon-pill">{{ a.name }}</div>
+                                {% endfor %}
+                            </div>
+                        </td>
                         <td class="table-cell-small">{{ pokemon.hp }}</td>
                         <td class="table-cell-small">{{ pokemon.attack }}</td>
                         <td class="table-cell-small">{{ pokemon.defense }}</td>

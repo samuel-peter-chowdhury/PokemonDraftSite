@@ -56,11 +56,14 @@ def league_pokemon_tiers_view(request, id):
         return redirect("/")
     
 def get_tier(request, league_id, tier):
-    league = League.objects.get(id=league_id)
-    activeSeason = league.get_active_season()
-    orderBy = request.GET.get('order_by', 'name')
-    pokemon = Pokemon.objects.defer('pokemon_type_effectives', 'pokemon_coverage_moves', 'pokemon_special_moves', 'pokemon_moves').filter(season=activeSeason, point_value=tier).order_by(orderBy)
-    return render(request, "leagues/league_pokemon_tier.html", {'league': league, 'tier': tier, 'pokemon': pokemon, 'orderBy': orderBy})
+    if request.user.has_league(league_id):
+        league = League.objects.get(id=league_id)
+        activeSeason = league.get_active_season()
+        orderBy = request.GET.get('order_by', 'name')
+        pokemon = Pokemon.objects.defer('pokemon_type_effectives', 'pokemon_coverage_moves', 'pokemon_special_moves', 'pokemon_moves').filter(season=activeSeason, point_value=tier).order_by(orderBy)
+        return render(request, "leagues/league_pokemon_tier.html", {'league': league, 'tier': tier, 'pokemon': pokemon, 'orderBy': orderBy})
+    else:
+        return HttpResponse(status=400)
     
 @user_passes_test(lambda u: u.is_superuser)
 def initialize_season_view(request, id):

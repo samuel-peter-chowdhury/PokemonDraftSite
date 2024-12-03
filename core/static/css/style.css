@@ -138,6 +138,12 @@ nav {
                 max-width: 8rem;
             }
 
+            &.table-cell-large {
+                width: 10rem;
+                min-width: 10rem;
+                max-width: 15rem;
+            }
+
             a {
                 cursor: pointer;
                 text-decoration: none;
@@ -168,6 +174,89 @@ nav {
                 img {
                     max-width: 3rem;
                     max-height: 3rem;
+                }
+            }
+        }
+
+        .pokemon-types-container,
+        .pokemon-abilities-container {
+            display: inline-flex;
+            align-items: center;
+            width: 100%;
+            gap: 0.5rem;
+
+            .pokemon-pill {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-transform: capitalize;
+                padding: 0.25rem 1rem;
+                background-color: var(--bs-gray-700);
+                border-radius: 1rem;
+            }
+        }
+    }
+
+    &.compact {
+        font-size: 0.5rem;
+
+        table {
+            tr {
+                height: 2.75rem;
+                min-height: 2.75rem;
+                max-height: 2.75rem;
+            }
+    
+            th,
+            td {
+                height: 2.75rem;
+                min-height: 2.75rem;
+                max-height: 2.75rem;
+                max-width: 5.5rem;
+                padding: 0.5rem;
+    
+                &.table-cell-small {
+                    width: 2.75rem;
+                    min-width: 2.75rem;
+                    max-width: 2.75rem;
+                }
+    
+                &.table-cell-medium {
+                    width: 4rem;
+                    min-width: 4rem;
+                    max-width: 4rem;
+                }
+    
+                &.table-cell-large {
+                    width: 5rem;
+                    min-width: 5rem;
+                    max-width: 7.5rem;
+                }
+            }
+    
+            .pokemon-sprite {
+                width: 2.75rem;
+                max-width: 2.75rem;
+                min-width: 2.75rem;
+                height: 2.75rem;
+                max-height: 2.75rem;
+                min-height: 2.75rem;
+    
+                div {
+                    img {
+                        max-width: 1.5rem;
+                        max-height: 1.5rem;
+                    }
+                }
+            }
+    
+            .pokemon-types-container,
+            .pokemon-abilities-container {
+                gap: 0.25rem;
+    
+                .pokemon-pill {
+                    padding: 0.125rem 0.5rem;
+                    border-radius: 0.5rem;
                 }
             }
         }
