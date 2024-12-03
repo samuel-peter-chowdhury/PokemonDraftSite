@@ -51,8 +51,8 @@
                             <a class="w-100 d-inline-flex align-items-center justify-content-between" href="?page={{ pokemonPage.number }}&order_by=name&page_size={{ pageSize }}">Name</a>
                         {% endif %}
                     </th>
-                    <th class="table-cell-medium">Types</th>
-                    <th>Abilities</th>
+                    <th class="table-cell-large">Types</th>
+                    <th class="table-cell-xlarge">Abilities</th>
                     <th class="table-cell-small">
                         {% if orderBy == 'hp' %}
                             <a class="w-100 d-inline-flex align-items-center justify-content-between" href="?page={{ pokemonPage.number }}&order_by=-hp&page_size={{ pageSize }}">HP<i class="fa-solid fa-arrow-up ms-2"></i></a>
@@ -116,6 +116,15 @@
                             <a class="w-100 d-inline-flex align-items-center justify-content-between" href="?page={{ pokemonPage.number }}&order_by=-base_stat_total&page_size={{ pageSize }}">BST</a>
                         {% endif %}
                     </th>
+                    <th class="table-cell-small">
+                        {% if orderBy == 'point_value' %}
+                            <a class="w-100 d-inline-flex align-items-center justify-content-between" href="?page={{ pokemonPage.number }}&order_by=-point_value&page_size={{ pageSize }}">Pts<i class="fa-solid fa-arrow-up ms-2"></i></a>
+                        {% elif orderBy == '-point_value' %}
+                            <a class="w-100 d-inline-flex align-items-center justify-content-between" href="?page={{ pokemonPage.number }}&order_by=point_value&page_size={{ pageSize }}">Pts<i class="fa-solid fa-arrow-down ms-2"></i></a>
+                        {% else %}
+                            <a class="w-100 d-inline-flex align-items-center justify-content-between" href="?page={{ pokemonPage.number }}&order_by=-point_value&page_size={{ pageSize }}">Pts</a>
+                        {% endif %}
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -134,7 +143,7 @@
                                 {% endfor %}
                             </div>
                         </td>
-                        <td>
+                        <td class="table-cell-xlarge">
                             <div class="pokemon-abilities-container">
                                 {% for a in pokemon.pokemon_abilities.all %}
                                     <div class="pokemon-pill">{{ a.name }}</div>
@@ -148,6 +157,7 @@
                         <td class="table-cell-small">{{ pokemon.special_defense }}</td>
                         <td class="table-cell-small">{{ pokemon.speed }}</td>
                         <td class="table-cell-small">{{ pokemon.base_stat_total }}</td>
+                        <td class="table-cell-small">{{ pokemon.point_value }}</td>
                     </tr>
                 {% endfor %}
             </tbody>
