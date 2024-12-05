@@ -5,8 +5,8 @@ from pokemons.models import Pokemon
 
 @login_required(login_url="/users/login/")
 def homepage(request):
-    leagues = request.user.member_leagues.all()
+    leagues = request.user.get_all_leagues()
     if len(leagues) > 0:
         return redirect(reverse('leagues:league', kwargs={'id': leagues[0].id}))
     else:
-        return redirect(reverse('users:settings'))
+        return redirect(reverse('leagues:leagueJoin'))

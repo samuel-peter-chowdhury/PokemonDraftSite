@@ -1,5 +1,10 @@
 from django import forms
 
+class LeagueJoinForm(forms.Form):
+    league_name = forms.CharField(label="League Name", max_length=50)
+    league_password = forms.CharField(label="League Password", max_length=20)
+    team_name = forms.CharField(label="Team Name", max_length=50)
+
 class PokemonSearchForm(forms.Form):
     base_name__icontains = forms.CharField(label="Name Match", max_length=50, required=False)
 

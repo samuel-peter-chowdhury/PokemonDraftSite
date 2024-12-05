@@ -34,11 +34,17 @@
         <div class="container-fluid justify-space-between">
             {% if user.is_authenticated %}
                 <ul class="navbar-nav">
-                    {% for league in user.member_leagues.all %}
+                    {% if user.has_any_league %}
+                        {% for league in user.get_all_leagues %}
+                            <li class="nav-item">
+                                <a class="nav-link nav-link-logo" href="{%  url 'leagues:league' id=league.id %}"><img src="{{ league.logo.url }}" alt="League Logo">{{ league.abbreviation }}</a>
+                            </li>
+                        {% endfor %}
+                    {% else %}
                         <li class="nav-item">
-                            <a class="nav-link nav-link-logo" href="{%  url 'leagues:league' id=league.id %}"><img src="{{ league.logo.url }}" alt="League Logo">{{ league.abbreviation }}</a>
+                            <a class="nav-link nav-link-logo" href="{%  url 'leagues:leagueJoin' %}">Join League</a>
                         </li>
-                    {% endfor %}
+                    {% endif %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'users:settings' %}">Settings</a>
                     </li>

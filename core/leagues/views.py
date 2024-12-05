@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import user_passes_test
+from django.shortcuts import render, redirect, reverse
+from django.contrib.auth.decorators import user_passes_test, login_required
 from django.http import HttpResponse
 from django.conf import settings
 from django.core.paginator import Paginator
@@ -10,20 +10,51 @@ import json
 import csv
 import functools
 
-from .forms import PokemonSearchForm
-from .models import League, Season
+from .forms import PokemonSearchForm, LeagueJoinForm
+from .models import League, Season, Team
 from .data import initialize_pokemon_data, initialize_point_value_data
 from pokemons.models import Pokemon, Type
+from django.contrib import messages
 
 # Create your views here.
+@login_required(login_url="/users/login/")
 def league_view(request, id):
     if request.user.has_league(id):
         league = League.objects.get(id=id)
         activeSeason = league.get_active_season()
         return render(request, "leagues/league.html", {'league': league, 'activeSeason': activeSeason})
+    return redirect(reverse('users:settings'))
+
+@login_required(login_url="/users/login/")
+def league_join_view(request):
+    if request.method == "POST":
+        form = LeagueJoinForm(request.POST)
+        if form.is_valid():
+            league = League.objects.filter(name__iexact=form.cleaned_data["league_name"]).first()
+            if league:
+                if league.password == form.cleaned_data["league_password"]:
+                    active_season = league.get_active_season()
+                    team_names = [t.name.lower() for t in active_season.teams.all()]
+                    if form.cleaned_data["team_name"].lower() in team_names:
+                        messages.error(request, 'Team Name Already Exists')
+                    else:
+                        league.members.add(request.user)
+                        league.save()
+                        request.user.member_leagues.add(league)
+                        request.user.save()
+                        team = Team(name=form.cleaned_data["team_name"], season=active_season, user=request.user)
+                        team.save()
+                        messages.success(request, f'Welcome to {league.abbreviation}')
+                        return redirect(reverse('leagues:league', kwargs={'id': league.id}))
+                else:
+                    messages.error(request, 'Invalid Password')
+            else:
+                messages.error(request, 'League Not Found')
     else:
-        return redirect("/")
-    
+        form = LeagueJoinForm()
+    return render(request, "leagues/league_join.html", { "form": form })
+
+@login_required(login_url="/users/login/")
 def league_pokemon_list_view(request, id):
     if request.user.has_league(id):
         league = League.objects.get(id=id)
@@ -36,7 +67,8 @@ def league_pokemon_list_view(request, id):
         return render(request, "leagues/pokemon/league_pokemon_list.html", {'league': league, 'activeSeason': activeSeason, 'pokemonPage': p.page(page), 'lastPage': p.num_pages, 'pageSize': pageSize, 'orderBy': orderBy})
     else:
         return redirect("/")
-    
+
+@login_required(login_url="/users/login/")
 def league_pokemon_tiers_view(request, id):
     if request.user.has_league(id):
         league = League.objects.get(id=id)
@@ -45,7 +77,8 @@ def league_pokemon_tiers_view(request, id):
         return render(request, "leagues/pokemon/league_pokemon_tiers.html", {'league': league, 'activeSeason': activeSeason, 'tiers': tiers})
     else:
         return redirect("/")
-    
+
+@login_required(login_url="/users/login/")
 def get_tier(request, league_id, tier):
     if request.user.has_league(league_id):
         league = League.objects.get(id=league_id)
@@ -55,7 +88,8 @@ def get_tier(request, league_id, tier):
         return render(request, "leagues/pokemon/league_pokemon_tier.html", {'league': league, 'tier': tier, 'pokemon': pokemon, 'orderBy': orderBy})
     else:
         return HttpResponse(status=400)
-    
+
+@login_required(login_url="/users/login/")
 def league_pokemon_type_tiers_view(request, id):
     if request.user.has_league(id):
         league = League.objects.get(id=id)
@@ -64,7 +98,8 @@ def league_pokemon_type_tiers_view(request, id):
         return render(request, "leagues/pokemon/league_pokemon_type_tiers.html", {'league': league, 'activeSeason': activeSeason, 'types': types})
     else:
         return redirect("/")
-    
+
+@login_required(login_url="/users/login/")
 def get_type_tier(request, league_id, type_id):
     if request.user.has_league(league_id):
         league = League.objects.get(id=league_id)
@@ -75,7 +110,8 @@ def get_type_tier(request, league_id, type_id):
         return render(request, "leagues/pokemon/league_pokemon_type_tier.html", {'league': league, 'type': type, 'pokemon': pokemon, 'orderBy': orderBy})
     else:
         return HttpResponse(status=400)
-    
+
+@login_required(login_url="/users/login/")
 def league_pokemon_search(request, id):
     if request.user.has_league(id):
         league = League.objects.get(id=id)
@@ -83,7 +119,8 @@ def league_pokemon_search(request, id):
         return render(request, "leagues/pokemon/league_pokemon_search.html", {'form': form, 'league': league})
     else:
         return HttpResponse(status=400)
-    
+
+@login_required(login_url="/users/login/")
 def league_pokemon_search_results(request, id):
     if request.user.has_league(id):
         league = League.objects.get(id=id)
