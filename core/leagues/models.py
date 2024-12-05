@@ -12,7 +12,7 @@ class SeasonStatus(models.TextChoices):
 class League(BaseModel):
     name = models.CharField(max_length=50)
     abbreviation = models.CharField(max_length=4)
-    logo = models.ImageField(default='default_league_logo.png', blank=True, null=True)
+    logo = models.ImageField(default='defaults/default_league_logo.png', blank=True, null=True, upload_to='leagues_logos/')
     password = models.CharField(max_length=20)
     members = models.ManyToManyField(CustomUser, related_name='member_leagues')
     moderators = models.ManyToManyField(CustomUser, related_name='moderator_leagues')
@@ -33,7 +33,7 @@ class Season(BaseModel):
 
 class Team(BaseModel):
     name = models.CharField(max_length=50)
-    logo = models.ImageField(default='default_team_logo.png', blank=True, null=True)
+    logo = models.ImageField(default='defaults/default_team_logo.png', blank=True, null=True, upload_to='team_logos/')
     season = models.ForeignKey(Season, on_delete=models.CASCADE, related_name='teams')
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='teams')
 

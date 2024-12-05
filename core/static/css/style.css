@@ -283,3 +283,19 @@ nav {
     position: sticky;
     top: 0;
 }
+
+.user-profile-picture {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 10rem;
+    width: 10rem;
+    background-color: var(--bs-secondary);
+    border-radius: 50%;
+    overflow: hidden;
+
+    img {
+        max-width: 10rem;
+        max-height: 10rem;
+    }
+}

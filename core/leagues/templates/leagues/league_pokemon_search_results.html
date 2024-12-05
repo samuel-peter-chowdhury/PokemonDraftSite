@@ -10,7 +10,7 @@
                         <li class="page-item disabled"><a class="page-link" href="#"><i class="fa-solid fa-chevron-left"></i></a></li>
                     {% endif %}
                     <li class="page-item" style="cursor: pointer"><a class="page-link" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page=1&order_by={{ orderBy }}&page_size={{ pageSize }}">1</a></li>
-                    <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
+                    <li class="page-item disabled"><a class="page-link" href="#">Page {{pokemonPage.number}}</a></li>
                     <li class="page-item" style="cursor: pointer"><a class="page-link" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page={{ lastPage }}&order_by={{ orderBy }}&page_size={{ pageSize }}">{{ lastPage }}</a></li>
                     {% if pokemonPage.has_next %}
                         <li class="page-item" style="cursor: pointer"><a class="page-link" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page={{ pokemonPage.next_page_number }}&order_by={{ orderBy }}&page_size={{ pageSize }}"><i class="fa-solid fa-chevron-right"></i></a></li>
@@ -166,7 +166,7 @@
                         <li class="page-item disabled"><a class="page-link" href="#"><i class="fa-solid fa-chevron-left"></i></a></li>
                     {% endif %}
                     <li class="page-item" style="cursor: pointer"><a class="page-link" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page=1&order_by={{ orderBy }}&page_size={{ pageSize }}">1</a></li>
-                    <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
+                    <li class="page-item disabled"><a class="page-link" href="#">Page {{pokemonPage.number}}</a></li>
                     <li class="page-item" style="cursor: pointer"><a class="page-link" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page={{ lastPage }}&order_by={{ orderBy }}&page_size={{ pageSize }}">{{ lastPage }}</a></li>
                     {% if pokemonPage.has_next %}
                         <li class="page-item" style="cursor: pointer"><a class="page-link" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page={{ pokemonPage.next_page_number }}&order_by={{ orderBy }}&page_size={{ pageSize }}"><i class="fa-solid fa-chevron-right"></i></a></li>
