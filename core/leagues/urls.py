@@ -6,6 +6,7 @@ app_name = 'leagues'
 urlpatterns = [
     path('<int:id>', views.league_view, name="league"),
     path('join', views.league_join_view, name="leagueJoin"),
+    path('<int:id>/team/settings', views.team_settings_view, name="teamSettings"),
     path('<int:id>/pokemon/list', views.league_pokemon_list_view, name="leaguePokemonList"),
     path('<int:id>/pokemon/tiers', views.league_pokemon_tiers_view, name="leaguePokemonTiers"),
     path('<int:id>/pokemon/type/tiers', views.league_pokemon_type_tiers_view, name="leaguePokemonTypeTiers"),

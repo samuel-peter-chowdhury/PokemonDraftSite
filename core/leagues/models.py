@@ -5,6 +5,7 @@ from users.models import CustomUser
 
 # Create your models here.
 class SeasonStatus(models.TextChoices):
+    PRE_SEASON = 'PRE_SEASON'
     DRAFT = 'DRAFT'
     REGULAR_SEASON = 'REGULAR_SEASON'
     PLAYOFFS = 'PLAYOFFS'
@@ -36,6 +37,9 @@ class Team(BaseModel):
     logo = models.ImageField(default='defaults/default_team_logo.png', blank=True, null=True, upload_to='team_logos/')
     season = models.ForeignKey(Season, on_delete=models.CASCADE, related_name='teams')
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='teams')
+
+    class Meta:
+        unique_together = ('name', 'season')
 
     def __str__(self):
         return self.name

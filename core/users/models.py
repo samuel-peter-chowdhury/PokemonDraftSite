@@ -25,3 +25,6 @@ class CustomUser(AbstractUser):
     
     def get_all_leagues(self):
         return list(set(self.member_leagues.all() | self.moderator_leagues.all()))
+    
+    def get_active_season_team(self, season):
+        return season.teams.filter(user=self).first()

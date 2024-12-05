@@ -1,7 +1,7 @@
-{% extends 'non_sidebar_page.html' %}
+{% extends 'leagues/base.html' %}
 
 {% block title %}
-    Settings
+    Team Settings
 {% endblock %}
 
 {% load crispy_forms_tags %}
@@ -9,15 +9,15 @@
     <div class="container">
         <div class="d-inline-flex align-items-center mb-4">
             <div class="user-profile-picture me-5">
-                {% if user.profile_picture %}
-                    <img src="{{ user.profile_picture.url }}" alt="User Profile Picture">
+                {% if team.logo %}
+                    <img src="{{ team.logo.url }}" alt="Team Logo">
                 {% else %}
-                    <img src="/media/defaults/default_profile_picture.jpg" alt="User Profile Picture">
+                    <img src="/media/defaults/default_team_logo.png" alt="Team Logo">
                 {% endif %}
             </div>
-            <h1 class="text-capitalize">{{ user.username }}</h1>
+            <h1 class="text-capitalize">{{ team.name }}</h1>
         </div>
-        <form class="d-flex flex-column" action="{% url 'users:settings' %}" method="post" enctype="multipart/form-data">
+        <form class="d-flex flex-column" action="{% url 'leagues:teamSettings' id=league.id %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form|crispy }}
             <button class="btn btn-secondary my-5">Save</button>
