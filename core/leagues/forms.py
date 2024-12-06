@@ -55,3 +55,6 @@ class PokemonSearchForm(forms.Form):
 
     and_pokemon_type_effectives__type__name__iexact___pokemon_type_effectives__value___0 = forms.CharField(label="Immune Types (AND)", max_length=150, required=False)
     or_pokemon_type_effectives__type__name__iexact___pokemon_type_effectives__value___0 = forms.CharField(label="Immune Types (OR)", max_length=150, required=False)
+
+class PokemonSimpleSearchForm(forms.Form):
+    name__icontains = forms.CharField(label="Name Match", max_length=50, required=False)

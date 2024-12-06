@@ -1,0 +1,20 @@
+{% extends 'leagues/base.html' %}
+
+{% block content %}
+    <h1>Modify a Team</h1>
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Select a Team
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            {% for team in teams %}
+                <a class="dropdown-item" hx-get="{%  url 'leagues:adminModifiableTeam' league_id=league.id team_id=team.id %}" hx-trigger="click" hx-target="#modifiable-team-table" hx-swap="innerHTML">{{ team.name }}</a>
+            {% endfor %}
+        </div>
+    </div>
+    {% if teamId %}
+        <div id="modifiable-team-table" hx-get="{%  url 'leagues:adminModifiableTeam' league_id=league.id team_id=teamId %}" hx-trigger="load" hx-target="this" hx-swap="innerHTML"></div>
+    {% else %}
+        <div id="modifiable-team-table"></div>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,50 @@
+{% load crispy_forms_tags %}
+<div id="modifiable-team-page" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' hx-target="this" hx-swap="outerHTML">
+    <h3 class="mt-2">{{team.name}}</h3>
+    <div class="table-responsive pokemon-table">
+        <table class="table table-dark table-striped table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th class="pokemon-sprite"></th>
+                    <th class="table-cell-medium">
+                        <a class="w-100 d-inline-flex align-items-center justify-content-between pe-none" href="#">Name</a>
+                    </th>
+                    <th class="table-cell-small">
+                        <a class="w-100 d-inline-flex align-items-center justify-content-between pe-none" href="#">Pts</a>
+                    </th>
+                    <th class="table-cell-small">
+                        <a class="w-100 d-inline-flex align-items-center justify-content-between pe-none" href="#">Remove from Roster</a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in pokemon %}
+                    <tr>
+                        <td class="pokemon-sprite">
+                            <div>
+                                <img src="{{ p.sprite_url }}" alt="Pokemon Sprite">
+                            </div>
+                        </td>
+                        <td class="table-cell-medium text-capitalize">{{ p.name }}</td>
+                        <td class="table-cell-small">{{ p.point_value }}</td>
+                        <td class="table-cell-small"><button class="btn btn-secondary" hx-post="{%  url 'leagues:adminModifiableTeam' league_id=league.id team_id=team.id %}?action=remove&pokemonId={{p.id}}">Remove<i class="fa-solid fa-xmark ms-2"></i></button></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="d-flex flex-column flex-md-row" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' hx-target="#admin-simple-search-results-page" hx-swap="innerHTML">
+        <div class="me-md-5 px-2 overflow-auto" style="max-height: 50vh">
+            <div class="sticky-header bg-dark text-white rounded shadow p-4 mb-2">
+                <h2>Pokemon Search</h1>
+                <button class="btn btn-secondary mt-2 w-100" hx-post="{%  url 'leagues:adminSimpleSearchResults' league_id=league.id team_id=team.id %}" hx-trigger="click">Search</button>
+            </div>
+            <form id="admin-simple-search-form" class="d-flex flex-column" hx-post="{%  url 'leagues:adminSimpleSearchResults' league_id=league.id team_id=team.id %}" hx-trigger="submit">
+                {{ form|crispy }}
+            </form>
+        </div>
+        <div class="w-100" hx-post="{%  url 'leagues:adminSimpleSearchResults' league_id=league.id team_id=team.id %}" hx-trigger="load">
+            <div id="admin-simple-search-results-page"></div>
+        </div>
+    </div>
+</div>

@@ -290,12 +290,20 @@ nav {
     justify-content: center;
     height: 10rem;
     width: 10rem;
-    background-color: var(--bs-secondary);
     border-radius: 50%;
     overflow: hidden;
+    box-shadow: 5px 5px 5px var(--bs-secondary);
 
     img {
         max-width: 10rem;
-        max-height: 10rem;
+        object-fit: cover;
     }
+}
+
+.toggle-expand-parent[aria-expanded=true] .toggle-expand-icon {
+    display: none;
+}
+
+.toggle-expand-parent[aria-expanded=false] .toggle-collapse-icon {
+    display: none;
 }
