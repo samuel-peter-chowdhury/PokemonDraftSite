@@ -29,8 +29,8 @@ urlpatterns += team_urlpatterns
 
 admin_urlpatterns = [
     # Data Initialization Paths
-    path('initialize/season/<int:id>', admin_views.initialize_season_view, name="initializeSeason"),
-    path('initialize/point/data/<int:id>', admin_views.initialize_point_data_view, name="initializePointData"),
+    path('<int:id>/admin/initialize/pokemon', admin_views.initialize_pokemon_data_view, name="adminInitializePokemonData"),
+    path('<int:id>/admin/initialize/point', admin_views.initialize_point_data_view, name="adminInitializePointData"),
 
     # Standard Paths
     path('<int:id>/admin/team', admin_views.modify_team_view, name="adminModifyTeam"),

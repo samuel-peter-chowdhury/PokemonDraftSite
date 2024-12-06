@@ -1,42 +1,43 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django.http import HttpResponse
-from django.conf import settings
 
-import os
 import json
 import csv
 
-from leagues.forms import PokemonSimpleSearchForm
-from leagues.models import League, Season, Team
+from leagues.forms import PokemonSimpleSearchForm, DataUploadForm
+from leagues.models import League, Team
 from leagues.data import initialize_pokemon_data, initialize_point_value_data
 from pokemons.models import Pokemon
 
 @user_passes_test(lambda u: u.is_superuser)
-def initialize_season_view(request, id):
+def initialize_pokemon_data_view(request, id):
+    league = League.objects.get(id=id)
+    activeSeason = league.get_active_season()
     if request.method == "POST":
-        season = Season.objects.get(id=id)
-        if season:
-            with open(os.path.join(settings.BASE_DIR, 'pokemon_data.json'), 'r') as f:
-                data = json.load(f)
-                initialize_pokemon_data(data)
-            return HttpResponse(status=204)
-        else:
-            return HttpResponse(status=404)
-    return HttpResponse(status=400)
+        form = DataUploadForm(request.POST, request.FILES)
+        if form.is_valid() and activeSeason:
+            file = request.FILES['file']
+            data = json.load(file)
+            initialize_pokemon_data(data, activeSeason)
+    else:
+        form = DataUploadForm()
+    return render(request, "leagues/admin/initialize_pokemon_data.html", { "form": form, 'league': league, 'isLeagueModerator': request.user.is_league_moderator(league.id) })
 
 @user_passes_test(lambda u: u.is_superuser)
 def initialize_point_data_view(request, id):
+    league = League.objects.get(id=id)
+    activeSeason = league.get_active_season()
     if request.method == "POST":
-        season = Season.objects.get(id=id)
-        if season:
-            with open(os.path.join(settings.BASE_DIR, 'point_data.tsv'), 'r') as f:
-                tsv_file = csv.reader(f, delimiter="\t")
-                initialize_point_value_data(tsv_file)
-            return HttpResponse(status=204)
-        else:
-            return HttpResponse(status=404)
-    return HttpResponse(status=400)
+        form = DataUploadForm(request.POST, request.FILES)
+        if form.is_valid() and activeSeason:
+            file = request.FILES['file']
+            decoded_file = file.read().decode('utf-8').splitlines()
+            tsv_file = csv.reader(decoded_file, delimiter="\t")
+            initialize_point_value_data(tsv_file, activeSeason)
+    else:
+        form = DataUploadForm()
+    return render(request, "leagues/admin/initialize_point_data.html", { "form": form, 'league': league, 'isLeagueModerator': request.user.is_league_moderator(league.id) })
 
 @login_required(login_url="/users/login/")
 def modify_team_view(request, id):

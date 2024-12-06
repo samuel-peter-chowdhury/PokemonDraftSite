@@ -12,6 +12,9 @@ class TeamForm(forms.ModelForm):
         model = Team
         fields = ['name', 'logo']
 
+class DataUploadForm(forms.Form):
+    file = forms.FileField()
+
 class PokemonSearchForm(forms.Form):
     base_name__icontains = forms.CharField(label="Name Match", max_length=50, required=False)
 

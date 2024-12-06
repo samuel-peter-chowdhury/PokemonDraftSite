@@ -1,0 +1,17 @@
+{% extends 'leagues/base.html' %}
+
+{% block title %}
+    Pokemon Data
+{% endblock %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="container">
+        <h1>Initialize Pokemon Data</h1>
+        <form class="d-flex flex-column" action="{% url 'leagues:adminInitializePokemonData' id=league.id %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button class="btn btn-secondary my-5">Submit</button>
+        </form>
+    </div>
+{% endblock %}
