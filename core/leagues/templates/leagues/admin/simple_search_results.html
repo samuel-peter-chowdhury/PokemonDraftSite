@@ -1,6 +1,6 @@
 {% if undraftedPokemon %}
-    <h1>Search Results</h1>
-    <div class="table-responsive pokemon-table">
+    <h3>Search Results</h3>
+    <div class="table-responsive pokemon-table compact">
         <table class="table table-dark table-striped table-hover table-bordered">
             <thead>
                 <tr>
@@ -10,6 +10,9 @@
                     </th>
                     <th class="table-cell-small">
                         <a class="w-100 d-inline-flex align-items-center justify-content-between pe-none" href="#">Pts</a>
+                    </th>
+                    <th class="table-cell-medium">
+                        <a class="w-100 d-inline-flex align-items-center justify-content-between pe-none" href="#">Team</a>
                     </th>
                     <th class="table-cell-small">
                         <a class="w-100 d-inline-flex align-items-center justify-content-between pe-none" href="#">Add to Roster</a>
@@ -26,7 +29,8 @@
                         </td>
                         <td class="table-cell-medium text-capitalize">{{ p.name }}</td>
                         <td class="table-cell-small">{{ p.point_value }}</td>
-                        <td class="table-cell-small"><button class="btn btn-secondary" hx-post="{%  url 'leagues:adminModifiableTeam' league_id=league.id team_id=team.id %}?action=add&pokemonId={{p.id}}" hx-target="#modifiable-team-page" hx-swap="outerHTML">Add<i class="fa-solid fa-plus ms-2"></i></button></td>
+                        <td class="table-cell-medium">{{ p.team }}</td>
+                        <td class="table-cell-small"><button class="btn btn-secondary" hx-post="{%  url 'leagues:adminModifiableTeam' league_id=league.id team_id=team.id %}?action=add&pokemonId={{p.id}}" hx-target="#modifiable-team-page" hx-swap="outerHTML"><i class="fa-solid fa-plus"></i></button></td>
                     </tr>
                 {% endfor %}
             </tbody>

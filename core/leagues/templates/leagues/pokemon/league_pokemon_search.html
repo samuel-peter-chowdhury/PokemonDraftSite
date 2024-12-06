@@ -5,14 +5,14 @@
     <div class="d-flex flex-column flex-md-row" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' hx-target="#pokemon-search-results-page" hx-swap="innerHTML" hx-include="#pokemon-search-form">
         <div class="me-md-5 px-2 overflow-auto" style="max-height: 50vh">
             <div class="sticky-header bg-dark text-white rounded shadow p-4 mb-2">
-                <h2>Pokemon Search</h1>
-                <button class="btn btn-secondary mt-2 w-100" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}" hx-trigger="click">Search</button>
+                <h3>Pokemon Search</h3>
+                <button class="btn btn-secondary mt-2 w-100" hx-post="{%  url 'leagues:leaguePokemonSearchResults' league_id=league.id %}" hx-trigger="click">Search</button>
             </div>
             <form id="pokemon-search-form" class="d-flex flex-column">
                 {{ form|crispy }}
             </form>
         </div>
-        <div class="w-100" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}" hx-trigger="load">
+        <div class="w-100" hx-post="{%  url 'leagues:leaguePokemonSearchResults' league_id=league.id %}" hx-trigger="load">
             <div id="pokemon-search-results-page"></div>
         </div>
     </div>

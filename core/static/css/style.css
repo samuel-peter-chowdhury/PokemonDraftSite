@@ -248,6 +248,10 @@ nav {
                     min-width: 8rem;
                     max-width: 16rem;
                 }
+
+                button {
+                    font-size: 0.5rem;
+                }
             }
     
             .pokemon-sprite {

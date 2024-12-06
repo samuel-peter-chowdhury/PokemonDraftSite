@@ -1,19 +1,19 @@
 <div hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' hx-target="this" hx-swap="outerHTML" hx-include="#pokemon-search-form">
     {% if pokemonPage %}
-        <h1>Search Results</h1>
+        <h3>Search Results</h3>
         <div class="d-md-inline-flex">
             <nav class="d-flex me-5" aria-label="Page Navigation">
                 <ul class="pagination">
                     {% if pokemonPage.has_previous %}
-                        <li class="page-item" style="cursor: pointer"><a class="page-link" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page={{ pokemonPage.previous_page_number }}&order_by={{ orderBy }}&page_size={{ pageSize }}"><i class="fa-solid fa-chevron-left"></i></a></li>
+                        <li class="page-item" style="cursor: pointer"><a class="page-link" hx-post="{%  url 'leagues:leaguePokemonSearchResults' league_id=league.id %}?page={{ pokemonPage.previous_page_number }}&order_by={{ orderBy }}&page_size={{ pageSize }}"><i class="fa-solid fa-chevron-left"></i></a></li>
                     {% else %}
                         <li class="page-item disabled"><a class="page-link" href="#"><i class="fa-solid fa-chevron-left"></i></a></li>
                     {% endif %}
-                    <li class="page-item" style="cursor: pointer"><a class="page-link" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page=1&order_by={{ orderBy }}&page_size={{ pageSize }}">1</a></li>
+                    <li class="page-item" style="cursor: pointer"><a class="page-link" hx-post="{%  url 'leagues:leaguePokemonSearchResults' league_id=league.id %}?page=1&order_by={{ orderBy }}&page_size={{ pageSize }}">1</a></li>
                     <li class="page-item disabled"><a class="page-link" href="#">Page {{pokemonPage.number}}</a></li>
-                    <li class="page-item" style="cursor: pointer"><a class="page-link" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page={{ lastPage }}&order_by={{ orderBy }}&page_size={{ pageSize }}">{{ lastPage }}</a></li>
+                    <li class="page-item" style="cursor: pointer"><a class="page-link" hx-post="{%  url 'leagues:leaguePokemonSearchResults' league_id=league.id %}?page={{ lastPage }}&order_by={{ orderBy }}&page_size={{ pageSize }}">{{ lastPage }}</a></li>
                     {% if pokemonPage.has_next %}
-                        <li class="page-item" style="cursor: pointer"><a class="page-link" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page={{ pokemonPage.next_page_number }}&order_by={{ orderBy }}&page_size={{ pageSize }}"><i class="fa-solid fa-chevron-right"></i></a></li>
+                        <li class="page-item" style="cursor: pointer"><a class="page-link" hx-post="{%  url 'leagues:leaguePokemonSearchResults' league_id=league.id %}?page={{ pokemonPage.next_page_number }}&order_by={{ orderBy }}&page_size={{ pageSize }}"><i class="fa-solid fa-chevron-right"></i></a></li>
                     {% else %}
                         <li class="page-item disabled"><a class="page-link" href="#"><i class="fa-solid fa-chevron-right"></i></a></li>
                     {% endif %}
@@ -24,10 +24,10 @@
                     {{ pageSize }}
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page={{ pokemonPage.number }}&order_by={{ orderBy }}&page_size=10">10</a></li>
-                    <li><a class="dropdown-item" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page={{ pokemonPage.number }}&order_by={{ orderBy }}&page_size=25">25</a></li>
-                    <li><a class="dropdown-item" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page={{ pokemonPage.number }}&order_by={{ orderBy }}&page_size=50">50</a></li>
-                    <li><a class="dropdown-item" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page={{ pokemonPage.number }}&order_by={{ orderBy }}&page_size=100">100</a></li>
+                    <li><a class="dropdown-item" hx-post="{%  url 'leagues:leaguePokemonSearchResults' league_id=league.id %}?page={{ pokemonPage.number }}&order_by={{ orderBy }}&page_size=10">10</a></li>
+                    <li><a class="dropdown-item" hx-post="{%  url 'leagues:leaguePokemonSearchResults' league_id=league.id %}?page={{ pokemonPage.number }}&order_by={{ orderBy }}&page_size=25">25</a></li>
+                    <li><a class="dropdown-item" hx-post="{%  url 'leagues:leaguePokemonSearchResults' league_id=league.id %}?page={{ pokemonPage.number }}&order_by={{ orderBy }}&page_size=50">50</a></li>
+                    <li><a class="dropdown-item" hx-post="{%  url 'leagues:leaguePokemonSearchResults' league_id=league.id %}?page={{ pokemonPage.number }}&order_by={{ orderBy }}&page_size=100">100</a></li>
                 </ul>
             </div>
         </div>
@@ -38,85 +38,85 @@
                         <th class="pokemon-sprite"></th>
                         <th class="table-cell-medium">
                             {% if orderBy == 'name' %}
-                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page={{ pokemonPage.number }}&order_by=-name&page_size={{ pageSize }}">Name<i class="fa-solid fa-arrow-up ms-2"></i></a>
+                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' league_id=league.id %}?page={{ pokemonPage.number }}&order_by=-name&page_size={{ pageSize }}">Name<i class="fa-solid fa-arrow-up ms-2"></i></a>
                             {% elif orderBy == '-name' %}
-                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page={{ pokemonPage.number }}&order_by=name&page_size={{ pageSize }}">Name<i class="fa-solid fa-arrow-down ms-2"></i></a>
+                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' league_id=league.id %}?page={{ pokemonPage.number }}&order_by=name&page_size={{ pageSize }}">Name<i class="fa-solid fa-arrow-down ms-2"></i></a>
                             {% else %}
-                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page={{ pokemonPage.number }}&order_by=name&page_size={{ pageSize }}">Name</a>
+                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' league_id=league.id %}?page={{ pokemonPage.number }}&order_by=name&page_size={{ pageSize }}">Name</a>
                             {% endif %}
                         </th>
                         <th class="table-cell-large">Types</th>
                         <th class="table-cell-xlarge">Abilities</th>
                         <th class="table-cell-small">
                             {% if orderBy == 'hp' %}
-                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page={{ pokemonPage.number }}&order_by=-hp&page_size={{ pageSize }}">HP<i class="fa-solid fa-arrow-up ms-2"></i></a>
+                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' league_id=league.id %}?page={{ pokemonPage.number }}&order_by=-hp&page_size={{ pageSize }}">HP<i class="fa-solid fa-arrow-up ms-2"></i></a>
                             {% elif orderBy == '-hp' %}
-                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page={{ pokemonPage.number }}&order_by=hp&page_size={{ pageSize }}">HP<i class="fa-solid fa-arrow-down ms-2"></i></a>
+                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' league_id=league.id %}?page={{ pokemonPage.number }}&order_by=hp&page_size={{ pageSize }}">HP<i class="fa-solid fa-arrow-down ms-2"></i></a>
                             {% else %}
-                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page={{ pokemonPage.number }}&order_by=-hp&page_size={{ pageSize }}">HP</a>
+                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' league_id=league.id %}?page={{ pokemonPage.number }}&order_by=-hp&page_size={{ pageSize }}">HP</a>
                             {% endif %}
                         </th>
                         <th class="table-cell-small">
                             {% if orderBy == 'attack' %}
-                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page={{ pokemonPage.number }}&order_by=-attack&page_size={{ pageSize }}">Atk<i class="fa-solid fa-arrow-up ms-2"></i></a>
+                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' league_id=league.id %}?page={{ pokemonPage.number }}&order_by=-attack&page_size={{ pageSize }}">Atk<i class="fa-solid fa-arrow-up ms-2"></i></a>
                             {% elif orderBy == '-attack' %}
-                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page={{ pokemonPage.number }}&order_by=attack&page_size={{ pageSize }}">Atk<i class="fa-solid fa-arrow-down ms-2"></i></a>
+                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' league_id=league.id %}?page={{ pokemonPage.number }}&order_by=attack&page_size={{ pageSize }}">Atk<i class="fa-solid fa-arrow-down ms-2"></i></a>
                             {% else %}
-                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page={{ pokemonPage.number }}&order_by=-attack&page_size={{ pageSize }}">Atk</a>
+                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' league_id=league.id %}?page={{ pokemonPage.number }}&order_by=-attack&page_size={{ pageSize }}">Atk</a>
                             {% endif %}
                         </th>
                         <th class="table-cell-small">
                             {% if orderBy == 'defense' %}
-                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page={{ pokemonPage.number }}&order_by=-defense&page_size={{ pageSize }}">Def<i class="fa-solid fa-arrow-up ms-2"></i></a>
+                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' league_id=league.id %}?page={{ pokemonPage.number }}&order_by=-defense&page_size={{ pageSize }}">Def<i class="fa-solid fa-arrow-up ms-2"></i></a>
                             {% elif orderBy == '-defense' %}
-                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page={{ pokemonPage.number }}&order_by=defense&page_size={{ pageSize }}">Def<i class="fa-solid fa-arrow-down ms-2"></i></a>
+                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' league_id=league.id %}?page={{ pokemonPage.number }}&order_by=defense&page_size={{ pageSize }}">Def<i class="fa-solid fa-arrow-down ms-2"></i></a>
                             {% else %}
-                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page={{ pokemonPage.number }}&order_by=-defense&page_size={{ pageSize }}">Def</a>
+                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' league_id=league.id %}?page={{ pokemonPage.number }}&order_by=-defense&page_size={{ pageSize }}">Def</a>
                             {% endif %}
                         </th>
                         <th class="table-cell-small">
                             {% if orderBy == 'special_attack' %}
-                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page={{ pokemonPage.number }}&order_by=-special_attack&page_size={{ pageSize }}">SpA<i class="fa-solid fa-arrow-up ms-2"></i></a>
+                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' league_id=league.id %}?page={{ pokemonPage.number }}&order_by=-special_attack&page_size={{ pageSize }}">SpA<i class="fa-solid fa-arrow-up ms-2"></i></a>
                             {% elif orderBy == '-special_attack' %}
-                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page={{ pokemonPage.number }}&order_by=special_attack&page_size={{ pageSize }}">SpA<i class="fa-solid fa-arrow-down ms-2"></i></a>
+                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' league_id=league.id %}?page={{ pokemonPage.number }}&order_by=special_attack&page_size={{ pageSize }}">SpA<i class="fa-solid fa-arrow-down ms-2"></i></a>
                             {% else %}
-                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page={{ pokemonPage.number }}&order_by=-special_attack&page_size={{ pageSize }}">SpA</a>
+                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' league_id=league.id %}?page={{ pokemonPage.number }}&order_by=-special_attack&page_size={{ pageSize }}">SpA</a>
                             {% endif %}
                         </th>
                         <th class="table-cell-small">
                             {% if orderBy == 'special_defense' %}
-                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page={{ pokemonPage.number }}&order_by=-special_defense&page_size={{ pageSize }}">SpD<i class="fa-solid fa-arrow-up ms-2"></i></a>
+                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' league_id=league.id %}?page={{ pokemonPage.number }}&order_by=-special_defense&page_size={{ pageSize }}">SpD<i class="fa-solid fa-arrow-up ms-2"></i></a>
                             {% elif orderBy == '-special_defense' %}
-                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page={{ pokemonPage.number }}&order_by=special_defense&page_size={{ pageSize }}">SpD<i class="fa-solid fa-arrow-down ms-2"></i></a>
+                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' league_id=league.id %}?page={{ pokemonPage.number }}&order_by=special_defense&page_size={{ pageSize }}">SpD<i class="fa-solid fa-arrow-down ms-2"></i></a>
                             {% else %}
-                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page={{ pokemonPage.number }}&order_by=-special_defense&page_size={{ pageSize }}">SpD</a>
+                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' league_id=league.id %}?page={{ pokemonPage.number }}&order_by=-special_defense&page_size={{ pageSize }}">SpD</a>
                             {% endif %}
                         </th>
                         <th class="table-cell-small">
                             {% if orderBy == 'speed' %}
-                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page={{ pokemonPage.number }}&order_by=-speed&page_size={{ pageSize }}">Spd<i class="fa-solid fa-arrow-up ms-2"></i></a>
+                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' league_id=league.id %}?page={{ pokemonPage.number }}&order_by=-speed&page_size={{ pageSize }}">Spd<i class="fa-solid fa-arrow-up ms-2"></i></a>
                             {% elif orderBy == '-speed' %}
-                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page={{ pokemonPage.number }}&order_by=speed&page_size={{ pageSize }}">Spd<i class="fa-solid fa-arrow-down ms-2"></i></a>
+                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' league_id=league.id %}?page={{ pokemonPage.number }}&order_by=speed&page_size={{ pageSize }}">Spd<i class="fa-solid fa-arrow-down ms-2"></i></a>
                             {% else %}
-                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page={{ pokemonPage.number }}&order_by=-speed&page_size={{ pageSize }}">Spd</a>
+                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' league_id=league.id %}?page={{ pokemonPage.number }}&order_by=-speed&page_size={{ pageSize }}">Spd</a>
                             {% endif %}
                         </th>
                         <th class="table-cell-small">
                             {% if orderBy == 'base_stat_total' %}
-                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page={{ pokemonPage.number }}&order_by=-base_stat_total&page_size={{ pageSize }}">BST<i class="fa-solid fa-arrow-up ms-2"></i></a>
+                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' league_id=league.id %}?page={{ pokemonPage.number }}&order_by=-base_stat_total&page_size={{ pageSize }}">BST<i class="fa-solid fa-arrow-up ms-2"></i></a>
                             {% elif orderBy == '-base_stat_total' %}
-                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page={{ pokemonPage.number }}&order_by=base_stat_total&page_size={{ pageSize }}">BST<i class="fa-solid fa-arrow-down ms-2"></i></a>
+                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' league_id=league.id %}?page={{ pokemonPage.number }}&order_by=base_stat_total&page_size={{ pageSize }}">BST<i class="fa-solid fa-arrow-down ms-2"></i></a>
                             {% else %}
-                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page={{ pokemonPage.number }}&order_by=-base_stat_total&page_size={{ pageSize }}">BST</a>
+                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' league_id=league.id %}?page={{ pokemonPage.number }}&order_by=-base_stat_total&page_size={{ pageSize }}">BST</a>
                             {% endif %}
                         </th>
                         <th class="table-cell-small">
                             {% if orderBy == 'point_value' %}
-                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page={{ pokemonPage.number }}&order_by=-point_value&page_size={{ pageSize }}">Pts<i class="fa-solid fa-arrow-up ms-2"></i></a>
+                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' league_id=league.id %}?page={{ pokemonPage.number }}&order_by=-point_value&page_size={{ pageSize }}">Pts<i class="fa-solid fa-arrow-up ms-2"></i></a>
                             {% elif orderBy == '-point_value' %}
-                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page={{ pokemonPage.number }}&order_by=point_value&page_size={{ pageSize }}">Pts<i class="fa-solid fa-arrow-down ms-2"></i></a>
+                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' league_id=league.id %}?page={{ pokemonPage.number }}&order_by=point_value&page_size={{ pageSize }}">Pts<i class="fa-solid fa-arrow-down ms-2"></i></a>
                             {% else %}
-                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page={{ pokemonPage.number }}&order_by=-point_value&page_size={{ pageSize }}">Pts</a>
+                                <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' league_id=league.id %}?page={{ pokemonPage.number }}&order_by=-point_value&page_size={{ pageSize }}">Pts</a>
                             {% endif %}
                         </th>
                     </tr>
@@ -161,15 +161,15 @@
             <nav class="d-flex me-5" aria-label="Page Navigation">
                 <ul class="pagination">
                     {% if pokemonPage.has_previous %}
-                        <li class="page-item" style="cursor: pointer"><a class="page-link" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page={{ pokemonPage.previous_page_number }}&order_by={{ orderBy }}&page_size={{ pageSize }}"><i class="fa-solid fa-chevron-left"></i></a></li>
+                        <li class="page-item" style="cursor: pointer"><a class="page-link" hx-post="{%  url 'leagues:leaguePokemonSearchResults' league_id=league.id %}?page={{ pokemonPage.previous_page_number }}&order_by={{ orderBy }}&page_size={{ pageSize }}"><i class="fa-solid fa-chevron-left"></i></a></li>
                     {% else %}
                         <li class="page-item disabled"><a class="page-link" href="#"><i class="fa-solid fa-chevron-left"></i></a></li>
                     {% endif %}
-                    <li class="page-item" style="cursor: pointer"><a class="page-link" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page=1&order_by={{ orderBy }}&page_size={{ pageSize }}">1</a></li>
+                    <li class="page-item" style="cursor: pointer"><a class="page-link" hx-post="{%  url 'leagues:leaguePokemonSearchResults' league_id=league.id %}?page=1&order_by={{ orderBy }}&page_size={{ pageSize }}">1</a></li>
                     <li class="page-item disabled"><a class="page-link" href="#">Page {{pokemonPage.number}}</a></li>
-                    <li class="page-item" style="cursor: pointer"><a class="page-link" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page={{ lastPage }}&order_by={{ orderBy }}&page_size={{ pageSize }}">{{ lastPage }}</a></li>
+                    <li class="page-item" style="cursor: pointer"><a class="page-link" hx-post="{%  url 'leagues:leaguePokemonSearchResults' league_id=league.id %}?page={{ lastPage }}&order_by={{ orderBy }}&page_size={{ pageSize }}">{{ lastPage }}</a></li>
                     {% if pokemonPage.has_next %}
-                        <li class="page-item" style="cursor: pointer"><a class="page-link" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page={{ pokemonPage.next_page_number }}&order_by={{ orderBy }}&page_size={{ pageSize }}"><i class="fa-solid fa-chevron-right"></i></a></li>
+                        <li class="page-item" style="cursor: pointer"><a class="page-link" hx-post="{%  url 'leagues:leaguePokemonSearchResults' league_id=league.id %}?page={{ pokemonPage.next_page_number }}&order_by={{ orderBy }}&page_size={{ pageSize }}"><i class="fa-solid fa-chevron-right"></i></a></li>
                     {% else %}
                         <li class="page-item disabled"><a class="page-link" href="#"><i class="fa-solid fa-chevron-right"></i></a></li>
                     {% endif %}
@@ -180,10 +180,10 @@
                     {{ pageSize }}
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page={{ pokemonPage.number }}&order_by={{ orderBy }}&page_size=10">10</a></li>
-                    <li><a class="dropdown-item" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page={{ pokemonPage.number }}&order_by={{ orderBy }}&page_size=25">25</a></li>
-                    <li><a class="dropdown-item" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page={{ pokemonPage.number }}&order_by={{ orderBy }}&page_size=50">50</a></li>
-                    <li><a class="dropdown-item" hx-post="{%  url 'leagues:leaguePokemonSearchResults' id=league.id %}?page={{ pokemonPage.number }}&order_by={{ orderBy }}&page_size=100">100</a></li>
+                    <li><a class="dropdown-item" hx-post="{%  url 'leagues:leaguePokemonSearchResults' league_id=league.id %}?page={{ pokemonPage.number }}&order_by={{ orderBy }}&page_size=10">10</a></li>
+                    <li><a class="dropdown-item" hx-post="{%  url 'leagues:leaguePokemonSearchResults' league_id=league.id %}?page={{ pokemonPage.number }}&order_by={{ orderBy }}&page_size=25">25</a></li>
+                    <li><a class="dropdown-item" hx-post="{%  url 'leagues:leaguePokemonSearchResults' league_id=league.id %}?page={{ pokemonPage.number }}&order_by={{ orderBy }}&page_size=50">50</a></li>
+                    <li><a class="dropdown-item" hx-post="{%  url 'leagues:leaguePokemonSearchResults' league_id=league.id %}?page={{ pokemonPage.number }}&order_by={{ orderBy }}&page_size=100">100</a></li>
                 </ul>
             </div>
         </div>

@@ -12,9 +12,5 @@
             {% endfor %}
         </div>
     </div>
-    {% if teamId %}
-        <div id="modifiable-team-table" hx-get="{%  url 'leagues:adminModifiableTeam' league_id=league.id team_id=teamId %}" hx-trigger="load" hx-target="this" hx-swap="innerHTML"></div>
-    {% else %}
-        <div id="modifiable-team-table"></div>
-    {% endif %}
+    <div id="modifiable-team-table"></div>
 {% endblock %}
