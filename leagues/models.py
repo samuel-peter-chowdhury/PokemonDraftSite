@@ -13,7 +13,7 @@ class SeasonStatus(models.TextChoices):
 class League(BaseModel):
     name = models.CharField(max_length=50)
     abbreviation = models.CharField(max_length=4)
-    logo = models.ImageField(default='defaults/default_league_logo.png', blank=True, null=True, upload_to='leagues_logos/')
+    logo = models.ImageField(default='defaults/default_league_logo.png', blank=True, null=True, upload_to='league_logos/')
     password = models.CharField(max_length=20)
     members = models.ManyToManyField(CustomUser, related_name='member_leagues')
     moderators = models.ManyToManyField(CustomUser, related_name='moderator_leagues')
