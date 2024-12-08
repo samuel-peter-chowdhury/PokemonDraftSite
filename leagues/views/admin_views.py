@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.decorators import user_passes_test, login_required
 from django.http import HttpResponse
 
@@ -87,5 +87,33 @@ def admin_simple_search_results(request, league_id, team_id):
         else: 
             form = PokemonSimpleSearchForm()
         return render(request, "leagues/admin/simple_search_results.html", {'form': form, 'league': league, "team": team, 'undraftedPokemon': pokemon})
+    else:
+        return HttpResponse(status=400)
+    
+@login_required(login_url="/users/login/")
+def admin_modify_tiers_view(request, id):
+    if request.user.has_league(id) and request.user.is_league_moderator(id):
+        league = League.objects.get(id=id)
+        activeSeason = league.get_active_season()
+        tiers = [20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+        return render(request, "leagues/admin/modify_tiers.html", {'league': league, 'isLeagueModerator': request.user.is_league_moderator(league.id), 'activeSeason': activeSeason, 'tiers': tiers})
+    else:
+        return redirect("/")
+
+@login_required(login_url="/users/login/")
+def get_admin_modify_tier(request, league_id, tier):
+    if request.user.has_league(league_id) and request.user.is_league_moderator(league_id):
+        if request.method == "POST":
+            pokemon_id = request.GET.get('pokemonId', None)
+            point_value = request.POST['point_value']
+            p = Pokemon.objects.get(id=pokemon_id)
+            p.point_value = point_value
+            p.save()
+            return redirect(reverse('leagues:adminModifyTiers', kwargs={'id': league_id}))
+        league = League.objects.get(id=league_id)
+        activeSeason = league.get_active_season()
+        orderBy = request.GET.get('order_by', 'name')
+        pokemon = Pokemon.objects.defer('pokemon_type_effectives', 'pokemon_coverage_moves', 'pokemon_special_moves', 'pokemon_moves').filter(season=activeSeason, point_value=tier).order_by(orderBy)
+        return render(request, "leagues/admin/modify_tier.html", {'league': league, 'tier': tier, 'pokemon': pokemon, 'orderBy': orderBy})
     else:
         return HttpResponse(status=400)

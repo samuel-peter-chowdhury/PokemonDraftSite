@@ -7,15 +7,15 @@
 {% load crispy_forms_tags %}
 {% block content %}
     <div class="container">
-        <div class="d-inline-flex align-items-center mb-4">
-            <div class="user-profile-picture me-5">
+        <div class="d-flex flex-column flex-md-row align-items-center mb-4">
+            <div class="user-profile-picture me-md-5">
                 {% if user.profile_picture %}
                     <img src="{{ user.profile_picture.url }}" alt="User Profile Picture">
                 {% else %}
                     <img src="/media/defaults/default_profile_picture.jpg" alt="User Profile Picture">
                 {% endif %}
             </div>
-            <h1 class="text-capitalize">{{ user.username }}</h1>
+            <h1 class="text-capitalize mt-2 mt-md-0">{{ user.username }}</h1>
         </div>
         <form class="d-flex flex-column" action="{% url 'users:settings' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
