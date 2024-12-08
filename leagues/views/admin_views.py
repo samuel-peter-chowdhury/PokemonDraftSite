@@ -109,7 +109,6 @@ def get_admin_modify_tier(request, league_id, tier):
             p = Pokemon.objects.get(id=pokemon_id)
             p.point_value = point_value
             p.save()
-            return redirect(reverse('leagues:adminModifyTiers', kwargs={'id': league_id}))
         league = League.objects.get(id=league_id)
         activeSeason = league.get_active_season()
         orderBy = request.GET.get('order_by', 'name')
