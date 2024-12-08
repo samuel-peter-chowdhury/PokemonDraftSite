@@ -1,7 +1,7 @@
 {% load crispy_forms_tags %}
 <div id="admin-modify-tier-column-{{tier}}">
     <div class="d-flex align-items-center justify-content-center bg-dark text-white sticky-header" style="border-bottom: 2px solid white; height: 3rem"><h3 class="mb-0">{{tier}}<h3></div>
-    <div class="pokemon-table">
+    <div class="pokemon-table compact">
         <table class="table table-dark table-striped table-hover table-bordered">
             <thead class="sticky-header" style="top: 3rem">
                 <tr>
@@ -46,17 +46,6 @@
                             <button class="btn btn-secondary ms-4" hx-post="{%  url 'leagues:adminModifyTier' league_id=league.id tier=tier %}?pokemonId={{p.id}}"><i class="fa-solid fa-floppy-disk"></i></button>
                         </td>
                     </tr>
-                    <!--<tr hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' hx-target="#admin-modify-tier-column-{{tier}}" hx-swap="outerHTML" hx-include="#admin-modify-tier-form-{{p.id}}">
-                        <td class="pokemon-sprite"></td>
-                        <td class="table-cell-medium">
-                            <form id="admin-modify-tier-form-{{p.id}}" class="d-flex flex-column simple-number-input" hx-post="{%  url 'leagues:adminModifyTier' league_id=league.id tier=tier %}" hx-trigger="submit">
-                                {{ f.point_value }}
-                            </form>
-                        </td>
-                        <td class="table-cell-small">
-                            <button class="btn btn-secondary" hx-post="{%  url 'leagues:adminModifyTier' league_id=league.id tier=tier %}"><i class="fa-solid fa-floppy-disk"></i></button>
-                        </td>
-                    </tr>-->
                 {% endfor %}
             </tbody>
         </table>

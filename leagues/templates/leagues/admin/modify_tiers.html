@@ -3,7 +3,7 @@
 
 {% block content %}
     <h1>Modify Tier List</h1>
-    <div class="d-inline-flex w-100 overflow-auto bg-dark" style="max-height: 50vh">
+    <div class="d-inline-flex w-100 overflow-auto bg-dark" style="max-height: 80vh">
         {% for tier in tiers %}
             <div hx-get="{%  url 'leagues:adminModifyTier' league_id=league.id tier=tier %}" hx-trigger="load" hx-target="#admin-modify-tier-{{tier}}" hx-swap="outerHTML">
                 <div id="admin-modify-tier-{{tier}}"></div>
