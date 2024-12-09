@@ -38,8 +38,13 @@
         </div>
     </div>
     {% if userTeam and opponentTeam %}
-        <div hx-get="{%  url 'leagues:teamMatchupSpeed' league_id=league.id user_team_id=userTeam.id opponent_team_id=opponentTeam.id %}" hx-trigger="load" hx-target="#speed-tier-matchup" hx-swap="outerHTML">
-            <div id="speed-tier-matchup"></div>
+        <button class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#speedTierCollapse" aria-expanded="false" aria-controls="speedTierCollapse">
+            Speed Tiers
+        </button>
+        <div class="collapse" id="speedTierCollapse">
+            <div hx-get="{%  url 'leagues:teamMatchupSpeed' league_id=league.id user_team_id=userTeam.id opponent_team_id=opponentTeam.id %}" hx-trigger="load" hx-target="#speed-tier-matchup" hx-swap="outerHTML">
+                <div id="speed-tier-matchup"></div>
+            </div>
         </div>
     {% endif %}
 {% endblock %}
