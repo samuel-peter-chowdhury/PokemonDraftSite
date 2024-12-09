@@ -1,0 +1,45 @@
+{% extends 'leagues/base.html' %}
+
+{% block title %}
+    Team Matchup
+{% endblock %}
+    
+{% block content %}
+    <div class="d-flex flex-column flex-md-row align-items-center mb-3">
+        <h3 class="me-2">Team Matchup:</h3>
+        <div class="dropdown me-2">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {% if userTeam %}
+                    {{ userTeam.name }}
+                {% else %}
+                    Select a Team
+                {% endif %}
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                {% for team in teams %}
+                    <a class="dropdown-item" href="?userTeamId={{team.id}}&opponentTeamId={{opponentTeam.id}}">{{ team.name }}</a>
+                {% endfor %}
+            </div>
+        </div>
+        <h3 class="me-2">VS</h3>
+        <div class="dropdown me-2">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {% if opponentTeam %}
+                    {{ opponentTeam.name }}
+                {% else %}
+                    Select a Team
+                {% endif %}
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                {% for team in teams %}
+                    <a class="dropdown-item" href="?userTeamId={{userTeam.id}}&opponentTeamId={{team.id}}">{{ team.name }}</a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% if userTeam and opponentTeam %}
+        <div hx-get="{%  url 'leagues:teamMatchupSpeed' league_id=league.id user_team_id=userTeam.id opponent_team_id=opponentTeam.id %}" hx-trigger="load" hx-target="#speed-tier-matchup" hx-swap="outerHTML">
+            <div id="speed-tier-matchup"></div>
+        </div>
+    {% endif %}
+{% endblock %}

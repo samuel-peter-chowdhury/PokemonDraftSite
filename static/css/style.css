@@ -311,3 +311,23 @@ nav {
 .toggle-expand-parent[aria-expanded=false] .toggle-collapse-icon {
     display: none;
 }
+
+div.speed-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    border-radius: 50%;
+    width: 1.5rem;
+    height: 1.5rem;
+
+    &.fast {
+        background-color: #AA4203;
+        color: #ffce00;
+    }
+
+    &.slow {
+        background-color: #257ca3;
+        color: #baf2ef;
+    }
+}

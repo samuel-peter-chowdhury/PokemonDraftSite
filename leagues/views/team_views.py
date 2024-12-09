@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.http import HttpResponse
 
-from leagues.models import League
+from leagues.models import League, Team
 from leagues.forms import TeamForm
 
 @login_required(login_url="/users/login/")
@@ -26,3 +27,37 @@ def team_settings_view(request, id):
         return render(request, "leagues/team/team_settings.html", { 'league': league, 'isLeagueModerator': request.user.is_league_moderator(league.id), "form": form, "team": team })
     else:
         return redirect("/")
+    
+@login_required(login_url="/users/login/")
+def team_matchup_view(request, id):
+    if request.user.has_league(id):
+        league = League.objects.get(id=id)
+        activeSeason = league.get_active_season()
+
+        user_team_id = request.GET.get('userTeamId', None)
+        if user_team_id:
+            user_team = Team.objects.get(id=user_team_id)
+        else:
+            user_team = request.user.get_active_season_team(activeSeason)
+        
+        opponent_team_id = request.GET.get('opponentTeamId', None)
+        if opponent_team_id:
+            opponent_team = Team.objects.get(id=opponent_team_id)
+        else:
+            opponent_team = None
+        return render(request, "leagues/team/team_matchup.html", {'league': league, 'teams': activeSeason.teams.all(), 'isLeagueModerator': request.user.is_league_moderator(league.id), 'userTeam': user_team, 'opponentTeam': opponent_team})
+    else:
+        return redirect("/")
+    
+@login_required(login_url="/users/login/")
+def speed_tier_matchup(request, league_id, user_team_id, opponent_team_id):
+    if request.user.has_league(league_id):
+        league = League.objects.get(id=league_id)
+        orderBy = request.GET.get('order_by', '-speed')
+        userTeam = Team.objects.get(id=user_team_id)
+        userPokemon = userTeam.pokemons.order_by(orderBy)
+        opponentTeam = Team.objects.get(id=opponent_team_id)
+        opponentPokemon = opponentTeam.pokemons.order_by(orderBy)
+        return render(request, "leagues/team/speed_tier_matchup.html", {'league': league, 'userTeam': userTeam, 'opponentTeam': opponentTeam, 'userPokemon': userPokemon, 'opponentPokemon': opponentPokemon, 'orderBy': orderBy})
+    else:
+        return HttpResponse(status=400)

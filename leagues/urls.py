@@ -23,7 +23,12 @@ pokemon_urlpatterns = [
 urlpatterns += pokemon_urlpatterns
 
 team_urlpatterns = [
+    # Standard Paths
     path('<int:id>/team/settings', team_views.team_settings_view, name="teamSettings"),
+    path('<int:id>/team/matchup', team_views.team_matchup_view, name="teamMatchup"),
+
+    # HTMX Paths
+    path('<int:league_id>/team/matchup/speed/<int:user_team_id>/<int:opponent_team_id>', team_views.speed_tier_matchup, name="teamMatchupSpeed"),
 ]
 urlpatterns += team_urlpatterns
 
