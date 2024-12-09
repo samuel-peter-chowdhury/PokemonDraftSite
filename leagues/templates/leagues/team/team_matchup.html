@@ -5,9 +5,9 @@
 {% endblock %}
     
 {% block content %}
-    <div class="d-flex flex-column flex-md-row align-items-center mb-3">
-        <h3 class="me-2">Team Matchup:</h3>
-        <div class="dropdown me-2">
+    <div class="d-flex flex-column flex-md-row align-items-center mb-3" style="gap: 0.5rem">
+        <h3 class="mb-0">Team Matchup:</h3>
+        <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {% if userTeam %}
                     {{ userTeam.name }}
@@ -21,8 +21,8 @@
                 {% endfor %}
             </div>
         </div>
-        <h3 class="me-2">VS</h3>
-        <div class="dropdown me-2">
+        <h3 class="mb-0">VS</h3>
+        <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {% if opponentTeam %}
                     {{ opponentTeam.name }}
@@ -38,10 +38,10 @@
         </div>
     </div>
     {% if userTeam and opponentTeam %}
-        <button class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#speedTierCollapse" aria-expanded="false" aria-controls="speedTierCollapse">
+        <button id="speedTierCollapseButton" class="btn btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#speedTierCollapse" aria-expanded="false" aria-controls="speedTierCollapse">
             Speed Tiers
         </button>
-        <div class="collapse" id="speedTierCollapse">
+        <div class="collapse show" id="speedTierCollapse">
             <div hx-get="{%  url 'leagues:teamMatchupSpeed' league_id=league.id user_team_id=userTeam.id opponent_team_id=opponentTeam.id %}" hx-trigger="load" hx-target="#speed-tier-matchup" hx-swap="outerHTML">
                 <div id="speed-tier-matchup"></div>
             </div>

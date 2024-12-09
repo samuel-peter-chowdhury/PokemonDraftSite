@@ -37,15 +37,28 @@ def team_matchup_view(request, id):
         user_team_id = request.GET.get('userTeamId', None)
         if user_team_id:
             user_team = Team.objects.get(id=user_team_id)
+            request.session['team_matchup_user_team_id'] = user_team_id
         else:
-            user_team = request.user.get_active_season_team(activeSeason)
+            session_user_team_id = request.session.get('team_matchup_user_team_id', None)
+            if session_user_team_id:
+                user_team = Team.objects.get(id=session_user_team_id)
+            else:
+                user_team = request.user.get_active_season_team(activeSeason)
+                request.session['team_matchup_user_team_id'] = user_team.id
         
         opponent_team_id = request.GET.get('opponentTeamId', None)
         if opponent_team_id:
             opponent_team = Team.objects.get(id=opponent_team_id)
+            request.session['team_matchup_opponent_team_id'] = opponent_team_id
         else:
-            opponent_team = None
-        return render(request, "leagues/team/team_matchup.html", {'league': league, 'teams': activeSeason.teams.all(), 'isLeagueModerator': request.user.is_league_moderator(league.id), 'userTeam': user_team, 'opponentTeam': opponent_team})
+            session_opponent_team_id = request.session.get('team_matchup_opponent_team_id', None)
+            if session_opponent_team_id:
+                opponent_team = Team.objects.get(id=session_opponent_team_id)
+            else:
+                opponent_team = None
+
+        return render(request, "leagues/team/team_matchup.html", {'league': league, 'teams': activeSeason.teams.all(), 'isLeagueModerator': request.user.is_league_moderator(league.id),
+                                                                  'userTeam': user_team, 'opponentTeam': opponent_team})
     else:
         return redirect("/")
     
