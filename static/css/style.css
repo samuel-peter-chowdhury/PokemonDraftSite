@@ -130,6 +130,12 @@ nav {
             text-align: left;
             vertical-align: middle;
 
+            &.table-cell-xsmall {
+                width: 3.5rem;
+                min-width: 3.5rem;
+                max-width: 3.5rem;
+            }
+
             &.table-cell-small {
                 width: 5.5rem;
                 min-width: 5.5rem;
@@ -224,6 +230,12 @@ nav {
                 max-height: 2.75rem;
                 max-width: 5.5rem;
                 padding: 0.5rem;
+
+                &.table-cell-xsmall {
+                    width: 1.75rem;
+                    min-width: 1.75rem;
+                    max-width: 1.75rem;
+                }
     
                 &.table-cell-small {
                     width: 2.75rem;
@@ -300,6 +312,12 @@ nav {
                     max-height: 2.75rem;
                     max-width: 5.5rem;
                     padding: 0.5rem;
+
+                    &.table-cell-xsmall {
+                        width: 1.75rem;
+                        min-width: 1.75rem;
+                        max-width: 1.75rem;
+                    }
         
                     &.table-cell-small {
                         width: 2.75rem;
@@ -381,12 +399,12 @@ nav {
     }
 
     &.compact {
-        height: 5rem;
-        width: 5rem;
+        height: 4rem;
+        width: 4rem;
         box-shadow: 2px 2px 2px var(--bs-secondary);
 
         img {
-            max-width: 5rem;
+            max-width: 4rem;
         }
     }
 }
@@ -417,4 +435,20 @@ div.speed-icon {
         background-color: #257ca3;
         color: #baf2ef;
     }
+}
+
+.speed-stat-text {
+    text-align: center !important;
+    font-weight: bold !important;
+    color: #212529 !important;
+    font-size: 0.75rem !important;
+
+    &:hover {
+        color: #212529 !important;
+    }
+}
+
+.expansion-button {
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
 }

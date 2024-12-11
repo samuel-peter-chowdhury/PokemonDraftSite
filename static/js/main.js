@@ -39,4 +39,40 @@ $(document).ready(function () {
             localStorage.setItem('team-matchup-speed-tiers-expansion', 'open');
         }
     });
+
+
+    if (localStorage.getItem('team-matchup-user-table-expansion') === null) {
+        localStorage.setItem('team-matchup-user-table-expansion', 'open');
+    }
+    let userTableState = localStorage.getItem('team-matchup-user-table-expansion');
+    if (userTableState == 'open') {
+        $('#userTeamTableCollapse').addClass('show');
+    }
+    $('#userTeamTableCollapseButton').click(function (e) {
+        e.preventDefault();
+        let userTableState = localStorage.getItem('team-matchup-user-table-expansion');
+        if (userTableState == 'open') {
+            localStorage.setItem('team-matchup-user-table-expansion', 'closed');
+        } else {
+            localStorage.setItem('team-matchup-user-table-expansion', 'open');
+        }
+    });
+
+
+    if (localStorage.getItem('team-matchup-opponent-table-expansion') === null) {
+        localStorage.setItem('team-matchup-opponent-table-expansion', 'open');
+    }
+    let opponentTableState = localStorage.getItem('team-matchup-opponent-table-expansion');
+    if (opponentTableState == 'open') {
+        $('#opponentTeamTableCollapse').addClass('show');
+    }
+    $('#opponentTeamTableCollapseButton').click(function (e) {
+        e.preventDefault();
+        let opponentTableState = localStorage.getItem('team-matchup-opponent-table-expansion');
+        if (opponentTableState == 'open') {
+            localStorage.setItem('team-matchup-opponent-table-expansion', 'closed');
+        } else {
+            localStorage.setItem('team-matchup-opponent-table-expansion', 'open');
+        }
+    });
 });

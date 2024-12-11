@@ -29,6 +29,7 @@ team_urlpatterns = [
 
     # HTMX Paths
     path('<int:league_id>/team/matchup/speed/<int:user_team_id>/<int:opponent_team_id>', team_views.speed_tier_matchup, name="teamMatchupSpeed"),
+    path('<int:league_id>/team/matchup/table/<int:team_id>', team_views.team_table, name="teamMatchupTable"),
 ]
 urlpatterns += team_urlpatterns
 

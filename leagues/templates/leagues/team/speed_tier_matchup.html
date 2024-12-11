@@ -9,7 +9,7 @@
                         <img src="/media/defaults/default_team_logo.png" alt="Team Logo">
                     {% endif %}
                 </div>
-                <h3 class="text-capitalize mx-4 d-none d-md-flex">{{ userTeam.name }}</h3>
+                <h3 class="text-capitalize mx-5 d-none d-md-flex">{{ userTeam.name }}</h3>
                 <div class="user-profile-picture compact d-none d-md-flex">
                     {% if userTeam.logo %}
                         <img src="{{ userTeam.logo.url }}" alt="Team Logo">
@@ -18,7 +18,7 @@
                     {% endif %}
                 </div>
             </div>
-            <div class="pokemon-table responsive">
+            <div class="pokemon-table compact">
                 <table class="table table-dark table-striped table-hover table-bordered">
                     <thead>
                         <tr>
@@ -32,7 +32,7 @@
                                     <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupSpeed' league_id=league.id user_team_id=userTeam.id opponent_team_id=opponentTeam.id %}?order_by=name" hx-trigger="click" hx-target="#speed-tier-matchup-table" hx-swap="outerHTML">Name</a>
                                 {% endif %}
                             </th>
-                            <th class="table-cell-small d-none d-md-table-cell">
+                            <th class="table-cell-small">
                                 {% if orderBy == 'speed' %}
                                     <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupSpeed' league_id=league.id user_team_id=userTeam.id opponent_team_id=opponentTeam.id %}?order_by=-speed" hx-trigger="click" hx-target="#speed-tier-matchup-table" hx-swap="outerHTML">Spd<i class="fa-solid fa-arrow-up ms-2"></i></a>
                                 {% elif orderBy == '-speed' %}
@@ -41,22 +41,16 @@
                                     <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupSpeed' league_id=league.id user_team_id=userTeam.id opponent_team_id=opponentTeam.id %}?order_by=-speed" hx-trigger="click" hx-target="#speed-tier-matchup-table" hx-swap="outerHTML">Spd</a>
                                 {% endif %}
                             </th>
-                            <th class="table-cell-small d-none d-md-table-cell">
+                            <th class="table-cell-xsmall d-none d-md-table-cell">
                                 <a>0</a>
                             </th>
-                            <th class="table-cell-small d-none d-md-table-cell">
+                            <th class="table-cell-xsmall d-none d-md-table-cell">
                                 <a>252</a>
                             </th>
-                            <th class="table-cell-small">
-                                {% if orderBy == 'speed' %}
-                                    <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupSpeed' league_id=league.id user_team_id=userTeam.id opponent_team_id=opponentTeam.id %}?order_by=-speed" hx-trigger="click" hx-target="#speed-tier-matchup-table" hx-swap="outerHTML">252+<i class="fa-solid fa-arrow-up ms-2"></i></a>
-                                {% elif orderBy == '-speed' %}
-                                    <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupSpeed' league_id=league.id user_team_id=userTeam.id opponent_team_id=opponentTeam.id %}?order_by=speed" hx-trigger="click" hx-target="#speed-tier-matchup-table" hx-swap="outerHTML">252+<i class="fa-solid fa-arrow-down ms-2"></i></a>
-                                {% else %}
-                                    <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupSpeed' league_id=league.id user_team_id=userTeam.id opponent_team_id=opponentTeam.id %}?order_by=-speed" hx-trigger="click" hx-target="#speed-tier-matchup-table" hx-swap="outerHTML">252+</a>
-                                {% endif %}
+                            <th class="table-cell-xsmall">
+                                <a>252+</a>
                             </th>
-                            <th class="table-cell-small d-none d-md-table-cell">
+                            <th class="table-cell-xsmall d-none d-md-table-cell">
                                 <a>+1</a>
                             </th>
                         </tr>
@@ -70,20 +64,35 @@
                                     </div>
                                 </td>
                                 <td class="table-cell-medium text-capitalize d-none d-md-table-cell">{{ p.name|truncatechars:12 }}</td>
-                                <td class="table-cell-small d-none d-md-table-cell">
-                                    <div class="d-inline-flex align-items-center">
-                                        {{ p.speed }}
-                                        {% if p.speed > 100 %}
-                                            <div class="speed-icon fast ms-2"><i class="fa-solid fa-fire"></i></div>
-                                        {% elif p.speed < 50 %}
-                                            <div class="speed-icon slow ms-2"><i class="fa-solid fa-snowflake"></i></div>
-                                        {% endif %}
-                                    </div>
-                                </td>
-                                <td class="table-cell-small d-none d-md-table-cell">{{ p.speed|get_speed:'0' }}</td>
-                                <td class="table-cell-small d-none d-md-table-cell">{{ p.speed|get_speed:'252' }}</td>
-                                <td class="table-cell-small">{{ p.speed|get_speed:'252+' }}</td>
-                                <td class="table-cell-small d-none d-md-table-cell">{{ p.speed|get_speed:'+1' }}</td>
+                                {% if p.speed >= 200 %}
+                                    <td class="table-cell-small speed-stat-text" style="background-color: #02ffff; --bs-table-accent-bg: none;">{{ p.speed }}</td>
+                                {% elif p.speed >= 150 %}
+                                    <td class="table-cell-small speed-stat-text" style="background-color: #02ff2a; --bs-table-accent-bg: none;">{{ p.speed }}</td>
+                                {% elif p.speed >= 140 %}
+                                    <td class="table-cell-small speed-stat-text" style="background-color: #2aff08; --bs-table-accent-bg: none;">{{ p.speed }}</td>
+                                {% elif p.speed >= 130 %}
+                                    <td class="table-cell-small speed-stat-text" style="background-color: #66ff00; --bs-table-accent-bg: none;">{{ p.speed }}</td>
+                                {% elif p.speed >= 120 %}
+                                    <td class="table-cell-small speed-stat-text" style="background-color: #9aff00; --bs-table-accent-bg: none;">{{ p.speed }}</td>
+                                {% elif p.speed >= 110 %}
+                                    <td class="table-cell-small speed-stat-text" style="background-color: #ccff00; --bs-table-accent-bg: none;">{{ p.speed }}</td>
+                                {% elif p.speed >= 100 %}
+                                    <td class="table-cell-small speed-stat-text" style="background-color: #fffe00; --bs-table-accent-bg: none;">{{ p.speed }}</td>
+                                {% elif p.speed >= 90 %}
+                                    <td class="table-cell-small speed-stat-text" style="background-color: #ffcc00; --bs-table-accent-bg: none;">{{ p.speed }}</td>
+                                {% elif p.speed >= 80 %}
+                                    <td class="table-cell-small speed-stat-text" style="background-color: #ff9800; --bs-table-accent-bg: none;">{{ p.speed }}</td>
+                                {% elif p.speed >= 70 %}
+                                    <td class="table-cell-small speed-stat-text" style="background-color: #ff6600; --bs-table-accent-bg: none;">{{ p.speed }}</td>
+                                {% elif p.speed >= 60 %}
+                                    <td class="table-cell-small speed-stat-text" style="background-color: #ff3200; --bs-table-accent-bg: none;">{{ p.speed }}</td>
+                                {% else %}
+                                    <td class="table-cell-small speed-stat-text" style="background-color: #ff0000; --bs-table-accent-bg: none;">{{ p.speed }}</td>
+                                {% endif %}
+                                <td class="table-cell-xsmall d-none d-md-table-cell">{{ p.speed|get_speed:'0' }}</td>
+                                <td class="table-cell-xsmall d-none d-md-table-cell">{{ p.speed|get_speed:'252' }}</td>
+                                <td class="table-cell-xsmall">{{ p.speed|get_speed:'252+' }}</td>
+                                <td class="table-cell-xsmall d-none d-md-table-cell">{{ p.speed|get_speed:'+1' }}</td>
                             </tr>
                         {% endfor %}
                     </tbody>
@@ -99,7 +108,7 @@
                         <img src="/media/defaults/default_team_logo.png" alt="Team Logo">
                     {% endif %}
                 </div>
-                <h3 class="text-capitalize mx-4 d-none d-md-flex">{{ opponentTeam.name }}</h3>
+                <h3 class="text-capitalize mx-5 d-none d-md-flex">{{ opponentTeam.name }}</h3>
                 <div class="user-profile-picture compact d-none d-md-flex">
                     {% if opponentTeam.logo %}
                         <img src="{{ opponentTeam.logo.url }}" alt="Team Logo">
@@ -108,7 +117,7 @@
                     {% endif %}
                 </div>
             </div>
-            <div class="pokemon-table responsive">
+            <div class="pokemon-table compact">
                 <table class="table table-dark table-striped table-hover table-bordered">
                     <thead>
                         <tr>
@@ -122,7 +131,7 @@
                                     <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupSpeed' league_id=league.id user_team_id=userTeam.id opponent_team_id=opponentTeam.id %}?order_by=name" hx-trigger="click" hx-target="#speed-tier-matchup-table" hx-swap="outerHTML">Name</a>
                                 {% endif %}
                             </th>
-                            <th class="table-cell-small d-none d-md-table-cell">
+                            <th class="table-cell-small">
                                 {% if orderBy == 'speed' %}
                                     <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupSpeed' league_id=league.id user_team_id=userTeam.id opponent_team_id=opponentTeam.id %}?order_by=-speed" hx-trigger="click" hx-target="#speed-tier-matchup-table" hx-swap="outerHTML">Spd<i class="fa-solid fa-arrow-up ms-2"></i></a>
                                 {% elif orderBy == '-speed' %}
@@ -131,22 +140,16 @@
                                     <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupSpeed' league_id=league.id user_team_id=userTeam.id opponent_team_id=opponentTeam.id %}?order_by=-speed" hx-trigger="click" hx-target="#speed-tier-matchup-table" hx-swap="outerHTML">Spd</a>
                                 {% endif %}
                             </th>
-                            <th class="table-cell-small d-none d-md-table-cell">
+                            <th class="table-cell-xsmall d-none d-md-table-cell">
                                 <a>0</a>
                             </th>
-                            <th class="table-cell-small d-none d-md-table-cell">
+                            <th class="table-cell-xsmall d-none d-md-table-cell">
                                 <a>252</a>
                             </th>
-                            <th class="table-cell-small">
-                                {% if orderBy == 'speed' %}
-                                    <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupSpeed' league_id=league.id user_team_id=userTeam.id opponent_team_id=opponentTeam.id %}?order_by=-speed" hx-trigger="click" hx-target="#speed-tier-matchup-table" hx-swap="outerHTML">252+<i class="fa-solid fa-arrow-up ms-2"></i></a>
-                                {% elif orderBy == '-speed' %}
-                                    <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupSpeed' league_id=league.id user_team_id=userTeam.id opponent_team_id=opponentTeam.id %}?order_by=speed" hx-trigger="click" hx-target="#speed-tier-matchup-table" hx-swap="outerHTML">252+<i class="fa-solid fa-arrow-down ms-2"></i></a>
-                                {% else %}
-                                    <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupSpeed' league_id=league.id user_team_id=userTeam.id opponent_team_id=opponentTeam.id %}?order_by=-speed" hx-trigger="click" hx-target="#speed-tier-matchup-table" hx-swap="outerHTML">252+</a>
-                                {% endif %}
+                            <th class="table-cell-xsmall">
+                                <a>252+</a>
                             </th>
-                            <th class="table-cell-small d-none d-md-table-cell">
+                            <th class="table-cell-xsmall d-none d-md-table-cell">
                                 <a>+1</a>
                             </th>
                         </tr>
@@ -160,20 +163,35 @@
                                     </div>
                                 </td>
                                 <td class="table-cell-medium text-capitalize d-none d-md-table-cell">{{ p.name|truncatechars:12 }}</td>
-                                <td class="table-cell-small d-none d-md-table-cell">
-                                    <div class="d-inline-flex align-items-center">
-                                        {{ p.speed }}
-                                        {% if p.speed > 100 %}
-                                            <div class="speed-icon fast ms-2"><i class="fa-solid fa-fire"></i></div>
-                                        {% elif p.speed < 50 %}
-                                            <div class="speed-icon slow ms-2"><i class="fa-solid fa-snowflake"></i></div>
-                                        {% endif %}
-                                    </div>
-                                </td>
-                                <td class="table-cell-small d-none d-md-table-cell">{{ p.speed|get_speed:'0' }}</td>
-                                <td class="table-cell-small d-none d-md-table-cell">{{ p.speed|get_speed:'252' }}</td>
-                                <td class="table-cell-small">{{ p.speed|get_speed:'252+' }}</td>
-                                <td class="table-cell-small d-none d-md-table-cell">{{ p.speed|get_speed:'+1' }}</td>
+                                {% if p.speed >= 200 %}
+                                    <td class="table-cell-small speed-stat-text" style="background-color: #02ffff; --bs-table-accent-bg: none;">{{ p.speed }}</td>
+                                {% elif p.speed >= 150 %}
+                                    <td class="table-cell-small speed-stat-text" style="background-color: #02ff2a; --bs-table-accent-bg: none;">{{ p.speed }}</td>
+                                {% elif p.speed >= 140 %}
+                                    <td class="table-cell-small speed-stat-text" style="background-color: #2aff08; --bs-table-accent-bg: none;">{{ p.speed }}</td>
+                                {% elif p.speed >= 130 %}
+                                    <td class="table-cell-small speed-stat-text" style="background-color: #66ff00; --bs-table-accent-bg: none;">{{ p.speed }}</td>
+                                {% elif p.speed >= 120 %}
+                                    <td class="table-cell-small speed-stat-text" style="background-color: #9aff00; --bs-table-accent-bg: none;">{{ p.speed }}</td>
+                                {% elif p.speed >= 110 %}
+                                    <td class="table-cell-small speed-stat-text" style="background-color: #ccff00; --bs-table-accent-bg: none;">{{ p.speed }}</td>
+                                {% elif p.speed >= 100 %}
+                                    <td class="table-cell-small speed-stat-text" style="background-color: #fffe00; --bs-table-accent-bg: none;">{{ p.speed }}</td>
+                                {% elif p.speed >= 90 %}
+                                    <td class="table-cell-small speed-stat-text" style="background-color: #ffcc00; --bs-table-accent-bg: none;">{{ p.speed }}</td>
+                                {% elif p.speed >= 80 %}
+                                    <td class="table-cell-small speed-stat-text" style="background-color: #ff9800; --bs-table-accent-bg: none;">{{ p.speed }}</td>
+                                {% elif p.speed >= 70 %}
+                                    <td class="table-cell-small speed-stat-text" style="background-color: #ff6600; --bs-table-accent-bg: none;">{{ p.speed }}</td>
+                                {% elif p.speed >= 60 %}
+                                    <td class="table-cell-small speed-stat-text" style="background-color: #ff3200; --bs-table-accent-bg: none;">{{ p.speed }}</td>
+                                {% else %}
+                                    <td class="table-cell-small speed-stat-text" style="background-color: #ff0000; --bs-table-accent-bg: none;">{{ p.speed }}</td>
+                                {% endif %}
+                                <td class="table-cell-xsmall d-none d-md-table-cell">{{ p.speed|get_speed:'0' }}</td>
+                                <td class="table-cell-xsmall d-none d-md-table-cell">{{ p.speed|get_speed:'252' }}</td>
+                                <td class="table-cell-xsmall">{{ p.speed|get_speed:'252+' }}</td>
+                                <td class="table-cell-xsmall d-none d-md-table-cell">{{ p.speed|get_speed:'+1' }}</td>
                             </tr>
                         {% endfor %}
                     </tbody>
