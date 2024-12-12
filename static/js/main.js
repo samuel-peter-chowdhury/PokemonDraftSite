@@ -75,4 +75,40 @@ $(document).ready(function () {
             localStorage.setItem('team-matchup-opponent-table-expansion', 'open');
         }
     });
+
+
+    if (localStorage.getItem('team-matchup-user-type-effective-expansion') === null) {
+        localStorage.setItem('team-matchup-user-type-effective-expansion', 'open');
+    }
+    let userTypeEffectiveState = localStorage.getItem('team-matchup-user-type-effective-expansion');
+    if (userTypeEffectiveState == 'open') {
+        $('#userTypeEffectiveCollapse').addClass('show');
+    }
+    $('#userTypeEffectiveCollapseButton').click(function (e) {
+        e.preventDefault();
+        let userTypeEffectiveState = localStorage.getItem('team-matchup-user-type-effective-expansion');
+        if (userTypeEffectiveState == 'open') {
+            localStorage.setItem('team-matchup-user-type-effective-expansion', 'closed');
+        } else {
+            localStorage.setItem('team-matchup-user-type-effective-expansion', 'open');
+        }
+    });
+
+
+    if (localStorage.getItem('team-matchup-opponent-type-effective-expansion') === null) {
+        localStorage.setItem('team-matchup-opponent-type-effective-expansion', 'open');
+    }
+    let opponentTypeEffectiveState = localStorage.getItem('team-matchup-opponent-type-effective-expansion');
+    if (opponentTypeEffectiveState == 'open') {
+        $('#opponentTypeEffectiveCollapse').addClass('show');
+    }
+    $('#opponentTypeEffectiveCollapseButton').click(function (e) {
+        e.preventDefault();
+        let opponentTypeEffectiveState = localStorage.getItem('team-matchup-opponent-type-effective-expansion');
+        if (opponentTypeEffectiveState == 'open') {
+            localStorage.setItem('team-matchup-opponent-type-effective-expansion', 'closed');
+        } else {
+            localStorage.setItem('team-matchup-opponent-type-effective-expansion', 'open');
+        }
+    });
 });
