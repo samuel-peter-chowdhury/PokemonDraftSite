@@ -6,6 +6,8 @@ from django.http import HttpResponse
 from leagues.models import League, Team
 from leagues.forms import TeamForm
 
+from pokemons.models import Type
+
 @login_required(login_url="/users/login/")
 def team_settings_view(request, id):
     if request.user.has_league(id):
@@ -83,5 +85,33 @@ def team_table(request, league_id, team_id):
         team = Team.objects.get(id=team_id)
         pokemon = team.pokemons.order_by(orderBy)
         return render(request, "leagues/team/team_table.html", {'league': league, 'team': team, 'pokemon': pokemon, 'orderBy': orderBy})
+    else:
+        return HttpResponse(status=400)
+    
+@login_required(login_url="/users/login/")
+def type_effective(request, league_id, team_id):
+    if request.user.has_league(league_id):
+        league = League.objects.get(id=league_id)
+        team = Team.objects.get(id=team_id)
+        pokemon = team.pokemons.order_by('-point_value')
+        types = Type.objects.all()
+        totalTypeEffective = {}
+        for p in pokemon:
+            for pte in p.pokemon_type_effectives.all():
+                if pte.type.id not in totalTypeEffective:
+                    totalTypeEffective[pte.type.id] = 0
+                if pte.value == 0:
+                    totalTypeEffective[pte.type.id] += 3 * (p.point_value / 20)
+                elif pte.value == 0.25:
+                    totalTypeEffective[pte.type.id] += 2 * (p.point_value / 20)
+                elif pte.value == 0.5:
+                    totalTypeEffective[pte.type.id] += 1 * (p.point_value / 20)
+                elif pte.value == 1:
+                    pass
+                elif pte.value == 2:
+                    totalTypeEffective[pte.type.id] += -1 * (p.point_value / 20)
+                elif pte.value == 4:
+                    totalTypeEffective[pte.type.id] += -2 * (p.point_value / 20)
+        return render(request, "leagues/team/type_effective.html", {'league': league, 'team': team, 'pokemon': pokemon, 'types': types, 'totalTypeEffective': totalTypeEffective})
     else:
         return HttpResponse(status=400)

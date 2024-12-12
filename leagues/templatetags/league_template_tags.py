@@ -18,3 +18,9 @@ def get_speed(speed, type):
         return math.floor(math.floor((((speed * 2) + 36 + (252/4)) * 1.1)) * 1.5)
     elif type == '+2':
         return math.floor(math.floor((((speed * 2) + 36 + (252/4)) * 1.1)) * 2)
+    
+@register.filter
+def get_type_effective(pokemon_type_effectives, type):
+    for pte in pokemon_type_effectives:
+        if pte.type.id == type.id:
+            return pte.value
