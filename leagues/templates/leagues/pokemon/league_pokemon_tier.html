@@ -37,7 +37,7 @@
                                 <img src="{{ p.sprite_url }}" alt="Pokemon Sprite">
                             </div>
                         </td>
-                        <td class="table-cell-medium text-capitalize">{{ p.name|truncatechars:12 }}</td>
+                        <td class="table-cell-medium text-capitalize"><a href="{{ p.get_smogon_link }}" target="_blank">{{ p.name|truncatechars:12 }}</a></td>
                         <td class="table-cell-small">{{ p.speed }}</td>
                     </tr>
                 {% endfor %}

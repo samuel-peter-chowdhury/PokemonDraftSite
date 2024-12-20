@@ -40,6 +40,12 @@ class Pokemon(BaseModel):
     
     def get_icon_sprite(self):
         return f'https://play.pokemonshowdown.com/sprites/gen5/{self.name.replace(" ", "-")}.png'
+    
+    def get_smogon_link(self):
+        if '-mega' in self.name:
+            return f'https://www.smogon.com/dex/sm/pokemon/{self.sprite_url.split('xy/')[1].split('.gif')[0]}'
+        else:
+            return f'https://www.smogon.com/dex/sv/pokemon/{self.sprite_url.split('xy/')[1].split('.gif')[0]}'
 
 class Type(BaseModel):
     name = models.CharField(max_length=10)
