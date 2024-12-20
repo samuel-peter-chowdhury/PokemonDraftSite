@@ -27,20 +27,6 @@ nav {
     padding: 0 !important;
 }
 
-.sidebar-toggle {
-    position: relative;
-    z-index: 1;
-    height: fit-content;
-    width: 0;
-    border-bottom-right-radius: 10px;
-
-    i {
-        font-size: 1.5rem;
-        padding: 1rem;
-        cursor: pointer;
-    }
-}
-
 .parent-content-container {
     background-color: var(--bs-gray-100);
 }
@@ -70,10 +56,6 @@ nav {
 
     @media only screen and (max-width: 768px) {
         width: calc(100% - 100px);
-    }
-
-    main {
-        margin: 3.5rem 0;
     }
 }
 
@@ -451,4 +433,17 @@ div.speed-icon {
 .expansion-button {
     border-bottom-left-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
+}
+
+.zoom-icon {
+    position: absolute;
+    z-index: 1;
+    height: 0;
+    color: white;
+    font-size: 1.5rem;
+    left: 23px;
+
+    &:hover {
+        color: var(--bs-secondary);
+    }
 }

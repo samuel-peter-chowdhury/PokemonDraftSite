@@ -34,6 +34,8 @@
         <div class="container-fluid justify-space-between">
             {% if user.is_authenticated %}
                 <ul class="navbar-nav">
+                    {% block sidebar_icon %}
+                    {% endblock %}
                     {% if user.has_any_league %}
                         {% for league in user.get_all_leagues %}
                             <li class="nav-item">
@@ -82,7 +84,7 @@
             {% block non_sidebar_page %}
             <div id="page-content-wrapper" class="no-sidebar">
             {% endblock %}
-                <main class="container-fluid d-flex flex-column justify-content-center px-3">
+                <main class="container-fluid d-flex flex-column justify-content-center p-3">
                     {% block content %}
                     {% endblock %}
                 </main>

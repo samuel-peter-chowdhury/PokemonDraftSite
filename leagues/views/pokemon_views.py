@@ -30,7 +30,14 @@ def league_pokemon_tiers_view(request, id):
         league = League.objects.get(id=id)
         activeSeason = league.get_active_season()
         tiers = [20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
-        return render(request, "leagues/pokemon/league_pokemon_tiers.html", {'league': league, 'isLeagueModerator': request.user.is_league_moderator(league.id), 'activeSeason': activeSeason, 'tiers': tiers})
+
+        tierListZoom = request.GET.get('tier_list_zoom', None)
+        if tierListZoom:
+            request.session['tier_list_zoom'] = tierListZoom
+        else:
+            tierListZoom = request.session.get('tier_list_zoom', 'compact')
+
+        return render(request, "leagues/pokemon/league_pokemon_tiers.html", {'league': league, 'isLeagueModerator': request.user.is_league_moderator(league.id), 'activeSeason': activeSeason, 'tiers': tiers, 'tierListZoom': tierListZoom})
     else:
         return redirect("/")
 
@@ -40,8 +47,9 @@ def get_tier(request, league_id, tier):
         league = League.objects.get(id=league_id)
         activeSeason = league.get_active_season()
         orderBy = request.GET.get('order_by', 'name')
+        tierListZoom = request.GET.get('tier_list_zoom', 'compact')
         pokemon = Pokemon.objects.defer('pokemon_type_effectives', 'pokemon_coverage_moves', 'pokemon_special_moves', 'pokemon_moves').filter(season=activeSeason, point_value=tier).order_by(orderBy)
-        return render(request, "leagues/pokemon/league_pokemon_tier.html", {'league': league, 'tier': tier, 'pokemon': pokemon, 'orderBy': orderBy})
+        return render(request, "leagues/pokemon/league_pokemon_tier.html", {'league': league, 'tier': tier, 'pokemon': pokemon, 'orderBy': orderBy, 'tierListZoom': tierListZoom})
     else:
         return HttpResponse(status=400)
 

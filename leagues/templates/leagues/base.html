@@ -4,6 +4,12 @@
     {{ league.abbreviation }}
 {% endblock %}
 
+{% block sidebar_icon %}
+    <li class="nav-item">
+        <a class="nav-link" id="menu-toggle" href="#"><i class="fa-solid fa-bars"></i></a>
+    </li>
+{% endblock %}
+
 {% block sidebar %}
     <nav class="navbar-dark shadow-sm collapsed" id="sidebar">
         <ul class="navbar-nav">
@@ -59,9 +65,6 @@
             </div>
         {% endif %}
     </nav>
-    <div class="sidebar-toggle" id="menu-toggle">
-        <i class="fa-solid fa-bars"></i>
-    </div>
 {% endblock %}
 
 {% block content %}

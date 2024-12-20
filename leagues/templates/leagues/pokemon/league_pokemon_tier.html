@@ -1,26 +1,30 @@
 <div id="pokemon-tier-column-{{tier}}">
     <div class="d-flex align-items-center justify-content-center bg-dark text-white sticky-header" style="border-bottom: 2px solid white; height: 3rem"><h3 class="mb-0">{{tier}}<h3></div>
+    {% if tierListZoom == 'expand' %}
+    <div class="pokemon-table">
+    {% else %}
     <div class="pokemon-table compact">
+    {% endif %}
         <table class="table table-dark table-striped table-hover table-bordered">
             <thead class="sticky-header" style="top: 3rem">
                 <tr>
                     <th class="pokemon-sprite"></th>
                     <th class="table-cell-medium">
                         {% if orderBy == 'name' %}
-                            <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:leaguePokemonTier' league_id=league.id tier=tier %}?order_by=-name" hx-trigger="click" hx-target="#pokemon-tier-column-{{tier}}" hx-swap="outerHTML">Name<i class="fa-solid fa-arrow-up ms-2"></i></a>
+                            <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:leaguePokemonTier' league_id=league.id tier=tier %}?order_by=-name&tier_list_zoom={{tierListZoom}}" hx-trigger="click" hx-target="#pokemon-tier-column-{{tier}}" hx-swap="outerHTML">Name<i class="fa-solid fa-arrow-up ms-2"></i></a>
                         {% elif orderBy == '-name' %}
-                            <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:leaguePokemonTier' league_id=league.id tier=tier %}?order_by=name" hx-trigger="click" hx-target="#pokemon-tier-column-{{tier}}" hx-swap="outerHTML">Name<i class="fa-solid fa-arrow-down ms-2"></i></a>
+                            <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:leaguePokemonTier' league_id=league.id tier=tier %}?order_by=name&tier_list_zoom={{tierListZoom}}" hx-trigger="click" hx-target="#pokemon-tier-column-{{tier}}" hx-swap="outerHTML">Name<i class="fa-solid fa-arrow-down ms-2"></i></a>
                         {% else %}
-                            <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:leaguePokemonTier' league_id=league.id tier=tier %}?order_by=name" hx-trigger="click" hx-target="#pokemon-tier-column-{{tier}}" hx-swap="outerHTML">Name</a>
+                            <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:leaguePokemonTier' league_id=league.id tier=tier %}?order_by=name&tier_list_zoom={{tierListZoom}}" hx-trigger="click" hx-target="#pokemon-tier-column-{{tier}}" hx-swap="outerHTML">Name</a>
                         {% endif %}
                     </th>
                     <th class="table-cell-small">
                         {% if orderBy == 'speed' %}
-                            <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:leaguePokemonTier' league_id=league.id tier=tier %}?order_by=-speed" hx-trigger="click" hx-target="#pokemon-tier-column-{{tier}}" hx-swap="outerHTML">Spd<i class="fa-solid fa-arrow-up ms-2"></i></a>
+                            <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:leaguePokemonTier' league_id=league.id tier=tier %}?order_by=-speed&tier_list_zoom={{tierListZoom}}" hx-trigger="click" hx-target="#pokemon-tier-column-{{tier}}" hx-swap="outerHTML">Spd<i class="fa-solid fa-arrow-up ms-2"></i></a>
                         {% elif orderBy == '-speed' %}
-                            <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:leaguePokemonTier' league_id=league.id tier=tier %}?order_by=speed" hx-trigger="click" hx-target="#pokemon-tier-column-{{tier}}" hx-swap="outerHTML">Spd<i class="fa-solid fa-arrow-down ms-2"></i></a>
+                            <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:leaguePokemonTier' league_id=league.id tier=tier %}?order_by=speed&tier_list_zoom={{tierListZoom}}" hx-trigger="click" hx-target="#pokemon-tier-column-{{tier}}" hx-swap="outerHTML">Spd<i class="fa-solid fa-arrow-down ms-2"></i></a>
                         {% else %}
-                            <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:leaguePokemonTier' league_id=league.id tier=tier %}?order_by=-speed" hx-trigger="click" hx-target="#pokemon-tier-column-{{tier}}" hx-swap="outerHTML">Spd</a>
+                            <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:leaguePokemonTier' league_id=league.id tier=tier %}?order_by=-speed&tier_list_zoom={{tierListZoom}}" hx-trigger="click" hx-target="#pokemon-tier-column-{{tier}}" hx-swap="outerHTML">Spd</a>
                         {% endif %}
                     </th>
                 </tr>
