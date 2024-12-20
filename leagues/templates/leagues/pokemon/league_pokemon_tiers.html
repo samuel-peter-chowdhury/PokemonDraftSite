@@ -1,16 +1,16 @@
 {% extends 'leagues/base.html' %}
 
 {% block content %}
-    <div class="d-inline-flex w-100 overflow-auto bg-dark" style="max-height: calc(100vh - 5.5rem)">
+    <div class="d-inline-flex w-100 overflow-auto bg-dark position-relative" style="max-height: calc(100vh - 5.5rem)">
         {% for tier in tiers %}
             <div hx-get="{%  url 'leagues:leaguePokemonTier' league_id=league.id tier=tier %}?tier_list_zoom={{tierListZoom}}" hx-trigger="load" hx-target="#pokemon-tier-{{tier}}" hx-swap="outerHTML">
                 <div id="pokemon-tier-{{tier}}"></div>
             </div>
         {% endfor %}
         {% if tierListZoom == 'compact' %}
-            <a class="zoom-icon d-none d-md-block" href="?tier_list_zoom=expand"><i class="fa-solid fa-magnifying-glass-plus"></i></a>
+            <a class="zoom-icon" href="?tier_list_zoom=expand"><i class="fa-solid fa-magnifying-glass-plus"></i></a>
         {% else %}
-            <a class="zoom-icon d-none d-md-block" href="?tier_list_zoom=compact"><i class="fa-solid fa-magnifying-glass-minus"></i></a>
+            <a class="zoom-icon" href="?tier_list_zoom=compact"><i class="fa-solid fa-magnifying-glass-minus"></i></a>
         {% endif %}
     </div>
 {% endblock %}
