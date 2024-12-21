@@ -255,6 +255,7 @@ nav {
                 height: 2.75rem;
                 max-height: 2.75rem;
                 min-height: 2.75rem;
+                padding: 0;
     
                 div {
                     img {
@@ -337,6 +338,7 @@ nav {
                     height: 2.75rem;
                     max-height: 2.75rem;
                     min-height: 2.75rem;
+                    padding: 0;
         
                     div {
                         img {

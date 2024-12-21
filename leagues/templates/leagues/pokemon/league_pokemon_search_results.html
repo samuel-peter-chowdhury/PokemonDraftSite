@@ -47,6 +47,7 @@
                         </th>
                         <th class="table-cell-large">Types</th>
                         <th class="table-cell-xlarge">Abilities</th>
+                        <th class="table-cell-medium">Team</th>
                         <th class="table-cell-small">
                             {% if orderBy == 'hp' %}
                                 <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-post="{%  url 'leagues:leaguePokemonSearchResults' league_id=league.id %}?page={{ pokemonPage.number }}&order_by=-hp&page_size={{ pageSize }}">HP<i class="fa-solid fa-arrow-up ms-2"></i></a>
@@ -129,7 +130,9 @@
                                     <img src="{{ pokemon.sprite_url }}" alt="Pokemon Sprite">
                                 </div>
                             </td>
-                            <td class="table-cell-medium text-capitalize">{{ pokemon.name }}</td>
+                            <td class="table-cell-medium text-capitalize">
+                                <a href="{{ pokemon.get_smogon_link }}" target="_blank">{{ pokemon.name|truncatechars:12 }}</a>
+                            </td>
                             <td class="table-cell-large">
                                 <div class="pokemon-types-container">
                                     {% for t in pokemon.pokemon_types.all %}
@@ -144,6 +147,7 @@
                                     {% endfor %}
                                 </div>
                             </td>
+                            <td class="table-cell-medium text-capitalize">{{ pokemon.team.name }}</td>
                             <td class="table-cell-small">{{ pokemon.hp }}</td>
                             <td class="table-cell-small">{{ pokemon.attack }}</td>
                             <td class="table-cell-small">{{ pokemon.defense }}</td>

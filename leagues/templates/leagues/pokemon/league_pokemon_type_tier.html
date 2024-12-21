@@ -28,13 +28,28 @@
             <tbody>
                 {% for p in pokemon %}
                     <tr>
-                        <td class="pokemon-sprite">
-                            <div>
-                                <img src="{{ p.sprite_url }}" alt="Pokemon Sprite">
-                            </div>
-                        </td>
-                        <td class="table-cell-medium text-capitalize">{{ p.name|truncatechars:12 }}</td>
-                        <td class="table-cell-small">{{ p.point_value }}</td>
+                        {% if p.team %}
+                            <td class="pokemon-sprite" style="background-color: #550000; --bs-table-accent-bg: none;">
+                                <div>
+                                    <img src="{{ p.sprite_url }}" alt="Pokemon Sprite">
+                                </div>
+                            </td>
+                            <td class="table-cell-medium text-capitalize" style="background-color: #550000; --bs-table-accent-bg: none;"><a href="{{ p.get_smogon_link }}" target="_blank">{{ p.name|truncatechars:12 }}</a></td>
+                            <td class="table-cell-small" style="background-color: #550000; --bs-table-accent-bg: none;">{{ p.speed }}</td>
+                        {% else %}
+                            <td class="pokemon-sprite">
+                                {% if p.condition %}
+                                    <i class="fa-solid fa-asterisk position-absolute" style="color: #d4af37; padding: 5px" data-toggle="tooltip" data-placement="top" title="{{ p.condition }}"></i>
+                                {% endif %}
+                                <div>
+                                    <img src="{{ p.sprite_url }}" alt="Pokemon Sprite">
+                                </div>
+                            </td>
+                            <td class="table-cell-medium text-capitalize">
+                                <a href="{{ p.get_smogon_link }}" target="_blank">{{ p.name|truncatechars:12 }}</a>
+                            </td>
+                            <td class="table-cell-small">{{ p.speed }}</td>
+                        {% endif %}
                     </tr>
                 {% endfor %}
             </tbody>

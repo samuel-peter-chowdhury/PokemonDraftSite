@@ -90,7 +90,7 @@ def league_pokemon_search_results(request, league_id):
         league = League.objects.get(id=league_id)
         activeSeason = league.get_active_season()
         page = 1
-        pageSize = 10
+        pageSize = 20
         orderBy = 'name'
         p = None
         if request.method == "POST":
@@ -98,7 +98,7 @@ def league_pokemon_search_results(request, league_id):
             form = PokemonSearchForm(data=request.POST)
             if form.is_valid():
                 page = request.GET.get('page', '1')
-                pageSize = request.GET.get('page_size', '10')
+                pageSize = request.GET.get('page_size', '20')
                 orderBy = request.GET.get('order_by', '-point_value')
                 pokemon_objects = Pokemon.objects.filter(season=activeSeason)
 
