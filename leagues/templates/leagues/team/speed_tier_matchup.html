@@ -64,31 +64,7 @@
                                     </div>
                                 </td>
                                 <td class="table-cell-medium text-capitalize d-none d-md-table-cell">{{ p.name|truncatechars:12 }}</td>
-                                {% if p.speed >= 200 %}
-                                    <td class="table-cell-small speed-stat-text" style="background-color: #02ffff; --bs-table-accent-bg: none;">{{ p.speed }}</td>
-                                {% elif p.speed >= 150 %}
-                                    <td class="table-cell-small speed-stat-text" style="background-color: #02ff2a; --bs-table-accent-bg: none;">{{ p.speed }}</td>
-                                {% elif p.speed >= 140 %}
-                                    <td class="table-cell-small speed-stat-text" style="background-color: #2aff08; --bs-table-accent-bg: none;">{{ p.speed }}</td>
-                                {% elif p.speed >= 130 %}
-                                    <td class="table-cell-small speed-stat-text" style="background-color: #66ff00; --bs-table-accent-bg: none;">{{ p.speed }}</td>
-                                {% elif p.speed >= 120 %}
-                                    <td class="table-cell-small speed-stat-text" style="background-color: #9aff00; --bs-table-accent-bg: none;">{{ p.speed }}</td>
-                                {% elif p.speed >= 110 %}
-                                    <td class="table-cell-small speed-stat-text" style="background-color: #ccff00; --bs-table-accent-bg: none;">{{ p.speed }}</td>
-                                {% elif p.speed >= 100 %}
-                                    <td class="table-cell-small speed-stat-text" style="background-color: #fffe00; --bs-table-accent-bg: none;">{{ p.speed }}</td>
-                                {% elif p.speed >= 90 %}
-                                    <td class="table-cell-small speed-stat-text" style="background-color: #ffcc00; --bs-table-accent-bg: none;">{{ p.speed }}</td>
-                                {% elif p.speed >= 80 %}
-                                    <td class="table-cell-small speed-stat-text" style="background-color: #ff9800; --bs-table-accent-bg: none;">{{ p.speed }}</td>
-                                {% elif p.speed >= 70 %}
-                                    <td class="table-cell-small speed-stat-text" style="background-color: #ff6600; --bs-table-accent-bg: none;">{{ p.speed }}</td>
-                                {% elif p.speed >= 60 %}
-                                    <td class="table-cell-small speed-stat-text" style="background-color: #ff3200; --bs-table-accent-bg: none;">{{ p.speed }}</td>
-                                {% else %}
-                                    <td class="table-cell-small speed-stat-text" style="background-color: #ff0000; --bs-table-accent-bg: none;">{{ p.speed }}</td>
-                                {% endif %}
+                                <td class="table-cell-small speed-stat-text" style="background-color: {{ p.speed|get_stat_color }}; --bs-table-accent-bg: none;">{{ p.speed }}</td>
                                 <td class="table-cell-xsmall d-none d-md-table-cell">{{ p.speed|get_speed:'0' }}</td>
                                 <td class="table-cell-xsmall d-none d-md-table-cell">{{ p.speed|get_speed:'252' }}</td>
                                 <td class="table-cell-xsmall">{{ p.speed|get_speed:'252+' }}</td>
@@ -163,31 +139,7 @@
                                     </div>
                                 </td>
                                 <td class="table-cell-medium text-capitalize d-none d-md-table-cell">{{ p.name|truncatechars:12 }}</td>
-                                {% if p.speed >= 200 %}
-                                    <td class="table-cell-small speed-stat-text" style="background-color: #02ffff; --bs-table-accent-bg: none;">{{ p.speed }}</td>
-                                {% elif p.speed >= 150 %}
-                                    <td class="table-cell-small speed-stat-text" style="background-color: #02ff2a; --bs-table-accent-bg: none;">{{ p.speed }}</td>
-                                {% elif p.speed >= 140 %}
-                                    <td class="table-cell-small speed-stat-text" style="background-color: #2aff08; --bs-table-accent-bg: none;">{{ p.speed }}</td>
-                                {% elif p.speed >= 130 %}
-                                    <td class="table-cell-small speed-stat-text" style="background-color: #66ff00; --bs-table-accent-bg: none;">{{ p.speed }}</td>
-                                {% elif p.speed >= 120 %}
-                                    <td class="table-cell-small speed-stat-text" style="background-color: #9aff00; --bs-table-accent-bg: none;">{{ p.speed }}</td>
-                                {% elif p.speed >= 110 %}
-                                    <td class="table-cell-small speed-stat-text" style="background-color: #ccff00; --bs-table-accent-bg: none;">{{ p.speed }}</td>
-                                {% elif p.speed >= 100 %}
-                                    <td class="table-cell-small speed-stat-text" style="background-color: #fffe00; --bs-table-accent-bg: none;">{{ p.speed }}</td>
-                                {% elif p.speed >= 90 %}
-                                    <td class="table-cell-small speed-stat-text" style="background-color: #ffcc00; --bs-table-accent-bg: none;">{{ p.speed }}</td>
-                                {% elif p.speed >= 80 %}
-                                    <td class="table-cell-small speed-stat-text" style="background-color: #ff9800; --bs-table-accent-bg: none;">{{ p.speed }}</td>
-                                {% elif p.speed >= 70 %}
-                                    <td class="table-cell-small speed-stat-text" style="background-color: #ff6600; --bs-table-accent-bg: none;">{{ p.speed }}</td>
-                                {% elif p.speed >= 60 %}
-                                    <td class="table-cell-small speed-stat-text" style="background-color: #ff3200; --bs-table-accent-bg: none;">{{ p.speed }}</td>
-                                {% else %}
-                                    <td class="table-cell-small speed-stat-text" style="background-color: #ff0000; --bs-table-accent-bg: none;">{{ p.speed }}</td>
-                                {% endif %}
+                                <td class="table-cell-small speed-stat-text" style="background-color: {{ p.speed|get_stat_color }}; --bs-table-accent-bg: none;">{{ p.speed }}</td>
                                 <td class="table-cell-xsmall d-none d-md-table-cell">{{ p.speed|get_speed:'0' }}</td>
                                 <td class="table-cell-xsmall d-none d-md-table-cell">{{ p.speed|get_speed:'252' }}</td>
                                 <td class="table-cell-xsmall">{{ p.speed|get_speed:'252+' }}</td>

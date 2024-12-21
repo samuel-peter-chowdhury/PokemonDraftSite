@@ -35,7 +35,7 @@
                         {% if p.team %}
                             <td class="pokemon-sprite" style="background-color: #550000; --bs-table-accent-bg: none;">
                                 <div>
-                                    <img src="{{ p.sprite_url }}" alt="Pokemon Sprite">
+                                    <img src="{{ p.sprite_url }}" alt="Pokemon Sprite" style="cursor: pointer" data-bs-toggle="modal" data-bs-target="#pokemon-modal-{{ p.id }}">
                                 </div>
                             </td>
                             <td class="table-cell-medium text-capitalize" style="background-color: #550000; --bs-table-accent-bg: none;"><a href="{{ p.get_smogon_link }}" target="_blank">{{ p.name|truncatechars:12 }}</a></td>
@@ -46,7 +46,7 @@
                                     <i class="fa-solid fa-asterisk position-absolute" style="color: #d4af37; padding: 5px" data-toggle="tooltip" data-placement="top" title="{{ p.condition }}"></i>
                                 {% endif %}
                                 <div>
-                                    <img src="{{ p.sprite_url }}" alt="Pokemon Sprite">
+                                    <img src="{{ p.sprite_url }}" alt="Pokemon Sprite" style="cursor: pointer" data-bs-toggle="modal" data-bs-target="#pokemon-modal-{{ p.id }}">
                                 </div>
                             </td>
                             <td class="table-cell-medium text-capitalize">
@@ -60,3 +60,6 @@
         </table>
     </div>
 </div>
+{% for p in pokemon %}
+    <div hx-get="{% url 'leagues:leaguePokemonModal' league_id=league.id pokemon_id=p.id %}" hx-trigger="load" hx-target="this" hx-swap="outerHTML"></div>
+{% endfor %}

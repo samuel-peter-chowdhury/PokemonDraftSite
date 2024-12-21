@@ -1,0 +1,65 @@
+<div class="modal fade" id="pokemon-modal-{{ pokemon.id }}" tabindex="-1" aria-labelledby="pokemonModalLabel-{{ pokemon.id }}" aria-hidden="false">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content bg-dark text-white">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5 text-capitalize fw-bold" id="pokemonModalLabel-{{ pokemon.id }}">{{ pokemon.name }}</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex flex-column flex-md-row w-100" style="gap: 2rem">
+                    <div class="d-flex align-items-center justify-content-center" style="width: 10rem; height: 10rem; border-radius: 2rem; box-shadow: 5px 5px 5px var(--bs-secondary);">
+                        <img src="{{ pokemon.sprite_url }}" alt="Pokemon Sprite" style="max-height: 10rem; max-width: 10rem" />
+                    </div>
+                    <div class="d-flex flex-column" style="gap: 1rem">
+                        <div class="d-inline-flex align-items-center" style="gap: 0.5rem">
+                            <div class="fw-bold" style="width: 5rem">Type:</div>
+                            {% for t in pokemon.pokemon_types.all %}
+                                <div class="d-flex text-capitalize" style="padding: 0.125rem 0; width: 6rem; justify-content: center; border-radius: 0.75rem; background-color: {{ t.type.color }}">{{ t.type.name }}</div>
+                            {% endfor %}
+                        </div>
+                        <div class="d-inline-flex align-items-center" style="gap: 0.5rem">
+                            <div class="fw-bold" style="width: 5rem">Abilities:</div>
+                            <div class="d-flex flex-column" style="gap: 0.5rem">
+                                {% for a in pokemon.pokemon_abilities.all %}
+                                    <div class="d-flex text-capitalize" style="padding: 0.125rem 0.5rem; justify-content: center; border-radius: 0.75rem; background-color: var(--bs-secondary)">{{ a.name }}</div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column">
+                        <div class="d-inline-flex align-items-center">
+                            <div class="fw-bold" style="width: 5rem">HP:</div>
+                            <div style="width: 2rem">{{ pokemon.hp }}</div>
+                            <div style="width: {{ pokemon.hp }}px; height: 0.75rem; background-color: {{ pokemon.hp|get_stat_color }}; border-radius: 0.75rem"></div>
+                        </div>
+                        <div class="d-inline-flex align-items-center">
+                            <div class="fw-bold" style="width: 5rem">Attack:</div>
+                            <div style="width: 2rem">{{ pokemon.attack }}</div>
+                            <div style="width: {{ pokemon.attack }}px; height: 0.75rem; background-color: {{ pokemon.attack|get_stat_color }}; border-radius: 0.75rem"></div>
+                        </div>
+                        <div class="d-inline-flex align-items-center">
+                            <div class="fw-bold" style="width: 5rem">Defense:</div>
+                            <div style="width: 2rem">{{ pokemon.defense }}</div>
+                            <div style="width: {{ pokemon.defense }}px; height: 0.75rem; background-color: {{ pokemon.defense|get_stat_color }}; border-radius: 0.75rem"></div>
+                        </div>
+                        <div class="d-inline-flex align-items-center">
+                            <div class="fw-bold" style="width: 5rem">Sp. Atk:</div>
+                            <div style="width: 2rem">{{ pokemon.special_attack }}</div>
+                            <div style="width: {{ pokemon.special_attack }}px; height: 0.75rem; background-color: {{ pokemon.special_attack|get_stat_color }}; border-radius: 0.75rem"></div>
+                        </div>
+                        <div class="d-inline-flex align-items-center">
+                            <div class="fw-bold" style="width: 5rem">Sp. Def:</div>
+                            <div style="width: 2rem">{{ pokemon.special_defense }}</div>
+                            <div style="width: {{ pokemon.special_defense }}px; height: 0.75rem; background-color: {{ pokemon.special_defense|get_stat_color }}; border-radius: 0.75rem"></div>
+                        </div>
+                        <div class="d-inline-flex align-items-center">
+                            <div class="fw-bold" style="width: 5rem">Speed:</div>
+                            <div style="width: 2rem">{{ pokemon.speed }}</div>
+                            <div style="width: {{ pokemon.speed }}px; height: 0.75rem; background-color: {{ pokemon.speed|get_stat_color }}; border-radius: 0.75rem"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

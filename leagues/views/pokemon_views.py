@@ -130,3 +130,12 @@ def league_pokemon_search_results(request, league_id):
         return render(request, "leagues/pokemon/league_pokemon_search_results.html", {'form': form, 'league': league, 'pokemonPage': p.page(page) if p is not None else None, 'lastPage': p.num_pages if p is not None else None, 'pageSize': pageSize, 'orderBy': orderBy})
     else:
         return HttpResponse(status=400)
+    
+@login_required(login_url="/users/login/")
+def get_pokemon_modal(request, league_id, pokemon_id):
+    if request.user.has_league(league_id):
+        league = League.objects.get(id=league_id)
+        pokemon = Pokemon.objects.get(id=pokemon_id)
+        return render(request, "leagues/pokemon/league_pokemon_modal.html", {'league': league, 'pokemon': pokemon})
+    else:
+        return HttpResponse(status=400)

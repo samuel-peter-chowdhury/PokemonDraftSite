@@ -19,6 +19,7 @@ pokemon_urlpatterns = [
     path('<int:league_id>/pokemon/tier/<int:tier>', pokemon_views.get_tier, name="leaguePokemonTier"),
     path('<int:league_id>/pokemon/type/tier/<int:type_id>', pokemon_views.get_type_tier, name="leaguePokemonTypeTier"),
     path('<int:league_id>/pokemon/search/results', pokemon_views.league_pokemon_search_results, name="leaguePokemonSearchResults"),
+    path('<int:league_id>/pokemon/<int:pokemon_id>', pokemon_views.get_pokemon_modal, name="leaguePokemonModal"),
 ]
 urlpatterns += pokemon_urlpatterns
 
