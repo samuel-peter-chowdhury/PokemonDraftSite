@@ -51,3 +51,21 @@ def get_stat_color(stat):
         return '#ff3200'
     else:
         return '#ff0000'
+    
+@register.filter
+def get_pokemon_special_move_dictionary(pokemon):
+    special_move_dictionary = {}
+    for sm in pokemon.pokemon_special_moves.all().order_by('name'):
+        if sm.category not in special_move_dictionary:
+            special_move_dictionary[sm.category] = []
+        special_move_dictionary[sm.category].append(sm.name)
+    return special_move_dictionary
+
+@register.filter
+def get_pokemon_coverage_move_dictionary(pokemon):
+    coverage_move_dictionary = {}
+    for cm in pokemon.pokemon_coverage_moves.all().order_by('name'):
+        if cm.type.name not in coverage_move_dictionary:
+            coverage_move_dictionary[cm.type.name] = []
+        coverage_move_dictionary[cm.type.name].append({'name': cm.name, 'color': cm.type.color})
+    return coverage_move_dictionary
