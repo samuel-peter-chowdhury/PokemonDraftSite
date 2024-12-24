@@ -29,6 +29,14 @@ def get_type_effective(pokemon_type_effectives, type):
 def get_stat_color(stat):
     if stat >= 200:
         return '#02ffff'
+    elif stat >= 190:
+        return '#02ffd4'
+    elif stat >= 180:
+        return '#02ffaa'
+    elif stat >= 170:
+        return '#02ff7f'
+    elif stat >= 160:
+        return '#02ff55'
     elif stat >= 150:
         return '#02ff2a'
     elif stat >= 140:

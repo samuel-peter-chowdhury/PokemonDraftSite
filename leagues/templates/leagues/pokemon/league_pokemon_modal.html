@@ -1,9 +1,9 @@
-<div class="modal fade" id="pokemon-modal-{{ pokemon.id }}" tabindex="-1" aria-labelledby="pokemonModalLabel-{{ pokemon.id }}" aria-hidden="false">
+<div class="modal fade" id="pokemon-modal-{{ pokemon.id }}" tabindex="-1" aria-labelledby="pokemonModalLabel-{{ pokemon.id }}" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content bg-dark text-white">
             <div class="modal-header">
                 <h1 class="modal-title fs-5 text-capitalize fw-bold" id="pokemonModalLabel-{{ pokemon.id }}">{{ pokemon.name }}</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" style="background-color: var(--bs-secondary)" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="d-flex flex-column flex-md-row w-100" style="gap: 2rem; margin-bottom: 2rem;">
