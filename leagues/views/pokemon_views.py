@@ -106,7 +106,7 @@ def league_pokemon_search_results(request, league_id):
                     if f.startswith('base_') and form.cleaned_data[f] is not None:
                         pokemon_objects = pokemon_objects.filter(**{f.split('base_')[1]: form.cleaned_data[f]})
                     if f.startswith('and_') and form.cleaned_data[f] is not None:
-                        tokens = list(filter(None, form.cleaned_data[f].split(',')))
+                        tokens = list(filter(None, form.cleaned_data[f]))
                         if len(tokens) > 0:
                             for t in tokens:
                                 if '___' in f:
@@ -114,8 +114,8 @@ def league_pokemon_search_results(request, league_id):
                                     pokemon_objects = pokemon_objects.filter(Q(**{query_tokens[0].split('and_')[1]: t.strip()}) & Q(**{query_tokens[1]: float(query_tokens[2])}))
                                 else:
                                     pokemon_objects = pokemon_objects.filter(**{f.split('and_')[1]: t.strip()})
-                    if f.startswith('or') and form.cleaned_data[f] is not None:
-                        tokens = list(filter(None, form.cleaned_data[f].split(',')))
+                    if f.startswith('or_') and form.cleaned_data[f] is not None:
+                        tokens = list(filter(None, form.cleaned_data[f]))
                         if len(tokens) > 0:
                             if '___' in f:
                                 query_tokens = f.split('___')

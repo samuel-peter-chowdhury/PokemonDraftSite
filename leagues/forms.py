@@ -1,6 +1,11 @@
 from django import forms
 
 from .models import Team
+from pokemons.models import SpecialMoveCategory, Type, PokemonAbility, PokemonMove
+
+TYPE_CHOICES = [(t.name.capitalize(), t.name.capitalize()) for t in Type.objects.all().order_by('name')]
+ABILITY_CHOICES = [(x['name'].capitalize(), x['name'].capitalize()) for x in PokemonAbility.objects.values('name').distinct().order_by('name')]
+MOVE_CHOICES = [(x['name'].capitalize(), x['name'].capitalize()) for x in PokemonMove.objects.values('name').distinct().order_by('name')]
 
 class LeagueJoinForm(forms.Form):
     league_name = forms.CharField(label="League Name", max_length=50)
@@ -35,29 +40,93 @@ class PokemonSearchForm(forms.Form):
     base_point_value__gte = forms.IntegerField(label="Min Pts", required=False)
     base_point_value__lte = forms.IntegerField(label="Max Pts", required=False)
 
-    and_pokemon_types__type__name__iexact = forms.CharField(label="Types (AND)", max_length=150, required=False)
-    or_pokemon_types__type__name__iexact = forms.CharField(label="Types (OR)", max_length=150, required=False)
+    and_pokemon_types__type__name__iexact = forms.MultipleChoiceField(
+        label="Types (AND)",
+        choices=TYPE_CHOICES,
+        required=False
+    )
+    or_pokemon_types__type__name__iexact = forms.MultipleChoiceField(
+        label="Types (OR)",
+        choices=TYPE_CHOICES,
+        required=False
+    )
 
-    and_pokemon_abilities__name__iexact = forms.CharField(label="Abilities (AND)", max_length=150, required=False)
-    or_pokemon_abilities__name__iexact = forms.CharField(label="Abilities (OR)", max_length=150, required=False)
+    and_pokemon_abilities__name__iexact = forms.MultipleChoiceField(
+        label="Abilities (AND)",
+        choices=ABILITY_CHOICES,
+        required=False
+    )
+    or_pokemon_abilities__name__iexact = forms.MultipleChoiceField(
+        label="Abilities (OR)",
+        choices=ABILITY_CHOICES,
+        required=False
+    )
 
-    and_pokemon_moves__name__iexact = forms.CharField(label="Moves (AND)", max_length=150, required=False)
-    or_pokemon_moves__name__iexact = forms.CharField(label="Moves (OR)", max_length=150, required=False)
+    and_pokemon_moves__name__iexact = forms.MultipleChoiceField(
+        label="Moves (AND)",
+        choices=MOVE_CHOICES,
+        required=False
+    )
+    or_pokemon_moves__name__iexact = forms.MultipleChoiceField(
+        label="Moves (OR)",
+        choices=MOVE_CHOICES,
+        required=False
+    )
 
-    and_pokemon_coverage_moves__type__name__iexact = forms.CharField(label="Coverage Move Types (AND)", max_length=150, required=False)
-    or_pokemon_coverage_moves__type__name = forms.CharField(label="Coverage Move Types (OR)", max_length=150, required=False)
+    and_pokemon_coverage_moves__type__name__iexact = forms.MultipleChoiceField(
+        label="Coverage Move Types (AND)",
+        choices=TYPE_CHOICES,
+        required=False
+    )
+    or_pokemon_coverage_moves__type__name__iexact = forms.MultipleChoiceField(
+        label="Coverage Move Types (OR)",
+        choices=TYPE_CHOICES,
+        required=False
+    )
 
-    and_pokemon_special_moves__category__iexact = forms.CharField(label="Special Move Categories (AND)", max_length=150, required=False)
-    or_pokemon_special_moves__category__iexact = forms.CharField(label="Special Move Categories (OR)", max_length=150, required=False)
+    and_pokemon_special_moves__category__iexact = forms.MultipleChoiceField(
+        label="Special Move Categories (AND)",
+        choices=SpecialMoveCategory.choices,
+        required=False
+    )
+    or_pokemon_special_moves__category__iexact = forms.MultipleChoiceField(
+        label="Special Move Categories (OR)",
+        choices=SpecialMoveCategory.choices,
+        required=False
+    )
 
-    and_pokemon_type_effectives__type__name__iexact___pokemon_type_effectives__value__lt___1 = forms.CharField(label="Resisted Types (AND)", max_length=150, required=False)
-    or_pokemon_type_effectives__type__name__iexact___pokemon_type_effectives__value__lt___1 = forms.CharField(label="Resisted Types (OR)", max_length=150, required=False)
+    and_pokemon_type_effectives__type__name__iexact___pokemon_type_effectives__value__lt___1 = forms.MultipleChoiceField(
+        label="Resisted Types (AND)",
+        choices=TYPE_CHOICES,
+        required=False
+    )
+    or_pokemon_type_effectives__type__name__iexact___pokemon_type_effectives__value__lt___1 = forms.MultipleChoiceField(
+        label="Resisted Types (OR)",
+        choices=TYPE_CHOICES,
+        required=False
+    )
 
-    and_pokemon_type_effectives__type__name__iexact___pokemon_type_effectives__value__gt___1 = forms.CharField(label="Weak Types (AND)", max_length=150, required=False)
-    or_pokemon_type_effectives__type__name__iexact___pokemon_type_effectives__value__gt___1 = forms.CharField(label="Weak Types (OR)", max_length=150, required=False)
+    and_pokemon_type_effectives__type__name__iexact___pokemon_type_effectives__value__gt___1 = forms.MultipleChoiceField(
+        label="Weak Types (AND)",
+        choices=TYPE_CHOICES,
+        required=False
+    )
+    or_pokemon_type_effectives__type__name__iexact___pokemon_type_effectives__value__gt___1 = forms.MultipleChoiceField(
+        label="Weak Types (OR)",
+        choices=TYPE_CHOICES,
+        required=False
+    )
 
-    and_pokemon_type_effectives__type__name__iexact___pokemon_type_effectives__value___0 = forms.CharField(label="Immune Types (AND)", max_length=150, required=False)
-    or_pokemon_type_effectives__type__name__iexact___pokemon_type_effectives__value___0 = forms.CharField(label="Immune Types (OR)", max_length=150, required=False)
+    and_pokemon_type_effectives__type__name__iexact___pokemon_type_effectives__value___0 = forms.MultipleChoiceField(
+        label="Immune Types (AND)",
+        choices=TYPE_CHOICES,
+        required=False
+    )
+    or_pokemon_type_effectives__type__name__iexact___pokemon_type_effectives__value___0 = forms.MultipleChoiceField(
+        label="Immune Types (OR)",
+        choices=TYPE_CHOICES,
+        required=False
+    )
 
 class PokemonSimpleSearchForm(forms.Form):
     name__icontains = forms.CharField(label="Name Match", max_length=50, required=False)

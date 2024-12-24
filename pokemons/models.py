@@ -15,7 +15,7 @@ class SpecialMoveCategory(models.TextChoices):
     SET_UP = "set up",
     PRIORITY = "priority",
     ITEM_REMOVAL = "item removal",
-    STATUS = "status"
+    STATUS = "status",
 
 class Pokemon(BaseModel):
     name = models.CharField(max_length=50)
