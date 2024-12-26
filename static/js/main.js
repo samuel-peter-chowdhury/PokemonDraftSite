@@ -94,4 +94,11 @@ $(document).ready(function () {
             localStorage.setItem('team-matchup-opponent-type-effective-expansion', 'open');
         }
     });
+    
+    
+    htmx.on("htmx:afterSwap", (e) => {
+        if (e.detail.target.id == "pokemon-modal") {
+            $('#pokemon-modal-content').modal('show');
+        }
+    });
 });

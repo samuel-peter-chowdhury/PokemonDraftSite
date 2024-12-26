@@ -29,20 +29,27 @@
                 {% for p in pokemon %}
                     <tr>
                         {% if p.team %}
+                            {% if p.condition %}
+                            <td class="pokemon-sprite" style="background: repeating-linear-gradient(-45deg, #550000, #550000 5px, #2c3034 5px, #2c3034 10px); --bs-table-accent-bg: none;" data-toggle="tooltip" data-placement="top" title="{{ p.condition }}">
+                            {% else %}
                             <td class="pokemon-sprite" style="background-color: #550000; --bs-table-accent-bg: none;">
+                            {% endif %}
                                 <div>
-                                    <img src="{{ p.sprite_url }}" alt="Pokemon Sprite">
+                                    <img src="{{ p.sprite_url }}" alt="Pokemon Sprite" style="cursor: pointer" hx-get="{% url 'leagues:leaguePokemonModal' league_id=league.id pokemon_id=p.id %}" hx-trigger="click" hx-target="#pokemon-modal" hx-swap="innerHTML">
                                 </div>
                             </td>
-                            <td class="table-cell-medium text-capitalize" style="background-color: #550000; --bs-table-accent-bg: none;"><a href="{{ p.get_smogon_link }}" target="_blank">{{ p.name|truncatechars:12 }}</a></td>
+                            <td class="table-cell-medium text-capitalize" style="background-color: #550000; --bs-table-accent-bg: none;">
+                                <a href="{{ p.get_smogon_link }}" target="_blank">{{ p.name|truncatechars:12 }}</a>
+                            </td>
                             <td class="table-cell-small" style="background-color: #550000; --bs-table-accent-bg: none;">{{ p.speed }}</td>
                         {% else %}
+                            {% if p.condition %}
+                            <td class="pokemon-sprite" style="background: repeating-linear-gradient(-45deg, #212529, #212529 5px, #2c3034 5px, #2c3034 10px); --bs-table-accent-bg: none;" data-toggle="tooltip" data-placement="top" title="{{ p.condition }}">
+                            {% else %}
                             <td class="pokemon-sprite">
-                                {% if p.condition %}
-                                    <i class="fa-solid fa-asterisk position-absolute" style="color: #d4af37; padding: 5px" data-toggle="tooltip" data-placement="top" title="{{ p.condition }}"></i>
-                                {% endif %}
+                            {% endif %}
                                 <div>
-                                    <img src="{{ p.sprite_url }}" alt="Pokemon Sprite">
+                                    <img src="{{ p.sprite_url }}" alt="Pokemon Sprite" style="cursor: pointer" hx-get="{% url 'leagues:leaguePokemonModal' league_id=league.id pokemon_id=p.id %}" hx-trigger="click" hx-target="#pokemon-modal" hx-swap="innerHTML">
                                 </div>
                             </td>
                             <td class="table-cell-medium text-capitalize">
@@ -56,3 +63,4 @@
         </table>
     </div>
 </div>
+<div id="pokemon-modal"></div>

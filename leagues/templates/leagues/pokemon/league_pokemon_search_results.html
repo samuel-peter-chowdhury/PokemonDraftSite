@@ -127,7 +127,7 @@
                         <tr>
                             <td class="pokemon-sprite">
                                 <div>
-                                    <img src="{{ pokemon.sprite_url }}" alt="Pokemon Sprite">
+                                    <img src="{{ pokemon.sprite_url }}" alt="Pokemon Sprite" style="cursor: pointer" hx-get="{% url 'leagues:leaguePokemonModal' league_id=league.id pokemon_id=pokemon.id %}" hx-trigger="click" hx-target="#pokemon-modal" hx-swap="innerHTML">
                                 </div>
                             </td>
                             <td class="table-cell-medium text-capitalize">
@@ -195,3 +195,4 @@
         <h1>No Search Results</h1>
     {% endif %}
 </div>
+<div id="pokemon-modal"></div>
