@@ -27,7 +27,10 @@ class League(BaseModel):
 class Season(BaseModel):
     name = models.CharField(max_length=50)
     league = models.ForeignKey(League, on_delete=models.CASCADE, related_name='seasons')
-    status = models.CharField(max_length=15, choices=SeasonStatus.choices, default=SeasonStatus.DRAFT)
+    status = models.CharField(max_length=15, choices=SeasonStatus.choices, default=SeasonStatus.PRE_SEASON)
+    rules = models.TextField(blank=True, null=True)
+    point_limit = models.IntegerField(default=100)
+    max_tier_value = models.IntegerField(default=20)
 
     def __str__(self):
         return self.name
