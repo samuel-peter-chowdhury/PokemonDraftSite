@@ -5,6 +5,7 @@ app_name = 'leagues'
 
 urlpatterns = [
     path('<int:id>', base_views.league_view, name="league"),
+    path('<int:id>/rules', base_views.league_rules_view, name="leagueRules"),
     path('join', base_views.league_join_view, name="leagueJoin"),
 ]
 

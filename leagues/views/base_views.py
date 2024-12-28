@@ -14,6 +14,14 @@ def league_view(request, id):
     return redirect(reverse('users:settings'))
 
 @login_required(login_url="/users/login/")
+def league_rules_view(request, id):
+    if request.user.has_league(id):
+        league = League.objects.get(id=id)
+        activeSeason = league.get_active_season()
+        return render(request, "leagues/league_rules.html", {'league': league, 'isLeagueModerator': request.user.is_league_moderator(league.id), 'activeSeason': activeSeason})
+    return redirect(reverse('users:settings'))
+
+@login_required(login_url="/users/login/")
 def league_join_view(request):
     if request.method == "POST":
         form = LeagueJoinForm(request.POST)
