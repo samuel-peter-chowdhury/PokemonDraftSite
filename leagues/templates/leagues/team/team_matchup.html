@@ -48,7 +48,7 @@
         </div>
 
         <div class="d-flex flex-column flex-md-row w-100 mt-2" style="gap: 0.5rem">
-            <div class="w-100 w-md-50">
+            <div class="team-matchup-panel">
                 <button id="userTeamTableCollapseButton" class="btn btn-secondary expansion-button w-100" type="button" data-bs-toggle="collapse" data-bs-target="#userTeamTableCollapse" aria-expanded="false" aria-controls="userTeamTableCollapse">
                     {{ userTeam.name }} Team Table
                 </button>
@@ -58,7 +58,7 @@
                     </div>
                 </div>
             </div>
-            <div class="w-100 w-md-50">
+            <div class="team-matchup-panel">
                 <button id="opponentTeamTableCollapseButton" class="btn btn-secondary expansion-button w-100" type="button" data-bs-toggle="collapse" data-bs-target="#opponentTeamTableCollapse" aria-expanded="false" aria-controls="opponentTeamTableCollapse">
                     {{ opponentTeam.name }} Team Table
                 </button>
@@ -71,7 +71,7 @@
         </div>
 
         <div class="d-flex flex-column flex-md-row w-100 mt-2" style="gap: 0.5rem">
-            <div class="w-100 w-md-50">
+            <div class="team-matchup-panel">
                 <button id="userTypeEffectiveCollapseButton" class="btn btn-secondary expansion-button w-100" type="button" data-bs-toggle="collapse" data-bs-target="#userTypeEffectiveCollapse" aria-expanded="false" aria-controls="userTypeEffectiveCollapse">
                     {{ userTeam.name }} Type Effective
                 </button>
@@ -81,7 +81,7 @@
                     </div>
                 </div>
             </div>
-            <div class="w-100 w-md-50">
+            <div class="team-matchup-panel">
                 <button id="opponentTypeEffectiveCollapseButton" class="btn btn-secondary expansion-button w-100" type="button" data-bs-toggle="collapse" data-bs-target="#opponentTypeEffectiveCollapse" aria-expanded="false" aria-controls="opponentTypeEffectiveCollapse">
                     {{ opponentTeam.name }} Type Effective
                 </button>
@@ -92,5 +92,29 @@
                 </div>
             </div>
         </div>
+
+        <div class="d-flex flex-column flex-md-row w-100 mt-2" style="gap: 0.5rem">
+            <div class="team-matchup-panel">
+                <button id="userSpecialMovesCollapseButton" class="btn btn-secondary expansion-button w-100" type="button" data-bs-toggle="collapse" data-bs-target="#userSpecialMovesCollapse" aria-expanded="false" aria-controls="userSpecialMovesCollapse">
+                    {{ userTeam.name }} Special Moves
+                </button>
+                <div class="collapse" id="userSpecialMovesCollapse">
+                    <div hx-get="{%  url 'leagues:teamMatchupSpecialMoves' league_id=league.id team_id=userTeam.id %}" hx-trigger="load" hx-target="#user-special-moves" hx-swap="outerHTML">
+                        <div id="user-special-moves"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="team-matchup-panel">
+                <button id="opponentSpecialMovesCollapseButton" class="btn btn-secondary expansion-button w-100" type="button" data-bs-toggle="collapse" data-bs-target="#opponentSpecialMovesCollapse" aria-expanded="false" aria-controls="opponentSpecialMovesCollapse">
+                    {{ opponentTeam.name }} Special Moves
+                </button>
+                <div class="collapse" id="opponentSpecialMovesCollapse">
+                    <div hx-get="{%  url 'leagues:teamMatchupSpecialMoves' league_id=league.id team_id=opponentTeam.id %}" hx-trigger="load" hx-target="#opponent-special-moves" hx-swap="outerHTML">
+                        <div id="opponent-special-moves"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="pokemon-modal"></div>
     {% endif %}
 {% endblock %}

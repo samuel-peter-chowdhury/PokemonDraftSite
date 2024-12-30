@@ -39,7 +39,7 @@
                     {% if user.has_any_league %}
                         {% for league in user.get_all_leagues %}
                             <li class="nav-item">
-                                <a class="nav-link nav-link-logo" href="{%  url 'leagues:league' id=league.id %}"><img src="{{ league.logo.url }}" alt="League Logo">{{ league.abbreviation }}</a>
+                                <a class="nav-link nav-link-logo" href="{%  url 'leagues:leaguePokemonTiers' id=league.id %}"><img src="{{ league.logo.url }}" alt="League Logo">{{ league.abbreviation }}</a>
                             </li>
                         {% endfor %}
                     {% else %}

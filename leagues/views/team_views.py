@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from leagues.models import League, Team
 from leagues.forms import TeamForm
 
-from pokemons.models import Type
+from pokemons.models import Type, SpecialMoveCategory
 
 @login_required(login_url="/users/login/")
 def team_settings_view(request, id):
@@ -125,3 +125,20 @@ def get_type_effective_weight(point_value):
         return 2
     else:
         return 1
+    
+@login_required(login_url="/users/login/")
+def special_moves(request, league_id, team_id):
+    if request.user.has_league(league_id):
+        league = League.objects.get(id=league_id)
+        team = Team.objects.get(id=team_id)
+        pokemon = team.pokemons.order_by('-point_value')
+        categories = [choice[0] for choice in SpecialMoveCategory.choices]
+        specialMoves = {}
+        for p in pokemon:
+            for psm in p.pokemon_special_moves.all():
+                if psm.category not in specialMoves:
+                    specialMoves[psm.category] = []
+                specialMoves[psm.category].append({'pokemon': p, 'move': psm.name})
+        return render(request, "leagues/team/special_moves.html", {'league': league, 'team': team, 'categories': categories, 'specialMoves': specialMoves})
+    else:
+        return HttpResponse(status=400)

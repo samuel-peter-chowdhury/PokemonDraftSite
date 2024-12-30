@@ -1,9 +1,9 @@
 <div id="team-matchup-type-effective-{{team.id}}">
-    <div class="table-responsive pokemon-table compact">
+    <div class="table-responsive pokemon-table responsive">
         <table class="table table-dark table-striped table-hover table-bordered">
             <thead>
                 <tr>
-                    <th class="pokemon-sprite"></th>
+                    <th class="pokemon-sprite" style="position: sticky; left: 0;"></th>
                     {% for t in types %}
                         <th class="table-cell-small text-capitalize" style="background-color: {{t.color}}; border: none;">{{ t.name }}</th>
                     {% endfor %}
@@ -12,9 +12,9 @@
             <tbody>
                 {% for p in pokemon %}
                     <tr>
-                        <td class="pokemon-sprite">
+                        <td class="pokemon-sprite" style="position: sticky; left: 0;">
                             <div>
-                                <img src="{{ p.sprite_url }}" alt="Pokemon Sprite">
+                                <img src="{{ p.sprite_url }}" alt="Pokemon Sprite" style="cursor: pointer" hx-get="{% url 'leagues:leaguePokemonModal' league_id=league.id pokemon_id=p.id %}" hx-trigger="click" hx-target="#pokemon-modal" hx-swap="innerHTML">
                             </div>
                         </td>
                         {% for t in types %}
@@ -23,27 +23,27 @@
                     </tr>
                 {% endfor %}
                 <tr class="border-top border-white border-2">
-                    <td class="pokemon-sprite"><div>Total</div></td>
+                    <td class="pokemon-sprite" style="position: sticky; left: 0;"><div>Total</div></td>
                     {% for t in types %}
                         {% with totalTypeEffective|get_item:t.id as total %}
                             {% if total >= 2 %}
-                                <td class="table-cell-small speed-stat-text" style="background-color: #2EB62C; --bs-table-accent-bg: none;">{{ total|floatformat }}</td>
+                                <td class="table-cell-small fw-bold text-black" style="text-align: center; background-color: #2EB62C; --bs-table-accent-bg: none;">{{ total|floatformat }}</td>
                             {% elif total >= 1.5 %}
-                                <td class="table-cell-small speed-stat-text" style="background-color: #57C84D; --bs-table-accent-bg: none;">{{ total|floatformat }}</td>
+                                <td class="table-cell-small fw-bold text-black" style="text-align: center; background-color: #57C84D; --bs-table-accent-bg: none;">{{ total|floatformat }}</td>
                             {% elif total >= 1 %}
-                                <td class="table-cell-small speed-stat-text" style="background-color: #83D475; --bs-table-accent-bg: none;">{{ total|floatformat }}</td>
+                                <td class="table-cell-small fw-bold text-black" style="text-align: center; background-color: #83D475; --bs-table-accent-bg: none;">{{ total|floatformat }}</td>
                             {% elif total >= 0.5 %}
-                                <td class="table-cell-small speed-stat-text" style="background-color: #ABE098; --bs-table-accent-bg: none;">{{ total|floatformat }}</td>
+                                <td class="table-cell-small fw-bold text-black" style="text-align: center; background-color: #ABE098; --bs-table-accent-bg: none;">{{ total|floatformat }}</td>
                             {% elif total >= 0 %}
-                                <td class="table-cell-small speed-stat-text" style="background-color: #C5E8B7; --bs-table-accent-bg: none;">{{ total|floatformat }}</td>
+                                <td class="table-cell-small fw-bold text-black" style="text-align: center; background-color: #C5E8B7; --bs-table-accent-bg: none;">{{ total|floatformat }}</td>
                             {% elif total >= -0.5 %}
-                                <td class="table-cell-small speed-stat-text" style="background-color: #F1959B; --bs-table-accent-bg: none;">{{ total|floatformat }}</td>
+                                <td class="table-cell-small fw-bold text-black" style="text-align: center; background-color: #F1959B; --bs-table-accent-bg: none;">{{ total|floatformat }}</td>
                             {% elif total >= -1 %}
-                                <td class="table-cell-small speed-stat-text" style="background-color: #F07470; --bs-table-accent-bg: none;">{{ total|floatformat }}</td>
+                                <td class="table-cell-small fw-bold text-black" style="text-align: center; background-color: #F07470; --bs-table-accent-bg: none;">{{ total|floatformat }}</td>
                             {% elif total >= -1.5 %}
-                                <td class="table-cell-small speed-stat-text" style="background-color: #EA4C46; --bs-table-accent-bg: none;">{{ total|floatformat }}</td>
+                                <td class="table-cell-small fw-bold text-black" style="text-align: center; background-color: #EA4C46; --bs-table-accent-bg: none;">{{ total|floatformat }}</td>
                             {% else %}
-                                <td class="table-cell-small speed-stat-text" style="background-color: #DC1C13; --bs-table-accent-bg: none;">{{ total|floatformat }}</td>
+                                <td class="table-cell-small fw-bold text-black" style="text-align: center; background-color: #DC1C13; --bs-table-accent-bg: none;">{{ total|floatformat }}</td>
                             {% endif %}
                         {% endwith %}
                     {% endfor %}

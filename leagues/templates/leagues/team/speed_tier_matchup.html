@@ -18,7 +18,7 @@
                     {% endif %}
                 </div>
             </div>
-            <div class="pokemon-table compact">
+            <div class="pokemon-table responsive">
                 <table class="table table-dark table-striped table-hover table-bordered">
                     <thead>
                         <tr>
@@ -60,11 +60,13 @@
                             <tr>
                                 <td class="pokemon-sprite">
                                     <div>
-                                        <img src="{{ p.sprite_url }}" alt="Pokemon Sprite">
+                                        <img src="{{ p.sprite_url }}" alt="Pokemon Sprite" style="cursor: pointer" hx-get="{% url 'leagues:leaguePokemonModal' league_id=league.id pokemon_id=p.id %}" hx-trigger="click" hx-target="#pokemon-modal" hx-swap="innerHTML">
                                     </div>
                                 </td>
-                                <td class="table-cell-medium text-capitalize d-none d-md-table-cell">{{ p.name|truncatechars:12 }}</td>
-                                <td class="table-cell-small speed-stat-text" style="background-color: {{ p.speed|get_stat_color }}; --bs-table-accent-bg: none;">{{ p.speed }}</td>
+                                <td class="table-cell-medium text-capitalize d-none d-md-table-cell">
+                                    <a href="{{ p.get_smogon_link }}" target="_blank">{{ p.name|truncatechars:12 }}</a>
+                                </td>
+                                <td class="table-cell-small fw-bold text-black" style="text-align: center; background-color: {{ p.speed|get_stat_color }}; --bs-table-accent-bg: none;">{{ p.speed }}</td>
                                 <td class="table-cell-xsmall d-none d-md-table-cell">{{ p.speed|get_speed:'0' }}</td>
                                 <td class="table-cell-xsmall d-none d-md-table-cell">{{ p.speed|get_speed:'252' }}</td>
                                 <td class="table-cell-xsmall">{{ p.speed|get_speed:'252+' }}</td>
@@ -93,7 +95,7 @@
                     {% endif %}
                 </div>
             </div>
-            <div class="pokemon-table compact">
+            <div class="pokemon-table responsive">
                 <table class="table table-dark table-striped table-hover table-bordered">
                     <thead>
                         <tr>
@@ -135,11 +137,13 @@
                             <tr>
                                 <td class="pokemon-sprite">
                                     <div>
-                                        <img src="{{ p.sprite_url }}" alt="Pokemon Sprite">
+                                        <img src="{{ p.sprite_url }}" alt="Pokemon Sprite" style="cursor: pointer" hx-get="{% url 'leagues:leaguePokemonModal' league_id=league.id pokemon_id=p.id %}" hx-trigger="click" hx-target="#pokemon-modal" hx-swap="innerHTML">
                                     </div>
                                 </td>
-                                <td class="table-cell-medium text-capitalize d-none d-md-table-cell">{{ p.name|truncatechars:12 }}</td>
-                                <td class="table-cell-small speed-stat-text" style="background-color: {{ p.speed|get_stat_color }}; --bs-table-accent-bg: none;">{{ p.speed }}</td>
+                                <td class="table-cell-medium text-capitalize d-none d-md-table-cell">
+                                    <a href="{{ p.get_smogon_link }}" target="_blank">{{ p.name|truncatechars:12 }}</a>
+                                </td>
+                                <td class="table-cell-small fw-bold text-black" style="text-align: center; background-color: {{ p.speed|get_stat_color }}; --bs-table-accent-bg: none;">{{ p.speed }}</td>
                                 <td class="table-cell-xsmall d-none d-md-table-cell">{{ p.speed|get_speed:'0' }}</td>
                                 <td class="table-cell-xsmall d-none d-md-table-cell">{{ p.speed|get_speed:'252' }}</td>
                                 <td class="table-cell-xsmall">{{ p.speed|get_speed:'252+' }}</td>
