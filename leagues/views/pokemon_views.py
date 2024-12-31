@@ -104,7 +104,7 @@ def league_pokemon_search_results(request, league_id):
 
                 for f in form.fields:
                     if f.startswith('base_') and form.cleaned_data[f] is not None:
-                        pokemon_objects = pokemon_objects.filter(**{f.split('base_')[1]: form.cleaned_data[f]})
+                        pokemon_objects = pokemon_objects.filter(**{f.split('base_', 1)[1]: form.cleaned_data[f]})
                     if f.startswith('and_') and form.cleaned_data[f] is not None:
                         tokens = list(filter(None, form.cleaned_data[f]))
                         if len(tokens) > 0:
