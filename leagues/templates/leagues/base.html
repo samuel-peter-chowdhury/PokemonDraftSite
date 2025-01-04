@@ -29,13 +29,16 @@
                 <a class="nav-link" href="{%  url 'leagues:leaguePokemonList' id=league.id %}">Pokedex</a>
             </li>-->
             <li class="nav-item">
-                <a class="nav-link" href="{%  url 'leagues:leagueRules' id=league.id %}">Rules</a>
+                <a class="nav-link" href="{%  url 'leagues:leagueRosters' id=league.id %}">Rosters</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{%  url 'leagues:teamMatchup' id=league.id %}">Team Matchup</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{%  url 'leagues:teamSettings' id=league.id %}">Team Settings</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{%  url 'leagues:leagueRules' id=league.id %}">Rules</a>
             </li>
             {% if isLeagueModerator %}
                 <li class="nav-item">

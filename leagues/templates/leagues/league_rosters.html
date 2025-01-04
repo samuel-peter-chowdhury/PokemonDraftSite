@@ -1,0 +1,41 @@
+{% extends 'leagues/base.html' %}
+
+{% block content %}
+    <div class="d-flex flex-row w-100 bg-dark justify-content-center" style="padding: 1em; gap: 2rem; flex-wrap: wrap;">
+        {% for t in teams %}
+            <div class="d-flex flex-column">
+                <div class="d-flex align-items-center justify-content-center bg-dark text-white sticky-header" style="border-bottom: 2px solid white; height: 3rem"><h3 class="mb-0">{{ t.name|truncatechars:20 }}<h3></div>
+                <div class="pokemon-table">
+                    <table class="table table-dark table-striped table-hover table-bordered">
+                        <thead class="sticky-header">
+                            <th class="pokemon-sprite"></th>
+                            <th class="table-cell-medium">Name</th>
+                            <th class="table-cell-small">Pts</th>
+                        </thead>
+                        <tbody>
+                            {% for p in t.pokemons|get_all_ordered_by:'-point_value' %}
+                                <tr>
+                                    <td class="pokemon-sprite">
+                                        <div>
+                                            <img src="{{ p.sprite_url }}" alt="Pokemon Sprite" style="cursor: pointer" hx-get="{% url 'leagues:leaguePokemonModal' league_id=league.id pokemon_id=p.id %}" hx-trigger="click" hx-target="#pokemon-modal" hx-swap="innerHTML">
+                                        </div>
+                                    </td>
+                                    <td class="table-cell-medium text-capitalize">
+                                        <a href="{{ p.get_smogon_link }}" target="_blank">{{ p.name|truncatechars:12 }}</a>
+                                    </td>
+                                    <td class="table-cell-small">{{ p.point_value }}</td>
+                                </tr>
+                            {% endfor %}
+                            <tr>
+                                <td class="pokemon-sprite"></td>
+                                <td class="table-cell-medium">Points Remaining</td>
+                                <td class="table-cell-small">{{ t|get_remaining_points:activeSeason }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div id="pokemon-modal"></div>
+{% endblock %}

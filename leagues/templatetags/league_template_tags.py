@@ -77,3 +77,12 @@ def get_pokemon_coverage_move_dictionary(pokemon):
             coverage_move_dictionary[cm.type.name] = []
         coverage_move_dictionary[cm.type.name].append({'name': cm.name, 'color': cm.type.color})
     return coverage_move_dictionary
+
+@register.filter
+def get_all_ordered_by(obj, order_by_field):
+    return obj.order_by(order_by_field)
+
+@register.filter
+def get_remaining_points(team, season):
+    points_spent = sum([p.point_value for p in team.pokemons.all()])
+    return season.point_limit - points_spent

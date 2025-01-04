@@ -1,7 +1,6 @@
 {% extends 'leagues/base.html' %}
 
 {% block content %}
-    <h1>{{ league.name }} Rules</h1>
     {% if activeSeason and activeSeason.rules %}
         {{ activeSeason.rules|safe }}
     {% else %}
