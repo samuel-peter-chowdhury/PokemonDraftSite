@@ -44,7 +44,7 @@ def modify_team_view(request, id):
     if request.user.has_league(id) and request.user.is_league_moderator(id):
         league = League.objects.get(id=id)
         activeSeason = league.get_active_season()
-        return render(request, "leagues/admin/modify_team.html", {'league': league, 'teams': activeSeason.teams.all(), 'isLeagueModerator': request.user.is_league_moderator(league.id)})
+        return render(request, "leagues/admin/modify_team.html", {'league': league, 'teams': activeSeason.teams.filter(is_active=True), 'isLeagueModerator': request.user.is_league_moderator(league.id)})
     else:
         return redirect("/")
     
