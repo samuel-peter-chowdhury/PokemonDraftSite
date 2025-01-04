@@ -20,6 +20,7 @@ from . import views
 from users import views as user_views
 from django.conf import settings 
 from django.views.static import serve
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
@@ -31,4 +32,8 @@ urlpatterns = [
     re_path(r'^(?P<id>\w+)/password/$', user_views.change_password_view, name='change_password'),
     path('leagues/', include('leagues.urls')),
     path('pokemons/', include('pokemons.urls')),
+    path('reset_password/', auth_views.PasswordResetView.as_view(template_name = "users/reset_password.html"), name ='reset_password'),
+    path('reset_password_sent/', auth_views.PasswordResetDoneView.as_view(template_name = "users/password_reset_sent.html"), name ='password_reset_done'),
+    path('reset/<uidb64>/<token>', auth_views.PasswordResetConfirmView.as_view(template_name = "users/password_reset_form.html"), name ='password_reset_confirm'),
+    path('reset_password_complete/', auth_views.PasswordResetCompleteView.as_view(template_name = "users/password_reset_done.html"), name ='password_reset_complete'),
 ]
