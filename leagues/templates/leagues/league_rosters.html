@@ -1,13 +1,13 @@
 {% extends 'leagues/base.html' %}
 
 {% block content %}
-    <div class="d-flex flex-row w-100 bg-dark justify-content-center" style="padding: 1em; gap: 2rem; flex-wrap: wrap;">
+    <div class="d-flex flex-md-row flex-column w-100 bg-dark justify-content-center" style="padding: 1em; gap: 2rem; flex-wrap: wrap;">
         {% for t in teams %}
             <div class="d-flex flex-column">
                 <div class="d-flex align-items-center justify-content-center bg-dark text-white sticky-header" style="border-bottom: 2px solid white; height: 3rem"><h3 class="mb-0">{{ t.name|truncatechars:20 }}<h3></div>
-                <div class="pokemon-table">
+                <div class="pokemon-table responsive">
                     <table class="table table-dark table-striped table-hover table-bordered">
-                        <thead class="sticky-header">
+                        <thead class="sticky-header" style="top: 3rem">
                             <th class="pokemon-sprite"></th>
                             <th class="table-cell-medium">Name</th>
                             <th class="table-cell-small">Pts</th>

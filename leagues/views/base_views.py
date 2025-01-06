@@ -26,7 +26,10 @@ def league_rosters_view(request, id):
     if request.user.has_league(id):
         league = League.objects.get(id=id)
         activeSeason = league.get_active_season()
-        return render(request, "leagues/league_rosters.html", {'league': league, 'isLeagueModerator': request.user.is_league_moderator(league.id), 'activeSeason': activeSeason, 'teams': activeSeason.teams.filter(is_active=True).order_by('name')})
+        userTeam = request.user.get_active_season_team(activeSeason)
+        teams = list(activeSeason.teams.filter(is_active=True).exclude(id=userTeam.id).order_by('name'))
+        teams.insert(0, userTeam)
+        return render(request, "leagues/league_rosters.html", {'league': league, 'isLeagueModerator': request.user.is_league_moderator(league.id), 'activeSeason': activeSeason, 'teams': teams})
     return redirect(reverse('users:settings'))
 
 @login_required(login_url="/users/login/")
