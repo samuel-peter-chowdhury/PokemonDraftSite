@@ -21,111 +21,132 @@ class DataUploadForm(forms.Form):
     file = forms.FileField()
 
 class PokemonSearchForm(forms.Form):
-    base_name__icontains = forms.CharField(label="Name Match", max_length=50, required=False)
+    base_name__icontains = forms.CharField(label="Name Match", max_length=50, required=False, widget=forms.TextInput(attrs={'style': 'width: 10rem'}))
 
-    base_hp__gte = forms.IntegerField(label="Min HP", required=False)
-    base_hp__lte = forms.IntegerField(label="Max HP", required=False)
-    base_attack__gte = forms.IntegerField(label="Min Atk", required=False)
-    base_attack__lte = forms.IntegerField(label="Max Atk", required=False)
-    base_defense__gte = forms.IntegerField(label="Min Def", required=False)
-    base_defense__lte = forms.IntegerField(label="Max Def", required=False)
-    base_special_attack__gte = forms.IntegerField(label="Min SpA", required=False)
-    base_special_attack__lte = forms.IntegerField(label="Max SpA", required=False)
-    base_special_defense__gte = forms.IntegerField(label="Min SpD", required=False)
-    base_special_defense__lte = forms.IntegerField(label="Max SpD", required=False)
-    base_speed__gte = forms.IntegerField(label="Min Spd", required=False)
-    base_speed__lte = forms.IntegerField(label="Max Spd", required=False)
-    base_base_stat_total__gte = forms.IntegerField(label="Min BST", required=False)
-    base_base_stat_total__lte = forms.IntegerField(label="Max BST", required=False)
-    base_point_value__gte = forms.IntegerField(label="Min Pts", required=False)
-    base_point_value__lte = forms.IntegerField(label="Max Pts", required=False)
+    base_hp__gte = forms.IntegerField(label="Min HP", required=False, widget=forms.NumberInput(attrs={'style': 'width: 5rem'}))
+    base_hp__lte = forms.IntegerField(label="Max HP", required=False, widget=forms.NumberInput(attrs={'style': 'width: 5rem'}))
+    base_attack__gte = forms.IntegerField(label="Min Atk", required=False, widget=forms.NumberInput(attrs={'style': 'width: 5rem'}))
+    base_attack__lte = forms.IntegerField(label="Max Atk", required=False, widget=forms.NumberInput(attrs={'style': 'width: 5rem'}))
+    base_defense__gte = forms.IntegerField(label="Min Def", required=False, widget=forms.NumberInput(attrs={'style': 'width: 5rem'}))
+    base_defense__lte = forms.IntegerField(label="Max Def", required=False, widget=forms.NumberInput(attrs={'style': 'width: 5rem'}))
+    base_special_attack__gte = forms.IntegerField(label="Min SpA", required=False, widget=forms.NumberInput(attrs={'style': 'width: 5rem'}))
+    base_special_attack__lte = forms.IntegerField(label="Max SpA", required=False, widget=forms.NumberInput(attrs={'style': 'width: 5rem'}))
+    base_special_defense__gte = forms.IntegerField(label="Min SpD", required=False, widget=forms.NumberInput(attrs={'style': 'width: 5rem'}))
+    base_special_defense__lte = forms.IntegerField(label="Max SpD", required=False, widget=forms.NumberInput(attrs={'style': 'width: 5rem'}))
+    base_speed__gte = forms.IntegerField(label="Min Spd", required=False, widget=forms.NumberInput(attrs={'style': 'width: 5rem'}))
+    base_speed__lte = forms.IntegerField(label="Max Spd", required=False, widget=forms.NumberInput(attrs={'style': 'width: 5rem'}))
+    base_base_stat_total__gte = forms.IntegerField(label="Min BST", required=False, widget=forms.NumberInput(attrs={'style': 'width: 5rem'}))
+    base_base_stat_total__lte = forms.IntegerField(label="Max BST", required=False, widget=forms.NumberInput(attrs={'style': 'width: 5rem'}))
+    base_point_value__gte = forms.IntegerField(label="Min Pts", required=False, widget=forms.NumberInput(attrs={'style': 'width: 5rem'}))
+    base_point_value__lte = forms.IntegerField(label="Max Pts", required=False, widget=forms.NumberInput(attrs={'style': 'width: 5rem'}))
 
     and_pokemon_types__type__name__iexact = forms.MultipleChoiceField(
-        label="Types (AND)",
+        label="Types (&)",
         choices=TYPE_CHOICES,
-        required=False
+        required=False,
+        widget=forms.SelectMultiple(attrs={'style': 'width: 10rem'})
     )
     or_pokemon_types__type__name__iexact = forms.MultipleChoiceField(
-        label="Types (OR)",
+        label="Types (|)",
         choices=TYPE_CHOICES,
-        required=False
+        required=False,
+        widget=forms.SelectMultiple(attrs={'style': 'width: 10rem'})
     )
 
     and_pokemon_abilities__name__iexact = forms.MultipleChoiceField(
-        label="Abilities (AND)",
+        label="Abilities (&)",
         choices=ABILITY_CHOICES,
-        required=False
+        required=False,
+        widget=forms.SelectMultiple(attrs={'style': 'width: 10rem'})
     )
     or_pokemon_abilities__name__iexact = forms.MultipleChoiceField(
-        label="Abilities (OR)",
+        label="Abilities (|)",
         choices=ABILITY_CHOICES,
-        required=False
+        required=False,
+        widget=forms.SelectMultiple(attrs={'style': 'width: 10rem'})
     )
 
     and_pokemon_moves__name__iexact = forms.MultipleChoiceField(
-        label="Moves (AND)",
+        label="Moves (&)",
         choices=MOVE_CHOICES,
-        required=False
+        required=False,
+        widget=forms.SelectMultiple(attrs={'style': 'width: 10rem'})
     )
     or_pokemon_moves__name__iexact = forms.MultipleChoiceField(
-        label="Moves (OR)",
+        label="Moves (|)",
         choices=MOVE_CHOICES,
-        required=False
+        required=False,
+        widget=forms.SelectMultiple(attrs={'style': 'width: 10rem'})
     )
 
     and_pokemon_coverage_moves__type__name__iexact = forms.MultipleChoiceField(
-        label="Coverage Move Types (AND)",
+        label="Coverage Moves (&)",
         choices=TYPE_CHOICES,
-        required=False
+        required=False,
+        widget=forms.SelectMultiple(attrs={'style': 'width: 10rem'})
     )
     or_pokemon_coverage_moves__type__name__iexact = forms.MultipleChoiceField(
-        label="Coverage Move Types (OR)",
+        label="Coverage Moves (|)",
         choices=TYPE_CHOICES,
-        required=False
+        required=False,
+        widget=forms.SelectMultiple(attrs={'style': 'width: 10rem'})
     )
 
     and_pokemon_special_moves__category__iexact = forms.MultipleChoiceField(
-        label="Special Move Categories (AND)",
+        label="Special Moves (&)",
         choices=SpecialMoveCategory.choices,
-        required=False
+        required=False,
+        widget=forms.SelectMultiple(attrs={'style': 'width: 10rem'})
     )
     or_pokemon_special_moves__category__iexact = forms.MultipleChoiceField(
-        label="Special Move Categories (OR)",
+        label="Special Moves (|)",
         choices=SpecialMoveCategory.choices,
-        required=False
+        required=False,
+        widget=forms.SelectMultiple(attrs={'style': 'width: 10rem'})
     )
 
     and_pokemon_type_effectives__type__name__iexact___pokemon_type_effectives__value__lt___1 = forms.MultipleChoiceField(
-        label="Resisted Types (AND)",
+        label="Resisted Types (&)",
         choices=TYPE_CHOICES,
-        required=False
+        required=False,
+        widget=forms.SelectMultiple(attrs={'style': 'width: 10rem'})
     )
     or_pokemon_type_effectives__type__name__iexact___pokemon_type_effectives__value__lt___1 = forms.MultipleChoiceField(
-        label="Resisted Types (OR)",
+        label="Resisted Types (|)",
         choices=TYPE_CHOICES,
-        required=False
+        required=False,
+        widget=forms.SelectMultiple(attrs={'style': 'width: 10rem'})
     )
 
     and_pokemon_type_effectives__type__name__iexact___pokemon_type_effectives__value__gt___1 = forms.MultipleChoiceField(
-        label="Weak Types (AND)",
+        label="Weak Types (&)",
         choices=TYPE_CHOICES,
-        required=False
+        required=False,
+        widget=forms.SelectMultiple(attrs={'style': 'width: 10rem'})
     )
     or_pokemon_type_effectives__type__name__iexact___pokemon_type_effectives__value__gt___1 = forms.MultipleChoiceField(
-        label="Weak Types (OR)",
+        label="Weak Types (|)",
         choices=TYPE_CHOICES,
-        required=False
+        required=False,
+        widget=forms.SelectMultiple(attrs={'style': 'width: 10rem'})
     )
 
     and_pokemon_type_effectives__type__name__iexact___pokemon_type_effectives__value___0 = forms.MultipleChoiceField(
-        label="Immune Types (AND)",
+        label="Immune Types (&)",
         choices=TYPE_CHOICES,
-        required=False
+        required=False,
+        widget=forms.SelectMultiple(attrs={'style': 'width: 10rem'})
     )
     or_pokemon_type_effectives__type__name__iexact___pokemon_type_effectives__value___0 = forms.MultipleChoiceField(
-        label="Immune Types (OR)",
+        label="Immune Types (|)",
         choices=TYPE_CHOICES,
-        required=False
+        required=False,
+        widget=forms.SelectMultiple(attrs={'style': 'width: 10rem'})
+    )
+    exclude_drafted_pokemon = forms.BooleanField(
+        label="Exclude Drafted Pokemon",
+        required=False,
+        initial=True
     )
 
 class PokemonSimpleSearchForm(forms.Form):

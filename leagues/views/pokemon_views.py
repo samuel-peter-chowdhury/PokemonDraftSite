@@ -90,7 +90,7 @@ def league_pokemon_search_results(request, league_id):
         league = League.objects.get(id=league_id)
         activeSeason = league.get_active_season()
         page = 1
-        pageSize = 20
+        pageSize = 10
         orderBy = 'name'
         p = None
         if request.method == "POST":
@@ -98,11 +98,13 @@ def league_pokemon_search_results(request, league_id):
             form = PokemonSearchForm(data=request.POST)
             if form.is_valid():
                 page = request.GET.get('page', '1')
-                pageSize = request.GET.get('page_size', '20')
+                pageSize = request.GET.get('page_size', '10')
                 orderBy = request.GET.get('order_by', '-point_value')
                 pokemon_objects = Pokemon.objects.filter(season=activeSeason)
 
                 for f in form.fields:
+                    if f.startswith('exclude_') and form.cleaned_data[f] is not None and form.cleaned_data[f]:
+                        pokemon_objects = pokemon_objects.filter(team=None)
                     if f.startswith('base_') and form.cleaned_data[f] is not None:
                         pokemon_objects = pokemon_objects.filter(**{f.split('base_', 1)[1]: form.cleaned_data[f]})
                     if f.startswith('and_') and form.cleaned_data[f] is not None:
