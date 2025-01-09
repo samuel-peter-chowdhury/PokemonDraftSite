@@ -30,7 +30,7 @@
     <script src="https://unpkg.com/htmx.org@1.6.0"></script>
 </head>
 <body>
-    <nav class="navbar navbar-expand bg-dark navbar-dark shadow-sm">
+    <nav class="navbar navbar-expand navbar-dark shadow-sm" style="position: sticky; top: 0; z-index: 10; background-color: #101214;">
         <div class="container-fluid justify-space-between">
             {% if user.is_authenticated %}
                 <ul class="navbar-nav">
