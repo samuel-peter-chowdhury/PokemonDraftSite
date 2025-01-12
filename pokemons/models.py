@@ -17,8 +17,13 @@ class SpecialMoveCategory(models.TextChoices):
     ITEM_REMOVAL = "item removal",
     STATUS = "status",
 
+class MoveCategory(models.TextChoices):
+    PHYSICAL = "physical",
+    SPECIAL = "special",
+    STATUS = "status"
+
 class Pokemon(BaseModel):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
     dex_number = models.IntegerField(blank=True, null=True)
     hp = models.IntegerField()
     attack = models.IntegerField()
@@ -48,11 +53,33 @@ class Pokemon(BaseModel):
             return f'https://www.smogon.com/dex/sv/pokemon/{self.sprite_url.split("xy/")[1].split(".gif")[0]}'
 
 class Type(BaseModel):
-    name = models.CharField(max_length=10)
+    name = models.CharField(max_length=10, unique=True)
     color = models.CharField(max_length=7)
 
     def __str__(self):
         return self.name
+    
+class DetailedMove(BaseModel):
+    name =  models.CharField(max_length=50, unique=True)
+    base_power = models.IntegerField()
+    type = models.ForeignKey(Type, on_delete=models.CASCADE, related_name='detailed_moves')
+    accuracy = models.IntegerField()
+    pp = models.IntegerField()
+    priority = models.IntegerField()
+    category = models.CharField(max_length=8, choices=MoveCategory.choices)
+    special_category = models.CharField(max_length=16, choices=SpecialMoveCategory.choices, blank=True, null=True)
+    viable = models.BooleanField()
+
+    def __str__(self):
+        return self.name
+
+class PokemonDetailedMove(BaseModel):
+    pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE, related_name='pokemon_detailed_moves')
+    detailed_move = models.ForeignKey(DetailedMove, on_delete=models.CASCADE, related_name='pokemon_detailed_moves')
+
+    def __str__(self):
+        return f'{self.pokemon}:{self.detailed_move}'
+
 
 class PokemonType(BaseModel):
     pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE, related_name='pokemon_types')

@@ -60,12 +60,15 @@
                         <a class="nav-link" href="{%  url 'leagues:adminModifyTiers' id=league.id %}">Modify Tiers</a>
                     </li>
                     {% if user.is_superuser %}
-                        <li class="nav-item">
+                        <!--<li class="nav-item">
                             <a class="nav-link" href="{%  url 'leagues:adminInitializePokemonData' id=league.id %}">Pokemon Data</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{%  url 'leagues:adminInitializePointData' id=league.id %}">Point Data</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{%  url 'leagues:adminInitializeMoveData' id=league.id %}">Move Data</a>
+                        </li>-->
                     {% endif %}
                 </ul>
             </div>

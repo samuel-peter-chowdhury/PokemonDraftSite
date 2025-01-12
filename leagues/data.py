@@ -1,9 +1,100 @@
 import requests
+import json
 
-from pokemons.models import Pokemon, Type, PokemonType, PokemonTypeEffective, PokemonCoverageMove, PokemonSpecialMove, PokemonMove, PokemonAbility
+from pokemons.models import Pokemon, Type, PokemonType, PokemonTypeEffective, PokemonCoverageMove, PokemonSpecialMove, PokemonMove, PokemonAbility, DetailedMove, PokemonDetailedMove
+
+def initialize_detailed_move_data(season):
+    # Initialize special move data
+    special_moves_file = open('special_moves.json',)
+    special_moves_data = json.load(special_moves_file)
+    inverted_special_move_map = {}
+    for key, value in special_moves_data.items():
+        for move in value:
+            inverted_special_move_map[move] = key
+    special_moves_file.close()
+
+    # Initialize move data
+    moves_file = open('moves.json')
+    moves_data = json.load(moves_file)["9"]
+    moves_file.close()
+
+    # Initialize pokemon data
+    pokemon_file = open('species.json')
+    pokemon_data = json.load(pokemon_file)["9"]
+    pokemon_file.close()
+
+    # Initialize learnset data
+    learnsets_file = open('learnsets.json')
+    learnsets_data = json.load(learnsets_file)["9"]
+    learnsets_file.close()
+
+    # Initialize move and type map for easy access
+    moveMap = {}
+    typeMap = {}
+
+    DetailedMove.objects.all().delete()
+
+    index = 1
+    for learnsets_key, learnsets_value in learnsets_data.items():
+        print(index)
+        pokemon_name = pokemon_data[learnsets_key]['name'].lower()
+        try:
+            pokemon = Pokemon.objects.get(name=pokemon_name, season=season)
+        except:
+            print(f'********* Failed to retrieve: {pokemon_name} *********')
+            continue
+        try:
+            mega_pokemons = Pokemon.objects.filter(name__contains=pokemon_name + '-mega', season=season)
+            if mega_pokemons is not None:
+                mega_pokemons = list(mega_pokemons)
+                for mp in mega_pokemons:
+                    print(f'********* Retrieved mega: {mp.name} *********')
+        except:
+            pass
+        try:
+            learnset = learnsets_value['learnset']
+        except:
+            print(f'********* No learnset: {pokemon_name} *********')
+            continue
+        for m in learnset.keys():
+            m_data = moves_data[m]
+            move_name = m_data['name'].lower()
+            if move_name in moveMap:
+                move = moveMap[move_name]
+            else:
+                move = DetailedMove()
+                move.name = move_name
+                move.base_power = m_data['basePower']
+                type_name = m_data['type'].lower()
+                if type_name in typeMap:
+                    type = typeMap[type_name]
+                else:
+                    type = Type.objects.get(name=type_name)
+                    typeMap[type_name] = type
+                move.type = type
+                move.accuracy = 100 if isinstance(m_data['accuracy'], bool) else m_data['accuracy']
+                move.pp = m_data['pp']
+                move.priority = m_data['priority']
+                move.category = m_data['category'].lower()
+                move.special_category = inverted_special_move_map[move_name] if move_name in inverted_special_move_map else None
+                move.viable = (move.base_power >= 60 or move.base_power == 0 or 'multihit' in m_data) and (move.accuracy >= 70) and (move.category != 'status')
+                move.save()
+                moveMap[move_name] = move
+            pokemon_detailed_move = PokemonDetailedMove()
+            pokemon_detailed_move.pokemon = pokemon
+            pokemon_detailed_move.detailed_move = move
+            pokemon_detailed_move.save()
+
+            if mega_pokemons is not None and len(mega_pokemons) > 0:
+                for mp in mega_pokemons:
+                    pokemon_detailed_move = PokemonDetailedMove()
+                    pokemon_detailed_move.pokemon = mp
+                    pokemon_detailed_move.detailed_move = move
+                    pokemon_detailed_move.save()
+        index += 1
 
 def initialize_pokemon_data(data, season):
-     for p in data:
+    for p in data:
         pokemon = Pokemon()
         pokemon.name = p['name'].lower()
         pokemon.dex_number = p['dex_number']

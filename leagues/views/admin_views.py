@@ -7,8 +7,15 @@ import csv
 
 from leagues.forms import PokemonSimpleSearchForm, DataUploadForm
 from leagues.models import League, Team
-from leagues.data import initialize_pokemon_data, initialize_point_value_data
+from leagues.data import initialize_detailed_move_data, initialize_pokemon_data, initialize_point_value_data
 from pokemons.models import Pokemon
+
+@user_passes_test(lambda u: u.is_superuser)
+def initialize_detailed_move_data_view(request, id):
+    league = League.objects.get(id=id)
+    activeSeason = league.get_active_season()
+    #initialize_detailed_move_data(activeSeason)
+    return render(request, "leagues/admin/initialize_detailed_move_data.html", { 'league': league, 'isLeagueModerator': request.user.is_league_moderator(league.id) })
 
 @user_passes_test(lambda u: u.is_superuser)
 def initialize_pokemon_data_view(request, id):
@@ -112,7 +119,7 @@ def get_admin_modify_tier(request, league_id, tier):
         league = League.objects.get(id=league_id)
         activeSeason = league.get_active_season()
         orderBy = request.GET.get('order_by', 'name')
-        pokemon = Pokemon.objects.defer('pokemon_type_effectives', 'pokemon_coverage_moves', 'pokemon_special_moves', 'pokemon_moves').filter(season=activeSeason, point_value=tier).order_by(orderBy)
+        pokemon = Pokemon.objects.defer('pokemon_type_effectives', 'pokemon_detailed_moves', 'pokemon_coverage_moves', 'pokemon_special_moves', 'pokemon_moves').filter(season=activeSeason, point_value=tier).order_by(orderBy)
         return render(request, "leagues/admin/modify_tier.html", {'league': league, 'tier': tier, 'pokemon': pokemon, 'orderBy': orderBy})
     else:
         return HttpResponse(status=400)

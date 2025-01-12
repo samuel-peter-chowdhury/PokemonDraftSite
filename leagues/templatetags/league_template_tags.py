@@ -1,6 +1,9 @@
 from django.template.defaulttags import register
+from django.db.models import Subquery
+from pokemons.models import DetailedMove
 
 import math
+import operator
 
 @register.filter
 def get_item(dictionary, key):
@@ -63,19 +66,29 @@ def get_stat_color(stat):
 @register.filter
 def get_pokemon_special_move_dictionary(pokemon):
     special_move_dictionary = {}
-    for sm in pokemon.pokemon_special_moves.all().order_by('name'):
-        if sm.category not in special_move_dictionary:
-            special_move_dictionary[sm.category] = []
-        special_move_dictionary[sm.category].append(sm.name)
+    special_move_subquery = DetailedMove.objects.exclude(special_category__isnull=True).only('id').all()
+    special_moves = pokemon.pokemon_detailed_moves.filter(detailed_move__id__in=Subquery(special_move_subquery))
+    for sm in special_moves:
+        move = sm.detailed_move
+        if move.special_category not in special_move_dictionary:
+            special_move_dictionary[move.special_category] = []
+        special_move_dictionary[move.special_category].append({'name': move.name, 'category': move.category, 'color': move.type.color})
+    for key, value in special_move_dictionary.items():
+        special_move_dictionary[key] = sorted(value, key = lambda x: (x['color'], x['category'], x['name']))
     return special_move_dictionary
 
 @register.filter
 def get_pokemon_coverage_move_dictionary(pokemon):
     coverage_move_dictionary = {}
-    for cm in pokemon.pokemon_coverage_moves.all().order_by('name'):
-        if cm.type.name not in coverage_move_dictionary:
-            coverage_move_dictionary[cm.type.name] = []
-        coverage_move_dictionary[cm.type.name].append({'name': cm.name, 'color': cm.type.color})
+    coverage_move_subquery = DetailedMove.objects.exclude(viable=False).only('id').all()
+    coverage_moves = pokemon.pokemon_detailed_moves.filter(detailed_move__id__in=Subquery(coverage_move_subquery))
+    for cm in coverage_moves:
+        move = cm.detailed_move
+        if move.type.name not in coverage_move_dictionary:
+            coverage_move_dictionary[move.type.name] = []
+        coverage_move_dictionary[move.type.name].append({'name': move.name, 'category': move.category, 'color': move.type.color})
+    for key, value in coverage_move_dictionary.items():
+        coverage_move_dictionary[key] = sorted(value, key = lambda x: (x['category'], x['name']))
     return coverage_move_dictionary
 
 @register.filter
@@ -86,3 +99,20 @@ def get_all_ordered_by(obj, order_by_field):
 def get_remaining_points(team, season):
     points_spent = sum([p.point_value for p in team.pokemons.all()])
     return season.point_limit - points_spent
+
+@register.filter
+def get_sorted_keys(dict):
+    return sorted(list(dict.keys()))
+
+@register.filter
+def get_stat_value_length(value):
+    return math.ceil(value * 0.8)
+
+@register.filter
+def get_category_icon(category):
+    if category == 'physical':
+        return 'fa-hand-fist'
+    elif category == 'special':
+        return 'fa-hand-sparkles'
+    else:
+        return 'fa-screwdriver-wrench'

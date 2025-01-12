@@ -18,7 +18,7 @@ def league_pokemon_list_view(request, id):
         page = request.GET.get('page', '1')
         pageSize = request.GET.get('page_size', '10')
         orderBy = request.GET.get('order_by', 'name')
-        pokemon = Pokemon.objects.defer('pokemon_type_effectives', 'pokemon_coverage_moves', 'pokemon_special_moves', 'pokemon_moves').filter(season=activeSeason).order_by(orderBy)
+        pokemon = Pokemon.objects.defer('pokemon_type_effectives', 'pokemon_detailed_moves', 'pokemon_coverage_moves', 'pokemon_special_moves', 'pokemon_moves').filter(season=activeSeason).order_by(orderBy)
         p = Paginator(pokemon, pageSize)
         return render(request, "leagues/pokemon/league_pokemon_list.html", {'league': league, 'isLeagueModerator': request.user.is_league_moderator(league.id), 'activeSeason': activeSeason, 'pokemonPage': p.page(page), 'lastPage': p.num_pages, 'pageSize': pageSize, 'orderBy': orderBy})
     else:
@@ -48,7 +48,7 @@ def get_tier(request, league_id, tier):
         activeSeason = league.get_active_season()
         orderBy = request.GET.get('order_by', 'name')
         tierListZoom = request.GET.get('tier_list_zoom', 'compact')
-        pokemon = Pokemon.objects.defer('pokemon_type_effectives', 'pokemon_coverage_moves', 'pokemon_special_moves', 'pokemon_moves').filter(season=activeSeason, point_value=tier).order_by(orderBy)
+        pokemon = Pokemon.objects.defer('pokemon_type_effectives', 'pokemon_detailed_moves', 'pokemon_coverage_moves', 'pokemon_special_moves', 'pokemon_moves').filter(season=activeSeason, point_value=tier).order_by(orderBy)
         return render(request, "leagues/pokemon/league_pokemon_tier.html", {'league': league, 'tier': tier, 'pokemon': pokemon, 'orderBy': orderBy, 'tierListZoom': tierListZoom})
     else:
         return HttpResponse(status=400)
@@ -69,7 +69,7 @@ def get_type_tier(request, league_id, type_id):
         league = League.objects.get(id=league_id)
         activeSeason = league.get_active_season()
         orderBy = request.GET.get('order_by', '-point_value')
-        pokemon = Pokemon.objects.defer('pokemon_type_effectives', 'pokemon_coverage_moves', 'pokemon_special_moves', 'pokemon_moves').filter(season=activeSeason, point_value__isnull=False, pokemon_types__type__id=type_id).order_by(orderBy)
+        pokemon = Pokemon.objects.defer('pokemon_type_effectives', 'pokemon_detailed_moves', 'pokemon_coverage_moves', 'pokemon_special_moves', 'pokemon_moves').filter(season=activeSeason, point_value__isnull=False, pokemon_types__type__id=type_id).order_by(orderBy)
         type = Type.objects.get(id=type_id)
         return render(request, "leagues/pokemon/league_pokemon_type_tier.html", {'league': league, 'type': type, 'pokemon': pokemon, 'orderBy': orderBy})
     else:
