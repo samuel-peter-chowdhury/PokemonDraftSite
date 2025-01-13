@@ -15,83 +15,64 @@ def initialize_detailed_move_data(season):
 
     # Initialize move data
     moves_file = open('moves.json')
-    moves_data = json.load(moves_file)["9"]
+    moves_data = json.load(moves_file)
     moves_file.close()
 
     # Initialize pokemon data
-    pokemon_file = open('species.json')
-    pokemon_data = json.load(pokemon_file)["9"]
+    pokemon_file = open('pokemon_data.json')
+    pokemon_data = json.load(pokemon_file)
     pokemon_file.close()
-
-    # Initialize learnset data
-    learnsets_file = open('learnsets.json')
-    learnsets_data = json.load(learnsets_file)["9"]
-    learnsets_file.close()
 
     # Initialize move and type map for easy access
     moveMap = {}
     typeMap = {}
 
+    # Delete all existing data
     DetailedMove.objects.all().delete()
 
-    index = 1
-    for learnsets_key, learnsets_value in learnsets_data.items():
-        print(index)
-        pokemon_name = pokemon_data[learnsets_key]['name'].lower()
-        try:
-            pokemon = Pokemon.objects.get(name=pokemon_name, season=season)
-        except:
-            print(f'********* Failed to retrieve: {pokemon_name} *********')
-            continue
-        try:
-            mega_pokemons = Pokemon.objects.filter(name__contains=pokemon_name + '-mega', season=season)
-            if mega_pokemons is not None:
-                mega_pokemons = list(mega_pokemons)
-                for mp in mega_pokemons:
-                    print(f'********* Retrieved mega: {mp.name} *********')
-        except:
-            pass
-        try:
-            learnset = learnsets_value['learnset']
-        except:
-            print(f'********* No learnset: {pokemon_name} *********')
-            continue
-        for m in learnset.keys():
-            m_data = moves_data[m]
-            move_name = m_data['name'].lower()
-            if move_name in moveMap:
-                move = moveMap[move_name]
+    # Initialize all moves in json file
+    print('Initializing moves...')
+    size = len(moves_data)
+    for i, m in enumerate(moves_data):
+        print('\r{}/{}'.format(i + 1, size), end='')
+        move_name = m['name'].lower()
+        if move_name in moveMap:
+            move = moveMap[move_name]
+        else:
+            move = DetailedMove()
+            move.name = move_name
+            move.base_power = m['power']
+            type_name = m['type'].lower()
+            if type_name in typeMap:
+                type = typeMap[type_name]
             else:
-                move = DetailedMove()
-                move.name = move_name
-                move.base_power = m_data['basePower']
-                type_name = m_data['type'].lower()
-                if type_name in typeMap:
-                    type = typeMap[type_name]
-                else:
-                    type = Type.objects.get(name=type_name)
-                    typeMap[type_name] = type
-                move.type = type
-                move.accuracy = 100 if isinstance(m_data['accuracy'], bool) else m_data['accuracy']
-                move.pp = m_data['pp']
-                move.priority = m_data['priority']
-                move.category = m_data['category'].lower()
-                move.special_category = inverted_special_move_map[move_name] if move_name in inverted_special_move_map else None
-                move.viable = (move.base_power >= 60 or move.base_power == 0 or 'multihit' in m_data) and (move.accuracy >= 70) and (move.category != 'status')
-                move.save()
-                moveMap[move_name] = move
+                type = Type.objects.get(name=type_name)
+                typeMap[type_name] = type
+            move.type = type
+            move.accuracy = m['accuracy']
+            move.pp = m['pp']
+            move.priority = m['priority']
+            category = m['category'].lower()
+            move.category = 'status' if category == 'non-damaging' else category
+            move.special_category = inverted_special_move_map[move_name] if move_name in inverted_special_move_map else None
+            move.viable = (move.base_power >= 60 or move.base_power == 0 or 'times' in m['description']) and (move.accuracy >= 70) and (move.category != 'status')
+            move.save()
+            moveMap[move_name] = move
+
+    print('\n')
+
+    print('Initializing pokemon with moves...')
+    size = len(pokemon_data)
+    for i, p in enumerate(pokemon_data):
+        print('\r{}/{}'.format(i + 1, size), end='')
+        pokemon_name = p['name'].lower()
+        pokemon = Pokemon.objects.get(name=pokemon_name, season=season)
+        for m in p['moves']:
+            move_name = m.lower()
             pokemon_detailed_move = PokemonDetailedMove()
             pokemon_detailed_move.pokemon = pokemon
-            pokemon_detailed_move.detailed_move = move
+            pokemon_detailed_move.detailed_move = moveMap[move_name]
             pokemon_detailed_move.save()
-
-            if mega_pokemons is not None and len(mega_pokemons) > 0:
-                for mp in mega_pokemons:
-                    pokemon_detailed_move = PokemonDetailedMove()
-                    pokemon_detailed_move.pokemon = mp
-                    pokemon_detailed_move.detailed_move = move
-                    pokemon_detailed_move.save()
-        index += 1
 
 def initialize_pokemon_data(data, season):
     for p in data:
