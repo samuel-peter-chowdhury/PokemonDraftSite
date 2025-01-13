@@ -101,9 +101,9 @@ def type_effective(request, league_id, team_id):
                 if pte.type.id not in totalTypeEffective:
                     totalTypeEffective[pte.type.id] = 0
                 if pte.value == 0:
-                    totalTypeEffective[pte.type.id] += 3 * get_type_effective_weight(p.point_value)
+                    totalTypeEffective[pte.type.id] += 1.5 * get_type_effective_weight(p.point_value)
                 elif pte.value == 0.25:
-                    totalTypeEffective[pte.type.id] += 2 * get_type_effective_weight(p.point_value)
+                    totalTypeEffective[pte.type.id] += 1.25 * get_type_effective_weight(p.point_value)
                 elif pte.value == 0.5:
                     totalTypeEffective[pte.type.id] += 1 * get_type_effective_weight(p.point_value)
                 elif pte.value == 1:
@@ -111,7 +111,7 @@ def type_effective(request, league_id, team_id):
                 elif pte.value == 2:
                     totalTypeEffective[pte.type.id] += -1 * get_type_effective_weight(p.point_value)
                 elif pte.value == 4:
-                    totalTypeEffective[pte.type.id] += -2 * get_type_effective_weight(p.point_value)
+                    totalTypeEffective[pte.type.id] += -1.25 * get_type_effective_weight(p.point_value)
         return render(request, "leagues/team/type_effective.html", {'league': league, 'team': team, 'pokemon': pokemon, 'types': types, 'totalTypeEffective': totalTypeEffective})
     else:
         return HttpResponse(status=400)
