@@ -72,7 +72,7 @@ def get_pokemon_special_move_dictionary(pokemon):
         move = sm.detailed_move
         if move.special_category not in special_move_dictionary:
             special_move_dictionary[move.special_category] = []
-        special_move_dictionary[move.special_category].append({'name': move.name, 'category': move.category, 'color': move.type.color})
+        special_move_dictionary[move.special_category].append({'name': move.name, 'category': move.category, 'color': move.type.color, 'id': move.id})
     for key, value in special_move_dictionary.items():
         special_move_dictionary[key] = sorted(value, key = lambda x: (x['color'], x['category'], x['name']))
     return special_move_dictionary
@@ -86,7 +86,7 @@ def get_pokemon_coverage_move_dictionary(pokemon):
         move = cm.detailed_move
         if move.type.name not in coverage_move_dictionary:
             coverage_move_dictionary[move.type.name] = []
-        coverage_move_dictionary[move.type.name].append({'name': move.name, 'category': move.category, 'color': move.type.color})
+        coverage_move_dictionary[move.type.name].append({'name': move.name, 'category': move.category, 'color': move.type.color, 'id': move.id})
     for key, value in coverage_move_dictionary.items():
         coverage_move_dictionary[key] = sorted(value, key = lambda x: (x['category'], x['name']))
     return coverage_move_dictionary

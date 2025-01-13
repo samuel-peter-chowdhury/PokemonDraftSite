@@ -8,7 +8,7 @@ import functools
 
 from leagues.forms import PokemonSearchForm
 from leagues.models import League
-from pokemons.models import Pokemon, Type
+from pokemons.models import Pokemon, Type, DetailedMove, PokemonAbility
 
 @login_required(login_url="/users/login/")
 def league_pokemon_list_view(request, id):
@@ -79,7 +79,19 @@ def get_type_tier(request, league_id, type_id):
 def league_pokemon_search(request, id):
     if request.user.has_league(id):
         league = League.objects.get(id=id)
+        move_id = request.GET.get('move_id', None)
+        ability_id = request.GET.get('ability_id', None)
+        type_id = request.GET.get('type_id', None)
         form = PokemonSearchForm()
+        if move_id is not None:
+            move = DetailedMove.objects.get(id=move_id)
+            form['and_pokemon_detailed_moves__detailed_move__name__iexact'].initial = [move.name.capitalize()]
+        if ability_id is not None:
+            ability = PokemonAbility.objects.get(id=ability_id)
+            form['and_pokemon_abilities__name__iexact'].initial = [ability.name.capitalize()]
+        if type_id is not None:
+            type = Type.objects.get(id=type_id)
+            form['and_pokemon_types__type__name__iexact'].initial = [type.name.capitalize()]
         return render(request, "leagues/pokemon/league_pokemon_search.html", {'form': form, 'league': league, 'isLeagueModerator': request.user.is_league_moderator(league.id)})
     else:
         return HttpResponse(status=400)
