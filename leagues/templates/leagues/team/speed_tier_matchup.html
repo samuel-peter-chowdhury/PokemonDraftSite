@@ -1,158 +1,43 @@
 <div id="speed-tier-matchup-table">
-    <div class="d-inline-flex w-100">
-        <div class="w-50">
-            <div class="d-flex align-items-center justify-content-center bg-dark text-white py-2" style="border-bottom: 2px solid white">
-                <div class="user-profile-picture compact">
-                    {% if userTeam.logo %}
-                        <img src="{{ userTeam.logo.url }}" alt="Team Logo">
-                    {% else %}
-                        <img src="/media/defaults/default_team_logo.png" alt="Team Logo">
-                    {% endif %}
-                </div>
-                <h3 class="text-capitalize mx-5 d-none d-md-flex">{{ userTeam.name }}</h3>
-                <div class="user-profile-picture compact d-none d-md-flex">
-                    {% if userTeam.logo %}
-                        <img src="{{ userTeam.logo.url }}" alt="Team Logo">
-                    {% else %}
-                        <img src="/media/defaults/default_team_logo.png" alt="Team Logo">
-                    {% endif %}
-                </div>
-            </div>
-            <div class="pokemon-table responsive">
-                <table class="table table-dark table-striped table-hover table-bordered">
-                    <thead>
-                        <tr>
-                            <th class="pokemon-sprite"></th>
-                            <th class="table-cell-medium d-none d-md-table-cell">
-                                {% if orderBy == 'name' %}
-                                    <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupSpeed' league_id=league.id user_team_id=userTeam.id opponent_team_id=opponentTeam.id %}?order_by=-name" hx-trigger="click" hx-target="#speed-tier-matchup-table" hx-swap="outerHTML">Name<i class="fa-solid fa-arrow-up ms-2"></i></a>
-                                {% elif orderBy == '-name' %}
-                                    <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupSpeed' league_id=league.id user_team_id=userTeam.id opponent_team_id=opponentTeam.id %}?order_by=name" hx-trigger="click" hx-target="#speed-tier-matchup-table" hx-swap="outerHTML">Name<i class="fa-solid fa-arrow-down ms-2"></i></a>
-                                {% else %}
-                                    <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupSpeed' league_id=league.id user_team_id=userTeam.id opponent_team_id=opponentTeam.id %}?order_by=name" hx-trigger="click" hx-target="#speed-tier-matchup-table" hx-swap="outerHTML">Name</a>
-                                {% endif %}
-                            </th>
-                            <th class="table-cell-small">
-                                {% if orderBy == 'speed' %}
-                                    <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupSpeed' league_id=league.id user_team_id=userTeam.id opponent_team_id=opponentTeam.id %}?order_by=-speed" hx-trigger="click" hx-target="#speed-tier-matchup-table" hx-swap="outerHTML">Spd<i class="fa-solid fa-arrow-up ms-2"></i></a>
-                                {% elif orderBy == '-speed' %}
-                                    <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupSpeed' league_id=league.id user_team_id=userTeam.id opponent_team_id=opponentTeam.id %}?order_by=speed" hx-trigger="click" hx-target="#speed-tier-matchup-table" hx-swap="outerHTML">Spd<i class="fa-solid fa-arrow-down ms-2"></i></a>
-                                {% else %}
-                                    <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupSpeed' league_id=league.id user_team_id=userTeam.id opponent_team_id=opponentTeam.id %}?order_by=-speed" hx-trigger="click" hx-target="#speed-tier-matchup-table" hx-swap="outerHTML">Spd</a>
-                                {% endif %}
-                            </th>
-                            <th class="table-cell-xsmall d-none d-md-table-cell">
-                                <a>0</a>
-                            </th>
-                            <th class="table-cell-xsmall d-none d-md-table-cell">
-                                <a>252</a>
-                            </th>
-                            <th class="table-cell-xsmall">
-                                <a>252+</a>
-                            </th>
-                            <th class="table-cell-xsmall d-none d-md-table-cell">
-                                <a>+1</a>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for p in userPokemon %}
-                            <tr>
-                                <td class="pokemon-sprite">
-                                    <div>
-                                        <img src="{{ p.sprite_url }}" alt="Pokemon Sprite" style="cursor: pointer" hx-get="{% url 'leagues:leaguePokemonModal' league_id=league.id pokemon_id=p.id %}" hx-trigger="click" hx-target="#pokemon-modal" hx-swap="innerHTML">
-                                    </div>
-                                </td>
-                                <td class="table-cell-medium text-capitalize d-none d-md-table-cell">
-                                    <a href="{{ p.get_smogon_link }}" target="_blank">{{ p.name|truncatechars:12 }}</a>
-                                </td>
-                                <td class="table-cell-small fw-bold text-black" style="text-align: center; background-color: {{ p.speed|get_stat_color }}; --bs-table-accent-bg: none;">{{ p.speed }}</td>
-                                <td class="table-cell-xsmall d-none d-md-table-cell">{{ p.speed|get_speed:'0' }}</td>
-                                <td class="table-cell-xsmall d-none d-md-table-cell">{{ p.speed|get_speed:'252' }}</td>
-                                <td class="table-cell-xsmall">{{ p.speed|get_speed:'252+' }}</td>
-                                <td class="table-cell-xsmall d-none d-md-table-cell">{{ p.speed|get_speed:'+1' }}</td>
-                            </tr>
+    <div class="d-flex w-100 justify-content-center">
+        <div class="speed-tier-table">
+            {% for t in teams %}
+            {% with t|get_item:'team' as team %}
+            {% with t|get_item:'pokemon' as pokemon %}
+            {% with t|get_item:'colors' as colors %}
+                <div class="speed-tier-table-child">
+                    <div class="speed-tier-team-name">{{ team.name|truncatechars:20 }}</div>
+                    <div class="d-flex flex-column" style="background-color: {{ colors|get_item:'header' }};">
+                        <div class="speed-tier-table-header">
+                            <div class="speed-tier-table-header-cell" style="width: 2rem;"></div>
+                            <div class="speed-tier-table-header-cell mobile-none fw-bold ps-2 justify-content-start" style="width: 10rem;">Pokemon</div>
+                            <div class="speed-tier-table-header-cell">Spe</div>
+                            <div class="speed-tier-table-header-cell mobile-none">0</div>
+                            <div class="speed-tier-table-header-cell mobile-none">252</div>
+                            <div class="speed-tier-table-header-cell">252+</div>
+                        </div>
+                        {% for p in pokemon %}
+                        {% with forloop.counter0 as counter %}
+                        {% with colors|get_item:'row' as row %}
+                            <div class="d-inline-flex align-items-center">
+                                <div class="speed-tier-table-body-cell" style="width: 2rem; background-color: {{ colors|get_item:'sprite' }};">
+                                    <img src="{{ p.sprite_url }}" alt="Pokemon Sprite" style="cursor: pointer; max-height: 2rem; max-width: 2rem" hx-get="{% url 'leagues:leaguePokemonModal' league_id=league.id pokemon_id=p.id %}" hx-trigger="click" hx-target="#pokemon-modal" hx-swap="innerHTML"/>
+                                </div>
+                                <a href="{{ p.get_smogon_link }}" target="_blank" class="speed-tier-table-body-cell mobile-none nav-link text-black ps-2 justify-content-start" style="width: 10rem; background-color: {{ counter|even_ternary:row }};">{{ p.name|truncatechars:14 }}</a>
+                                <div class="speed-tier-table-body-cell fw-bold" style="background-color: {{ p.speed|get_stat_color }};">{{ p.speed }}</div>
+                                <div class="speed-tier-table-body-cell mobile-none" style="background-color: {{ counter|even_ternary:row }};">{{ p.speed|get_speed:'0' }}</div>
+                                <div class="speed-tier-table-body-cell mobile-none" style="background-color: {{ counter|even_ternary:row }};">{{ p.speed|get_speed:'252' }}</div>
+                                <div class="speed-tier-table-body-cell" style="background-color: {{ counter|even_ternary:row }};">{{ p.speed|get_speed:'252+' }}</div>
+                            </div>
+                        {% endwith %}
+                        {% endwith %}
                         {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="w-50">
-            <div class="d-flex align-items-center justify-content-center bg-dark text-white py-2" style="border-bottom: 2px solid white">
-                <div class="user-profile-picture compact">
-                    {% if opponentTeam.logo %}
-                        <img src="{{ opponentTeam.logo.url }}" alt="Team Logo">
-                    {% else %}
-                        <img src="/media/defaults/default_team_logo.png" alt="Team Logo">
-                    {% endif %}
+                    </div>
                 </div>
-                <h3 class="text-capitalize mx-5 d-none d-md-flex">{{ opponentTeam.name }}</h3>
-                <div class="user-profile-picture compact d-none d-md-flex">
-                    {% if opponentTeam.logo %}
-                        <img src="{{ opponentTeam.logo.url }}" alt="Team Logo">
-                    {% else %}
-                        <img src="/media/defaults/default_team_logo.png" alt="Team Logo">
-                    {% endif %}
-                </div>
-            </div>
-            <div class="pokemon-table responsive">
-                <table class="table table-dark table-striped table-hover table-bordered">
-                    <thead>
-                        <tr>
-                            <th class="pokemon-sprite"></th>
-                            <th class="table-cell-medium d-none d-md-table-cell">
-                                {% if orderBy == 'name' %}
-                                    <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupSpeed' league_id=league.id user_team_id=userTeam.id opponent_team_id=opponentTeam.id %}?order_by=-name" hx-trigger="click" hx-target="#speed-tier-matchup-table" hx-swap="outerHTML">Name<i class="fa-solid fa-arrow-up ms-2"></i></a>
-                                {% elif orderBy == '-name' %}
-                                    <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupSpeed' league_id=league.id user_team_id=userTeam.id opponent_team_id=opponentTeam.id %}?order_by=name" hx-trigger="click" hx-target="#speed-tier-matchup-table" hx-swap="outerHTML">Name<i class="fa-solid fa-arrow-down ms-2"></i></a>
-                                {% else %}
-                                    <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupSpeed' league_id=league.id user_team_id=userTeam.id opponent_team_id=opponentTeam.id %}?order_by=name" hx-trigger="click" hx-target="#speed-tier-matchup-table" hx-swap="outerHTML">Name</a>
-                                {% endif %}
-                            </th>
-                            <th class="table-cell-small">
-                                {% if orderBy == 'speed' %}
-                                    <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupSpeed' league_id=league.id user_team_id=userTeam.id opponent_team_id=opponentTeam.id %}?order_by=-speed" hx-trigger="click" hx-target="#speed-tier-matchup-table" hx-swap="outerHTML">Spd<i class="fa-solid fa-arrow-up ms-2"></i></a>
-                                {% elif orderBy == '-speed' %}
-                                    <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupSpeed' league_id=league.id user_team_id=userTeam.id opponent_team_id=opponentTeam.id %}?order_by=speed" hx-trigger="click" hx-target="#speed-tier-matchup-table" hx-swap="outerHTML">Spd<i class="fa-solid fa-arrow-down ms-2"></i></a>
-                                {% else %}
-                                    <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupSpeed' league_id=league.id user_team_id=userTeam.id opponent_team_id=opponentTeam.id %}?order_by=-speed" hx-trigger="click" hx-target="#speed-tier-matchup-table" hx-swap="outerHTML">Spd</a>
-                                {% endif %}
-                            </th>
-                            <th class="table-cell-xsmall d-none d-md-table-cell">
-                                <a>0</a>
-                            </th>
-                            <th class="table-cell-xsmall d-none d-md-table-cell">
-                                <a>252</a>
-                            </th>
-                            <th class="table-cell-xsmall">
-                                <a>252+</a>
-                            </th>
-                            <th class="table-cell-xsmall d-none d-md-table-cell">
-                                <a>+1</a>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for p in opponentPokemon %}
-                            <tr>
-                                <td class="pokemon-sprite">
-                                    <div>
-                                        <img src="{{ p.sprite_url }}" alt="Pokemon Sprite" style="cursor: pointer" hx-get="{% url 'leagues:leaguePokemonModal' league_id=league.id pokemon_id=p.id %}" hx-trigger="click" hx-target="#pokemon-modal" hx-swap="innerHTML">
-                                    </div>
-                                </td>
-                                <td class="table-cell-medium text-capitalize d-none d-md-table-cell">
-                                    <a href="{{ p.get_smogon_link }}" target="_blank">{{ p.name|truncatechars:12 }}</a>
-                                </td>
-                                <td class="table-cell-small fw-bold text-black" style="text-align: center; background-color: {{ p.speed|get_stat_color }}; --bs-table-accent-bg: none;">{{ p.speed }}</td>
-                                <td class="table-cell-xsmall d-none d-md-table-cell">{{ p.speed|get_speed:'0' }}</td>
-                                <td class="table-cell-xsmall d-none d-md-table-cell">{{ p.speed|get_speed:'252' }}</td>
-                                <td class="table-cell-xsmall">{{ p.speed|get_speed:'252+' }}</td>
-                                <td class="table-cell-xsmall d-none d-md-table-cell">{{ p.speed|get_speed:'+1' }}</td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
+            {% endwith %}
+            {% endwith %}
+            {% endwith %}
+            {% endfor %}
         </div>
     </div>
 </div>

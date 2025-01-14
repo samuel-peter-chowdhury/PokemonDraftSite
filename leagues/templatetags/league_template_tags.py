@@ -116,3 +116,8 @@ def get_category_icon(category):
         return 'fa-hand-sparkles'
     else:
         return 'fa-screwdriver-wrench'
+    
+@register.filter
+def even_ternary(value, token_value):
+    tokens = token_value.split(',')
+    return tokens[0] if value % 2 == 0 else tokens[1]

@@ -73,7 +73,7 @@ def speed_tier_matchup(request, league_id, user_team_id, opponent_team_id):
         userPokemon = userTeam.pokemons.order_by(orderBy)
         opponentTeam = Team.objects.get(id=opponent_team_id)
         opponentPokemon = opponentTeam.pokemons.order_by(orderBy)
-        return render(request, "leagues/team/speed_tier_matchup.html", {'league': league, 'userTeam': userTeam, 'opponentTeam': opponentTeam, 'userPokemon': userPokemon, 'opponentPokemon': opponentPokemon, 'orderBy': orderBy})
+        return render(request, "leagues/team/speed_tier_matchup.html", {'league': league, 'teams': [{'team': userTeam, 'pokemon': userPokemon, 'colors': {'header': '#279ff0', 'sprite': '#62bfff', 'row': '#a9d9f7,#cdebfc'}}, {'team': opponentTeam, 'pokemon': opponentPokemon, 'colors': {'header': '#ea4637', 'sprite': '#ff7c7b', 'row': '#febebd,#ffd3d1'}}], 'orderBy': orderBy})
     else:
         return HttpResponse(status=400)
     
