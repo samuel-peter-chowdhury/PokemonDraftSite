@@ -55,7 +55,7 @@ def initialize_detailed_move_data(season):
             category = m['category'].lower()
             move.category = 'status' if category == 'non-damaging' else category
             move.special_category = inverted_special_move_map[move_name] if move_name in inverted_special_move_map else None
-            move.viable = (move.base_power >= 60 or move.base_power == 0 or 'times' in m['description']) and (move.accuracy >= 70) and (move.category != 'status')
+            move.viable = (move.base_power >= 60 or move.base_power == 0 or 'times' in m['description']) and (move.accuracy >= 70 or move.accuracy == 0) and (move.category != 'status') and ('10,000,000' not in move.name) and ('Z-Power' not in m['description'])
             move.save()
             moveMap[move_name] = move
 
