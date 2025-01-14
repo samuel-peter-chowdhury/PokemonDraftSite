@@ -523,3 +523,11 @@ div.speed-icon {
         }   
     }
 }
+
+.speed-tier-matchup-button {
+    width: 51rem;
+    align-self: center;
+    @media only screen and (max-width: 768px) {
+        width: 100%;
+    }
+}
