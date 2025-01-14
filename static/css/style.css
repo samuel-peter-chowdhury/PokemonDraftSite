@@ -433,6 +433,7 @@ div.speed-icon {
 }
 
 .expansion-button {
+    text-align: start !important;
     border-bottom-left-radius: 0 !important;
     border-bottom-right-radius: 0 !important;
 }
@@ -460,7 +461,8 @@ div.speed-icon {
 
 .speed-tier-table {
     display: inline-flex;
-    align-items: center;
+    width: 100%;
+    justify-content: center;
     background-color: var(--bs-secondary);
     gap: 1rem;
     padding: 0 1rem;
@@ -470,23 +472,11 @@ div.speed-icon {
 
     @media only screen and (max-width: 768px) {
         gap: 0;
-        width: 100%;
-        justify-content: center;
     }
 
     .speed-tier-table-child {
         @media only screen and (max-width: 768px) {
             width: 8rem;
-        }
-    }
-    
-    .speed-tier-team-name {
-        color: white;
-        font-weight: bold;
-        font-size: 1.2rem;
-
-        @media only screen and (max-width: 768px) {
-            gap: 0.9rem;
         }
     }
 
@@ -521,13 +511,5 @@ div.speed-icon {
         @media only screen and (max-width: 768px) {
             display: none;
         }   
-    }
-}
-
-.speed-tier-matchup-button {
-    width: 51rem;
-    align-self: center;
-    @media only screen and (max-width: 768px) {
-        width: 100%;
     }
 }

@@ -1,43 +1,40 @@
 <div id="speed-tier-matchup-table">
-    <div class="d-flex w-100 justify-content-center">
-        <div class="speed-tier-table">
-            {% for t in teams %}
-            {% with t|get_item:'team' as team %}
-            {% with t|get_item:'pokemon' as pokemon %}
-            {% with t|get_item:'colors' as colors %}
-                <div class="speed-tier-table-child">
-                    <div class="speed-tier-team-name">{{ team.name|truncatechars:20 }}</div>
-                    <div class="d-flex flex-column" style="background-color: {{ colors|get_item:'header' }};">
-                        <div class="speed-tier-table-header">
-                            <div class="speed-tier-table-header-cell" style="width: 2rem;"></div>
-                            <div class="speed-tier-table-header-cell mobile-none fw-bold ps-2 justify-content-start" style="width: 10rem;">Pokemon</div>
-                            <div class="speed-tier-table-header-cell">Spe</div>
-                            <div class="speed-tier-table-header-cell mobile-none">0</div>
-                            <div class="speed-tier-table-header-cell mobile-none">252</div>
-                            <div class="speed-tier-table-header-cell">252+</div>
-                        </div>
-                        {% for p in pokemon %}
-                        {% with forloop.counter0 as counter %}
-                        {% with colors|get_item:'row' as row %}
-                            <div class="d-inline-flex align-items-center">
-                                <div class="speed-tier-table-body-cell" style="width: 2rem; background-color: {{ colors|get_item:'sprite' }};">
-                                    <img src="{{ p.sprite_url }}" alt="Pokemon Sprite" style="cursor: pointer; max-height: 2rem; max-width: 2rem" hx-get="{% url 'leagues:leaguePokemonModal' league_id=league.id pokemon_id=p.id %}" hx-trigger="click" hx-target="#pokemon-modal" hx-swap="innerHTML"/>
-                                </div>
-                                <a href="{{ p.get_smogon_link }}" target="_blank" class="speed-tier-table-body-cell mobile-none nav-link text-black ps-2 justify-content-start" style="width: 10rem; background-color: {{ counter|even_ternary:row }};">{{ p.name|truncatechars:14 }}</a>
-                                <div class="speed-tier-table-body-cell fw-bold" style="background-color: {{ p.speed|get_stat_color }};">{{ p.speed }}</div>
-                                <div class="speed-tier-table-body-cell mobile-none" style="background-color: {{ counter|even_ternary:row }};">{{ p.speed|get_speed:'0' }}</div>
-                                <div class="speed-tier-table-body-cell mobile-none" style="background-color: {{ counter|even_ternary:row }};">{{ p.speed|get_speed:'252' }}</div>
-                                <div class="speed-tier-table-body-cell" style="background-color: {{ counter|even_ternary:row }};">{{ p.speed|get_speed:'252+' }}</div>
-                            </div>
-                        {% endwith %}
-                        {% endwith %}
-                        {% endfor %}
+    <div class="speed-tier-table">
+        {% for t in teams %}
+        {% with t|get_item:'team' as team %}
+        {% with t|get_item:'pokemon' as pokemon %}
+        {% with t|get_item:'colors' as colors %}
+            <div class="speed-tier-table-child">
+                <div class="d-flex flex-column" style="background-color: {{ colors|get_item:'header' }};">
+                    <div class="speed-tier-table-header">
+                        <div class="speed-tier-table-header-cell" style="width: 2rem;"></div>
+                        <div class="speed-tier-table-header-cell mobile-none fw-bold ps-2 justify-content-start" style="width: 10rem;">Pokemon</div>
+                        <div class="speed-tier-table-header-cell">Spe</div>
+                        <div class="speed-tier-table-header-cell mobile-none">0</div>
+                        <div class="speed-tier-table-header-cell mobile-none">252</div>
+                        <div class="speed-tier-table-header-cell">252+</div>
                     </div>
+                    {% for p in pokemon %}
+                    {% with forloop.counter0 as counter %}
+                    {% with colors|get_item:'row' as row %}
+                        <div class="d-inline-flex align-items-center">
+                            <div class="speed-tier-table-body-cell" style="width: 2rem; background-color: {{ colors|get_item:'sprite' }};">
+                                <img src="{{ p.sprite_url }}" alt="Pokemon Sprite" style="cursor: pointer; max-height: 2rem; max-width: 2rem" hx-get="{% url 'leagues:leaguePokemonModal' league_id=league.id pokemon_id=p.id %}" hx-trigger="click" hx-target="#pokemon-modal" hx-swap="innerHTML"/>
+                            </div>
+                            <a href="{{ p.get_smogon_link }}" target="_blank" class="speed-tier-table-body-cell mobile-none nav-link text-black ps-2 justify-content-start" style="width: 10rem; background-color: {{ counter|even_ternary:row }};">{{ p.name|truncatechars:14 }}</a>
+                            <div class="speed-tier-table-body-cell fw-bold" style="background-color: {{ p.speed|get_stat_color }};">{{ p.speed }}</div>
+                            <div class="speed-tier-table-body-cell mobile-none" style="background-color: {{ counter|even_ternary:row }};">{{ p.speed|get_speed:'0' }}</div>
+                            <div class="speed-tier-table-body-cell mobile-none" style="background-color: {{ counter|even_ternary:row }};">{{ p.speed|get_speed:'252' }}</div>
+                            <div class="speed-tier-table-body-cell" style="background-color: {{ counter|even_ternary:row }};">{{ p.speed|get_speed:'252+' }}</div>
+                        </div>
+                    {% endwith %}
+                    {% endwith %}
+                    {% endfor %}
                 </div>
-            {% endwith %}
-            {% endwith %}
-            {% endwith %}
-            {% endfor %}
-        </div>
+            </div>
+        {% endwith %}
+        {% endwith %}
+        {% endwith %}
+        {% endfor %}
     </div>
 </div>

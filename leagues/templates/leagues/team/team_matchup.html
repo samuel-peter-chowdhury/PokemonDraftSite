@@ -37,16 +37,15 @@
             </div>
         </div>
     </div>
-    {% if userTeam and opponentTeam %}
-        <button id="speedTierCollapseButton" class="speed-tier-matchup-button btn btn-secondary expansion-button" type="button" data-bs-toggle="collapse" data-bs-target="#speedTierCollapse" aria-expanded="false" aria-controls="speedTierCollapse">
-            Speed Tiers
-        </button>
-        <div class="collapse show" id="speedTierCollapse">
-            <div hx-get="{%  url 'leagues:teamMatchupSpeed' league_id=league.id user_team_id=userTeam.id opponent_team_id=opponentTeam.id %}" hx-trigger="load" hx-target="#speed-tier-matchup" hx-swap="outerHTML">
-                <div id="speed-tier-matchup"></div>
-            </div>
+    <button id="speedTierCollapseButton" class="w-100 btn btn-secondary expansion-button" type="button" data-bs-toggle="collapse" data-bs-target="#speedTierCollapse" aria-expanded="false" aria-controls="speedTierCollapse">
+        Speed Tiers
+    </button>
+    <div class="collapse show" id="speedTierCollapse">
+        <div hx-get="{%  url 'leagues:teamMatchupSpeed' league_id=league.id %}?user_team_id={{userTeam.id}}&opponent_team_id={{opponentTeam.id}}" hx-trigger="load" hx-target="#speed-tier-matchup" hx-swap="outerHTML">
+            <div id="speed-tier-matchup"></div>
         </div>
-
+    </div>
+    {% if userTeam and opponentTeam %}
         <div class="d-flex flex-column flex-md-row w-100 mt-2" style="gap: 0.5rem">
             <div class="team-matchup-panel">
                 <button id="userTeamTableCollapseButton" class="btn btn-secondary expansion-button w-100" type="button" data-bs-toggle="collapse" data-bs-target="#userTeamTableCollapse" aria-expanded="false" aria-controls="userTeamTableCollapse">

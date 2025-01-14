@@ -65,15 +65,23 @@ def team_matchup_view(request, id):
         return redirect("/")
     
 @login_required(login_url="/users/login/")
-def speed_tier_matchup(request, league_id, user_team_id, opponent_team_id):
+def speed_tier_matchup(request, league_id):
     if request.user.has_league(league_id):
         league = League.objects.get(id=league_id)
         orderBy = request.GET.get('order_by', '-speed')
+        teams = []
+
+        user_team_id = request.GET.get('user_team_id', request.user.id)
         userTeam = Team.objects.get(id=user_team_id)
         userPokemon = userTeam.pokemons.order_by(orderBy)
-        opponentTeam = Team.objects.get(id=opponent_team_id)
-        opponentPokemon = opponentTeam.pokemons.order_by(orderBy)
-        return render(request, "leagues/team/speed_tier_matchup.html", {'league': league, 'teams': [{'team': userTeam, 'pokemon': userPokemon, 'colors': {'header': '#279ff0', 'sprite': '#62bfff', 'row': '#a9d9f7,#cdebfc'}}, {'team': opponentTeam, 'pokemon': opponentPokemon, 'colors': {'header': '#ea4637', 'sprite': '#ff7c7b', 'row': '#febebd,#ffd3d1'}}], 'orderBy': orderBy})
+        teams.append({'team': userTeam, 'pokemon': userPokemon, 'colors': {'header': '#279ff0', 'sprite': '#62bfff', 'row': '#a9d9f7,#cdebfc'}})
+
+        opponent_team_id = request.GET.get('opponent_team_id', None)
+        if opponent_team_id is not None and opponent_team_id != '':
+            opponentTeam = Team.objects.get(id=opponent_team_id)
+            opponentPokemon = opponentTeam.pokemons.order_by(orderBy)
+            teams.append({'team': opponentTeam, 'pokemon': opponentPokemon, 'colors': {'header': '#ea4637', 'sprite': '#ff7c7b', 'row': '#febebd,#ffd3d1'}})
+        return render(request, "leagues/team/speed_tier_matchup.html", {'league': league, 'teams': teams, 'orderBy': orderBy})
     else:
         return HttpResponse(status=400)
     
