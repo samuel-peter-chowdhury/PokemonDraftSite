@@ -14,15 +14,17 @@
                             <td class="text-capitalize">{{ c }}</td>
                             <td>
                                 <div class="d-flex flex-row align-items-center" style="gap: 0.5rem; flex-wrap: wrap;">
-                                    {% for sm in list%}
+                                    {% for sm in list %}
                                         {% with sm|get_item:'pokemon' as p %}
                                         {% with sm|get_item:'move' as m %}
-                                            <div class="d-flex flex-row align-items-center" style="gap: 0.5rem; white-space: nowrap; padding: 0.125rem 0.5rem; justify-content: center; border-radius: 0.75rem; background-color: var(--bs-secondary);">
+                                        {% with sm|get_item:'color' as c %}
+                                            <div class="d-flex flex-row align-items-center" style="gap: 0.5rem; white-space: nowrap; padding: 0.125rem 0.5rem; justify-content: center; border-radius: 0.75rem; background-color: {{ c }};">
                                                 <div class="d-flex align-items-center justify-content-center" style="width: 2rem; height: 2rem">
                                                     <img src="{{ p.sprite_url }}" alt="Pokemon Sprite" style="cursor: pointer; max-height: 2rem; max-width: 2rem" hx-get="{% url 'leagues:leaguePokemonModal' league_id=league.id pokemon_id=p.id %}" hx-trigger="click" hx-target="#pokemon-modal" hx-swap="innerHTML"/>
                                                 </div>
                                                 <div class="text-capitalize">{{ m }}</div>
                                             </div>
+                                        {% endwith %}
                                         {% endwith %}
                                         {% endwith %}
                                     {% endfor %}

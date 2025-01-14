@@ -64,6 +64,40 @@ def get_stat_color(stat):
         return '#ff0000'
     
 @register.filter
+def get_type_effective_color(value):
+    if value >= 4:
+        return '#F07470'
+    elif value >= 2:
+        return '#F1959B'
+    elif value >= 1:
+        return '#C5E8B7'
+    elif value >= 0.5:
+        return '#ABE098'
+    else:
+        return '#83D475'
+
+@register.filter
+def get_type_effective_total_color(total):
+    if total >= 8:
+        return '#2EB62C'
+    elif total >= 6:
+        return '#57C84D'
+    elif total >= 4:
+        return '#83D475'
+    elif total >= 2:
+        return '#ABE098'
+    elif total >= 0:
+        return '#C5E8B7'
+    elif total >= -2:
+        return '#F1959B'
+    elif total >= -4:
+        return '#F07470'
+    elif total >= -6:
+        return '#EA4C46'
+    else:
+        return '#DC1C13'
+    
+@register.filter
 def get_pokemon_special_move_dictionary(pokemon):
     special_move_dictionary = {}
     special_move_subquery = DetailedMove.objects.exclude(special_category__isnull=True).only('id').all()

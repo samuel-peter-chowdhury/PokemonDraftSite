@@ -48,20 +48,20 @@
     {% if userTeam and opponentTeam %}
         <div class="d-flex flex-column flex-md-row w-100 mt-2" style="gap: 0.5rem">
             <div class="team-matchup-panel">
-                <button id="userTeamTableCollapseButton" class="btn btn-secondary expansion-button w-100" type="button" data-bs-toggle="collapse" data-bs-target="#userTeamTableCollapse" aria-expanded="false" aria-controls="userTeamTableCollapse">
+                <button id="userTeamTableCollapseButton" class="btn btn-secondary expansion-button w-100" type="button" data-bs-toggle="collapse" data-bs-target="#teamTableCollapse" aria-expanded="false" aria-controls="teamTableCollapse">
                     {{ userTeam.name }} Team Table
                 </button>
-                <div class="collapse" id="userTeamTableCollapse">
+                <div class="collapse" id="teamTableCollapse">
                     <div hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=userTeam.id %}" hx-trigger="load" hx-target="#user-team-table" hx-swap="outerHTML">
                         <div id="user-team-table"></div>
                     </div>
                 </div>
             </div>
             <div class="team-matchup-panel">
-                <button id="opponentTeamTableCollapseButton" class="btn btn-secondary expansion-button w-100" type="button" data-bs-toggle="collapse" data-bs-target="#opponentTeamTableCollapse" aria-expanded="false" aria-controls="opponentTeamTableCollapse">
+                <button id="opponentTeamTableCollapseButton" class="btn btn-secondary expansion-button w-100" type="button" data-bs-toggle="collapse" data-bs-target="#teamTableCollapse" aria-expanded="false" aria-controls="teamTableCollapse">
                     {{ opponentTeam.name }} Team Table
                 </button>
-                <div class="collapse" id="opponentTeamTableCollapse">
+                <div class="collapse" id="teamTableCollapse">
                     <div hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=opponentTeam.id %}" hx-trigger="load" hx-target="#opponent-team-table" hx-swap="outerHTML">
                         <div id="opponent-team-table"></div>
                     </div>
@@ -71,20 +71,20 @@
 
         <div class="d-flex flex-column flex-md-row w-100 mt-2" style="gap: 0.5rem">
             <div class="team-matchup-panel">
-                <button id="userTypeEffectiveCollapseButton" class="btn btn-secondary expansion-button w-100" type="button" data-bs-toggle="collapse" data-bs-target="#userTypeEffectiveCollapse" aria-expanded="false" aria-controls="userTypeEffectiveCollapse">
+                <button id="userTypeEffectiveCollapseButton" class="btn btn-secondary expansion-button w-100" type="button" data-bs-toggle="collapse" data-bs-target="#typeEffectiveCollapse" aria-expanded="false" aria-controls="typeEffectiveCollapse">
                     {{ userTeam.name }} Type Effective
                 </button>
-                <div class="collapse" id="userTypeEffectiveCollapse">
+                <div class="collapse" id="typeEffectiveCollapse">
                     <div hx-get="{%  url 'leagues:teamMatchupTypeEffective' league_id=league.id team_id=userTeam.id %}" hx-trigger="load" hx-target="#user-type-effective" hx-swap="outerHTML">
                         <div id="user-type-effective"></div>
                     </div>
                 </div>
             </div>
             <div class="team-matchup-panel">
-                <button id="opponentTypeEffectiveCollapseButton" class="btn btn-secondary expansion-button w-100" type="button" data-bs-toggle="collapse" data-bs-target="#opponentTypeEffectiveCollapse" aria-expanded="false" aria-controls="opponentTypeEffectiveCollapse">
+                <button id="opponentTypeEffectiveCollapseButton" class="btn btn-secondary expansion-button w-100" type="button" data-bs-toggle="collapse" data-bs-target="#typeEffectiveCollapse" aria-expanded="false" aria-controls="typeEffectiveCollapse">
                     {{ opponentTeam.name }} Type Effective
                 </button>
-                <div class="collapse" id="opponentTypeEffectiveCollapse">
+                <div class="collapse" id="typeEffectiveCollapse">
                     <div hx-get="{%  url 'leagues:teamMatchupTypeEffective' league_id=league.id team_id=opponentTeam.id %}" hx-trigger="load" hx-target="#opponent-type-effective" hx-swap="outerHTML">
                         <div id="opponent-type-effective"></div>
                     </div>
@@ -94,20 +94,20 @@
 
         <div class="d-flex flex-column flex-md-row w-100 mt-2" style="gap: 0.5rem">
             <div class="team-matchup-panel">
-                <button id="userSpecialMovesCollapseButton" class="btn btn-secondary expansion-button w-100" type="button" data-bs-toggle="collapse" data-bs-target="#userSpecialMovesCollapse" aria-expanded="false" aria-controls="userSpecialMovesCollapse">
+                <button id="userSpecialMovesCollapseButton" class="btn btn-secondary expansion-button w-100" type="button" data-bs-toggle="collapse" data-bs-target="#specialMovesCollapse" aria-expanded="false" aria-controls="specialMovesCollapse">
                     {{ userTeam.name }} Special Moves
                 </button>
-                <div class="collapse" id="userSpecialMovesCollapse">
+                <div class="collapse" id="specialMovesCollapse">
                     <div hx-get="{%  url 'leagues:teamMatchupSpecialMoves' league_id=league.id team_id=userTeam.id %}" hx-trigger="load" hx-target="#user-special-moves" hx-swap="outerHTML">
                         <div id="user-special-moves"></div>
                     </div>
                 </div>
             </div>
             <div class="team-matchup-panel">
-                <button id="opponentSpecialMovesCollapseButton" class="btn btn-secondary expansion-button w-100" type="button" data-bs-toggle="collapse" data-bs-target="#opponentSpecialMovesCollapse" aria-expanded="false" aria-controls="opponentSpecialMovesCollapse">
+                <button id="opponentSpecialMovesCollapseButton" class="btn btn-secondary expansion-button w-100" type="button" data-bs-toggle="collapse" data-bs-target="#specialMovesCollapse" aria-expanded="false" aria-controls="specialMovesCollapse">
                     {{ opponentTeam.name }} Special Moves
                 </button>
-                <div class="collapse" id="opponentSpecialMovesCollapse">
+                <div class="collapse" id="specialMovesCollapse">
                     <div hx-get="{%  url 'leagues:teamMatchupSpecialMoves' league_id=league.id team_id=opponentTeam.id %}" hx-trigger="load" hx-target="#opponent-special-moves" hx-swap="outerHTML">
                         <div id="opponent-special-moves"></div>
                     </div>

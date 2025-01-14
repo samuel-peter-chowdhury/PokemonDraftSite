@@ -1,6 +1,18 @@
 <div id="team-matchup-type-effective-{{team.id}}">
-    <div class="table-responsive pokemon-table responsive">
-        <table class="table table-dark table-striped table-hover table-bordered">
+    <div class="d-flex flex-row flex-wrap" style="justify-content: center; margin-top: 1rem; gap: 1rem">
+        {% for te in orderedTypeEffective %}
+        {% with te|get_item:'type' as type %}
+        {% with te|get_item:'total' as total %}
+            <div class="d-flex flex-column align-items-center" style="border-radius: 1rem; width: 6rem">
+                <div class="w-100 fw-bold text-white text-capitalize" style="text-align: center; background-color: {{ type.color }}; border-top-left-radius: 1rem; border-top-right-radius: 1rem; border-bottom: 2px solid white;">{{ type.name }}</div>
+                <div class="w-100 fw-bold" style="text-align: center; background-color: {{ total|get_type_effective_total_color }}; border-bottom-left-radius: 1rem; border-bottom-right-radius: 1rem;">{{ total|floatformat }}</div>
+            </div>
+        {% endwith %}
+        {% endwith %}
+        {% endfor %}
+    </div>
+    <div class="table-responsive pokemon-table compact mt-4">
+        <table class="table table-dark table-striped table-hover table-bordered" style="border: white">
             <thead>
                 <tr>
                     <th class="pokemon-sprite" style="position: sticky; left: 0;"></th>
@@ -9,7 +21,7 @@
                     {% endfor %}
                 </tr>
             </thead>
-            <tbody>
+            <tbody style="font-size: 0.8rem">
                 {% for p in pokemon %}
                     <tr>
                         <td class="pokemon-sprite" style="position: sticky; left: 0;">
@@ -18,7 +30,9 @@
                             </div>
                         </td>
                         {% for t in types %}
-                            <td class="table-cell-small">{{ p.pokemon_type_effectives.all|get_type_effective:t }}</td>
+                        {% with p.pokemon_type_effectives.all|get_type_effective:t as value %}
+                            <td class="table-cell-small text-black" style="background-color: {{ value|get_type_effective_color }}; --bs-table-accent-bg: none;">{{ value }}</td>
+                        {% endwith %}
                         {% endfor %}
                     </tr>
                 {% endfor %}
@@ -26,25 +40,7 @@
                     <td class="pokemon-sprite" style="position: sticky; left: 0;"><div>Total</div></td>
                     {% for t in types %}
                         {% with totalTypeEffective|get_item:t.id as total %}
-                            {% if total >= 2 %}
-                                <td class="table-cell-small fw-bold text-black" style="text-align: center; background-color: #2EB62C; --bs-table-accent-bg: none;">{{ total|floatformat }}</td>
-                            {% elif total >= 1.5 %}
-                                <td class="table-cell-small fw-bold text-black" style="text-align: center; background-color: #57C84D; --bs-table-accent-bg: none;">{{ total|floatformat }}</td>
-                            {% elif total >= 1 %}
-                                <td class="table-cell-small fw-bold text-black" style="text-align: center; background-color: #83D475; --bs-table-accent-bg: none;">{{ total|floatformat }}</td>
-                            {% elif total >= 0.5 %}
-                                <td class="table-cell-small fw-bold text-black" style="text-align: center; background-color: #ABE098; --bs-table-accent-bg: none;">{{ total|floatformat }}</td>
-                            {% elif total >= 0 %}
-                                <td class="table-cell-small fw-bold text-black" style="text-align: center; background-color: #C5E8B7; --bs-table-accent-bg: none;">{{ total|floatformat }}</td>
-                            {% elif total >= -0.5 %}
-                                <td class="table-cell-small fw-bold text-black" style="text-align: center; background-color: #F1959B; --bs-table-accent-bg: none;">{{ total|floatformat }}</td>
-                            {% elif total >= -1 %}
-                                <td class="table-cell-small fw-bold text-black" style="text-align: center; background-color: #F07470; --bs-table-accent-bg: none;">{{ total|floatformat }}</td>
-                            {% elif total >= -1.5 %}
-                                <td class="table-cell-small fw-bold text-black" style="text-align: center; background-color: #EA4C46; --bs-table-accent-bg: none;">{{ total|floatformat }}</td>
-                            {% else %}
-                                <td class="table-cell-small fw-bold text-black" style="text-align: center; background-color: #DC1C13; --bs-table-accent-bg: none;">{{ total|floatformat }}</td>
-                            {% endif %}
+                            <td class="table-cell-small fw-bold text-black" style="text-align: center; background-color: {{ total|get_type_effective_total_color }}; --bs-table-accent-bg: none;">{{ total|floatformat }}</td>
                         {% endwith %}
                     {% endfor %}
                 </tr>
