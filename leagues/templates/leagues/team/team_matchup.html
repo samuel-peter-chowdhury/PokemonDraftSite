@@ -42,7 +42,11 @@
     </button>
     <div class="collapse show" id="speedTierCollapse">
         <div hx-get="{%  url 'leagues:teamMatchupSpeed' league_id=league.id %}?user_team_id={{userTeam.id}}&opponent_team_id={{opponentTeam.id}}" hx-trigger="load" hx-target="#speed-tier-matchup" hx-swap="outerHTML">
-            <div id="speed-tier-matchup"></div>
+            <div id="speed-tier-matchup">
+                <div class="spinner-border mt-4" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
         </div>
     </div>
     {% if userTeam and opponentTeam %}
@@ -53,7 +57,11 @@
                 </button>
                 <div class="collapse" id="teamTableCollapse">
                     <div hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=userTeam.id %}" hx-trigger="load" hx-target="#user-team-table" hx-swap="outerHTML">
-                        <div id="user-team-table"></div>
+                        <div id="user-team-table">
+                            <div class="spinner-border mt-4" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -63,7 +71,11 @@
                 </button>
                 <div class="collapse" id="teamTableCollapse">
                     <div hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=opponentTeam.id %}" hx-trigger="load" hx-target="#opponent-team-table" hx-swap="outerHTML">
-                        <div id="opponent-team-table"></div>
+                        <div id="opponent-team-table">
+                            <div class="spinner-border mt-4" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -76,7 +88,11 @@
                 </button>
                 <div class="collapse" id="typeEffectiveCollapse">
                     <div hx-get="{%  url 'leagues:teamMatchupTypeEffective' league_id=league.id team_id=userTeam.id %}" hx-trigger="load" hx-target="#user-type-effective" hx-swap="outerHTML">
-                        <div id="user-type-effective"></div>
+                        <div id="user-type-effective">
+                            <div class="spinner-border mt-4" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -86,7 +102,11 @@
                 </button>
                 <div class="collapse" id="typeEffectiveCollapse">
                     <div hx-get="{%  url 'leagues:teamMatchupTypeEffective' league_id=league.id team_id=opponentTeam.id %}" hx-trigger="load" hx-target="#opponent-type-effective" hx-swap="outerHTML">
-                        <div id="opponent-type-effective"></div>
+                        <div id="opponent-type-effective">
+                            <div class="spinner-border mt-4" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -99,7 +119,11 @@
                 </button>
                 <div class="collapse" id="specialMovesCollapse">
                     <div hx-get="{%  url 'leagues:teamMatchupSpecialMoves' league_id=league.id team_id=userTeam.id %}" hx-trigger="load" hx-target="#user-special-moves" hx-swap="outerHTML">
-                        <div id="user-special-moves"></div>
+                        <div id="user-special-moves">
+                            <div class="spinner-border mt-4" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -109,7 +133,11 @@
                 </button>
                 <div class="collapse" id="specialMovesCollapse">
                     <div hx-get="{%  url 'leagues:teamMatchupSpecialMoves' league_id=league.id team_id=opponentTeam.id %}" hx-trigger="load" hx-target="#opponent-special-moves" hx-swap="outerHTML">
-                        <div id="opponent-special-moves"></div>
+                        <div id="opponent-special-moves">
+                            <div class="spinner-border mt-4" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
