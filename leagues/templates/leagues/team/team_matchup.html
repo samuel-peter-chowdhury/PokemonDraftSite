@@ -53,7 +53,7 @@
         <div class="w-100 mt-2">
             <button id="teamTableCollapseButton" class="btn btn-secondary expansion-button w-100" type="button" data-bs-toggle="collapse" data-bs-target="#teamTableCollapse" aria-expanded="false" aria-controls="teamTableCollapse">
                 <div hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=userTeam.id %}" hx-trigger="click" hx-target="#user-team-table" hx-swap="outerHTML">
-                    <div hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=opponentTeam.id %}" hx-trigger="load" hx-target="#opponent-team-table" hx-swap="outerHTML">
+                    <div hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=opponentTeam.id %}" hx-trigger="click" hx-target="#opponent-team-table" hx-swap="outerHTML">
                         Team Table
                     </div>
                 </div>
@@ -79,8 +79,8 @@
         </div>
         <div class="w-100 mt-2">
             <button id="typeEffectiveCollapseButton" class="btn btn-secondary expansion-button w-100" type="button" data-bs-toggle="collapse" data-bs-target="#typeEffectiveCollapse" aria-expanded="false" aria-controls="typeEffectiveCollapse">
-                <div hx-get="{%  url 'leagues:teamMatchupTypeEffective' league_id=league.id team_id=userTeam.id %}" hx-trigger="load" hx-target="#user-type-effective" hx-swap="outerHTML">
-                    <div hx-get="{%  url 'leagues:teamMatchupTypeEffective' league_id=league.id team_id=opponentTeam.id %}" hx-trigger="load" hx-target="#opponent-type-effective" hx-swap="outerHTML">
+                <div hx-get="{%  url 'leagues:teamMatchupTypeEffective' league_id=league.id team_id=userTeam.id %}" hx-trigger="click" hx-target="#user-type-effective" hx-swap="outerHTML">
+                    <div hx-get="{%  url 'leagues:teamMatchupTypeEffective' league_id=league.id team_id=opponentTeam.id %}" hx-trigger="click" hx-target="#opponent-type-effective" hx-swap="outerHTML">
                         Type Effective
                     </div>
                 </div>
@@ -106,8 +106,8 @@
         </div>
         <div class="w-100 mt-2">
             <button id="specialMovesCollapseButton" class="btn btn-secondary expansion-button w-100" type="button" data-bs-toggle="collapse" data-bs-target="#specialMovesCollapse" aria-expanded="false" aria-controls="specialMovesCollapse">
-                <div hx-get="{%  url 'leagues:teamMatchupSpecialMoves' league_id=league.id team_id=userTeam.id %}" hx-trigger="load" hx-target="#user-special-moves" hx-swap="outerHTML">
-                    <div hx-get="{%  url 'leagues:teamMatchupSpecialMoves' league_id=league.id team_id=opponentTeam.id %}" hx-trigger="load" hx-target="#opponent-special-moves" hx-swap="outerHTML">
+                <div hx-get="{%  url 'leagues:teamMatchupSpecialMoves' league_id=league.id team_id=userTeam.id %}" hx-trigger="click" hx-target="#user-special-moves" hx-swap="outerHTML">
+                    <div hx-get="{%  url 'leagues:teamMatchupSpecialMoves' league_id=league.id team_id=opponentTeam.id %}" hx-trigger="click" hx-target="#opponent-special-moves" hx-swap="outerHTML">
                         Special Moves
                     </div>
                 </div>
