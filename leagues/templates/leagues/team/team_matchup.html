@@ -43,36 +43,33 @@
     <div class="collapse show" id="speedTierCollapse">
         <div hx-get="{%  url 'leagues:teamMatchupSpeed' league_id=league.id %}?user_team_id={{userTeam.id}}&opponent_team_id={{opponentTeam.id}}" hx-trigger="load" hx-target="#speed-tier-matchup" hx-swap="outerHTML">
             <div id="speed-tier-matchup">
-                <div class="spinner-border mt-4" role="status">
+                <div class="spinner-border" style="margin-top: 0.5rem" role="status">
                     <span class="visually-hidden">Loading...</span>
                 </div>
             </div>
         </div>
     </div>
     {% if userTeam and opponentTeam %}
-        <div class="d-flex flex-column flex-md-row w-100 mt-2" style="gap: 0.5rem">
-            <div class="team-matchup-panel">
-                <button id="userTeamTableCollapseButton" class="btn btn-secondary expansion-button w-100" type="button" data-bs-toggle="collapse" data-bs-target="#teamTableCollapse" aria-expanded="false" aria-controls="teamTableCollapse">
-                    {{ userTeam.name }} Team Table
-                </button>
-                <div class="collapse" id="teamTableCollapse">
-                    <div hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=userTeam.id %}" hx-trigger="load" hx-target="#user-team-table" hx-swap="outerHTML">
-                        <div id="user-team-table">
-                            <div class="spinner-border mt-4" role="status">
-                                <span class="visually-hidden">Loading...</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="team-matchup-panel">
-                <button id="opponentTeamTableCollapseButton" class="btn btn-secondary expansion-button w-100" type="button" data-bs-toggle="collapse" data-bs-target="#teamTableCollapse" aria-expanded="false" aria-controls="teamTableCollapse">
-                    {{ opponentTeam.name }} Team Table
-                </button>
-                <div class="collapse" id="teamTableCollapse">
+        <div class="w-100 mt-2">
+            <button id="teamTableCollapseButton" class="btn btn-secondary expansion-button w-100" type="button" data-bs-toggle="collapse" data-bs-target="#teamTableCollapse" aria-expanded="false" aria-controls="teamTableCollapse">
+                <div hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=userTeam.id %}" hx-trigger="click" hx-target="#user-team-table" hx-swap="outerHTML">
                     <div hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=opponentTeam.id %}" hx-trigger="load" hx-target="#opponent-team-table" hx-swap="outerHTML">
+                        Team Table
+                    </div>
+                </div>
+            </button>
+            <div class="collapse" id="teamTableCollapse">
+                <div class="d-flex flex-column flex-md-row w-100" style="gap: 0.5rem">
+                    <div class="team-matchup-panel">
+                        <div id="user-team-table">
+                            <div class="spinner-border" style="margin-top: 0.5rem" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team-matchup-panel">
                         <div id="opponent-team-table">
-                            <div class="spinner-border mt-4" role="status">
+                            <div class="spinner-border" style="margin-top: 0.5rem" role="status">
                                 <span class="visually-hidden">Loading...</span>
                             </div>
                         </div>
@@ -80,30 +77,26 @@
                 </div>
             </div>
         </div>
-
-        <div class="d-flex flex-column flex-md-row w-100 mt-2" style="gap: 0.5rem">
-            <div class="team-matchup-panel">
-                <button id="userTypeEffectiveCollapseButton" class="btn btn-secondary expansion-button w-100" type="button" data-bs-toggle="collapse" data-bs-target="#typeEffectiveCollapse" aria-expanded="false" aria-controls="typeEffectiveCollapse">
-                    {{ userTeam.name }} Type Effective
-                </button>
-                <div class="collapse" id="typeEffectiveCollapse">
-                    <div hx-get="{%  url 'leagues:teamMatchupTypeEffective' league_id=league.id team_id=userTeam.id %}" hx-trigger="load" hx-target="#user-type-effective" hx-swap="outerHTML">
-                        <div id="user-type-effective">
-                            <div class="spinner-border mt-4" role="status">
-                                <span class="visually-hidden">Loading...</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="team-matchup-panel">
-                <button id="opponentTypeEffectiveCollapseButton" class="btn btn-secondary expansion-button w-100" type="button" data-bs-toggle="collapse" data-bs-target="#typeEffectiveCollapse" aria-expanded="false" aria-controls="typeEffectiveCollapse">
-                    {{ opponentTeam.name }} Type Effective
-                </button>
-                <div class="collapse" id="typeEffectiveCollapse">
+        <div class="w-100 mt-2">
+            <button id="typeEffectiveCollapseButton" class="btn btn-secondary expansion-button w-100" type="button" data-bs-toggle="collapse" data-bs-target="#typeEffectiveCollapse" aria-expanded="false" aria-controls="typeEffectiveCollapse">
+                <div hx-get="{%  url 'leagues:teamMatchupTypeEffective' league_id=league.id team_id=userTeam.id %}" hx-trigger="load" hx-target="#user-type-effective" hx-swap="outerHTML">
                     <div hx-get="{%  url 'leagues:teamMatchupTypeEffective' league_id=league.id team_id=opponentTeam.id %}" hx-trigger="load" hx-target="#opponent-type-effective" hx-swap="outerHTML">
+                        Type Effective
+                    </div>
+                </div>
+            </button>
+            <div class="collapse" id="typeEffectiveCollapse">
+                <div class="d-flex flex-column flex-md-row w-100" style="gap: 0.5rem">
+                    <div class="team-matchup-panel">
+                        <div id="user-type-effective">
+                            <div class="spinner-border" style="margin-top: 0.5rem" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team-matchup-panel">
                         <div id="opponent-type-effective">
-                            <div class="spinner-border mt-4" role="status">
+                            <div class="spinner-border" style="margin-top: 0.5rem" role="status">
                                 <span class="visually-hidden">Loading...</span>
                             </div>
                         </div>
@@ -111,30 +104,26 @@
                 </div>
             </div>
         </div>
-
-        <div class="d-flex flex-column flex-md-row w-100 mt-2" style="gap: 0.5rem">
-            <div class="team-matchup-panel">
-                <button id="userSpecialMovesCollapseButton" class="btn btn-secondary expansion-button w-100" type="button" data-bs-toggle="collapse" data-bs-target="#specialMovesCollapse" aria-expanded="false" aria-controls="specialMovesCollapse">
-                    {{ userTeam.name }} Special Moves
-                </button>
-                <div class="collapse" id="specialMovesCollapse">
-                    <div hx-get="{%  url 'leagues:teamMatchupSpecialMoves' league_id=league.id team_id=userTeam.id %}" hx-trigger="load" hx-target="#user-special-moves" hx-swap="outerHTML">
+        <div class="w-100 mt-2">
+            <button id="specialMovesCollapseButton" class="btn btn-secondary expansion-button w-100" type="button" data-bs-toggle="collapse" data-bs-target="#specialMovesCollapse" aria-expanded="false" aria-controls="specialMovesCollapse">
+                <div hx-get="{%  url 'leagues:teamMatchupSpecialMoves' league_id=league.id team_id=userTeam.id %}" hx-trigger="load" hx-target="#user-special-moves" hx-swap="outerHTML">
+                    <div hx-get="{%  url 'leagues:teamMatchupSpecialMoves' league_id=league.id team_id=opponentTeam.id %}" hx-trigger="load" hx-target="#opponent-special-moves" hx-swap="outerHTML">
+                        Special Moves
+                    </div>
+                </div>
+            </button>
+            <div class="collapse" id="specialMovesCollapse">
+                <div class="d-flex flex-column flex-md-row w-100" style="gap: 0.5rem">
+                    <div class="team-matchup-panel">
                         <div id="user-special-moves">
-                            <div class="spinner-border mt-4" role="status">
+                            <div class="spinner-border" style="margin-top: 0.5rem" role="status">
                                 <span class="visually-hidden">Loading...</span>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="team-matchup-panel">
-                <button id="opponentSpecialMovesCollapseButton" class="btn btn-secondary expansion-button w-100" type="button" data-bs-toggle="collapse" data-bs-target="#specialMovesCollapse" aria-expanded="false" aria-controls="specialMovesCollapse">
-                    {{ opponentTeam.name }} Special Moves
-                </button>
-                <div class="collapse" id="specialMovesCollapse">
-                    <div hx-get="{%  url 'leagues:teamMatchupSpecialMoves' league_id=league.id team_id=opponentTeam.id %}" hx-trigger="load" hx-target="#opponent-special-moves" hx-swap="outerHTML">
+                    <div class="team-matchup-panel">
                         <div id="opponent-special-moves">
-                            <div class="spinner-border mt-4" role="status">
+                            <div class="spinner-border" style="margin-top: 0.5rem" role="status">
                                 <span class="visually-hidden">Loading...</span>
                             </div>
                         </div>

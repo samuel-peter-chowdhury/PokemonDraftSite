@@ -452,7 +452,7 @@ div.speed-icon {
 }
 
 .team-matchup-panel {
-    width: 50%;
+    width: calc(50% - 0.25rem);
     
     @media only screen and (max-width: 768px) {
         width: 100%;

@@ -1,130 +1,128 @@
-<div id="team-matchup-team-table-{{team.id}}">
-    <div class="table-responsive pokemon-table responsive">
-        <table class="table table-dark table-striped table-hover table-bordered">
-            <thead>
+<div class="table-responsive pokemon-table responsive" id="team-matchup-team-table-{{team.id}}">
+    <table class="table table-dark table-striped table-hover table-bordered">
+        <thead>
+            <tr>
+                <th class="pokemon-sprite" style="position: sticky; left: 0;"></th>
+                <th class="table-cell-medium">
+                    {% if orderBy == 'name' %}
+                        <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=-name" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">Name<i class="fa-solid fa-arrow-up ms-2"></i></a>
+                    {% elif orderBy == '-name' %}
+                        <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=name" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">Name<i class="fa-solid fa-arrow-down ms-2"></i></a>
+                    {% else %}
+                        <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=name" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">Name</a>
+                    {% endif %}
+                </th>
+                <th class="table-cell-large">Types</th>
+                <th class="table-cell-xlarge">Abilities</th>
+                <th class="table-cell-small">
+                    {% if orderBy == 'hp' %}
+                        <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=-hp" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">HP<i class="fa-solid fa-arrow-up ms-2"></i></a>
+                    {% elif orderBy == '-hp' %}
+                        <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=hp" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">HP<i class="fa-solid fa-arrow-down ms-2"></i></a>
+                    {% else %}
+                        <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=-hp" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">HP</a>
+                    {% endif %}
+                </th>
+                <th class="table-cell-small">
+                    {% if orderBy == 'attack' %}
+                        <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=-attack" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">Atk<i class="fa-solid fa-arrow-up ms-2"></i></a>
+                    {% elif orderBy == '-attack' %}
+                        <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=attack" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">Atk<i class="fa-solid fa-arrow-down ms-2"></i></a>
+                    {% else %}
+                        <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=-attack" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">Atk</a>
+                    {% endif %}
+                </th>
+                <th class="table-cell-small">
+                    {% if orderBy == 'defense' %}
+                        <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=-defense" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">Def<i class="fa-solid fa-arrow-up ms-2"></i></a>
+                    {% elif orderBy == '-defense' %}
+                        <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=defense" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">Def<i class="fa-solid fa-arrow-down ms-2"></i></a>
+                    {% else %}
+                        <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=-defense" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">Def</a>
+                    {% endif %}
+                </th>
+                <th class="table-cell-small">
+                    {% if orderBy == 'special_attack' %}
+                        <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=-special_attack" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">SpA<i class="fa-solid fa-arrow-up ms-2"></i></a>
+                    {% elif orderBy == '-special_attack' %}
+                        <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=special_attack" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">SpA<i class="fa-solid fa-arrow-down ms-2"></i></a>
+                    {% else %}
+                        <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=-special_attack" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">SpA</a>
+                    {% endif %}
+                </th>
+                <th class="table-cell-small">
+                    {% if orderBy == 'special_defense' %}
+                        <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=-special_defense" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">SpD<i class="fa-solid fa-arrow-up ms-2"></i></a>
+                    {% elif orderBy == '-special_defense' %}
+                        <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=special_defense" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">SpD<i class="fa-solid fa-arrow-down ms-2"></i></a>
+                    {% else %}
+                        <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=-special_defense" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">SpD</a>
+                    {% endif %}
+                </th>
+                <th class="table-cell-small">
+                    {% if orderBy == 'speed' %}
+                        <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=-speed" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">Spd<i class="fa-solid fa-arrow-up ms-2"></i></a>
+                    {% elif orderBy == '-speed' %}
+                        <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=speed" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">Spd<i class="fa-solid fa-arrow-down ms-2"></i></a>
+                    {% else %}
+                        <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=-speed" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">Spd</a>
+                    {% endif %}
+                </th>
+                <th class="table-cell-small">
+                    {% if orderBy == 'base_stat_total' %}
+                        <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=-base_stat_total" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">BST<i class="fa-solid fa-arrow-up ms-2"></i></a>
+                    {% elif orderBy == '-base_stat_total' %}
+                        <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=base_stat_total" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">BST<i class="fa-solid fa-arrow-down ms-2"></i></a>
+                    {% else %}
+                        <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=-base_stat_total" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">BST</a>
+                    {% endif %}
+                </th>
+                <th class="table-cell-small">
+                    {% if orderBy == 'point_value' %}
+                        <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=-point_value" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">Pts<i class="fa-solid fa-arrow-up ms-2"></i></a>
+                    {% elif orderBy == '-point_value' %}
+                        <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=point_value" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">Pts<i class="fa-solid fa-arrow-down ms-2"></i></a>
+                    {% else %}
+                        <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=-point_value" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">Pts</a>
+                    {% endif %}
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in pokemon %}
                 <tr>
-                    <th class="pokemon-sprite" style="position: sticky; left: 0;"></th>
-                    <th class="table-cell-medium">
-                        {% if orderBy == 'name' %}
-                            <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=-name" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">Name<i class="fa-solid fa-arrow-up ms-2"></i></a>
-                        {% elif orderBy == '-name' %}
-                            <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=name" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">Name<i class="fa-solid fa-arrow-down ms-2"></i></a>
-                        {% else %}
-                            <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=name" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">Name</a>
-                        {% endif %}
-                    </th>
-                    <th class="table-cell-large">Types</th>
-                    <th class="table-cell-xlarge">Abilities</th>
-                    <th class="table-cell-small">
-                        {% if orderBy == 'hp' %}
-                            <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=-hp" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">HP<i class="fa-solid fa-arrow-up ms-2"></i></a>
-                        {% elif orderBy == '-hp' %}
-                            <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=hp" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">HP<i class="fa-solid fa-arrow-down ms-2"></i></a>
-                        {% else %}
-                            <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=-hp" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">HP</a>
-                        {% endif %}
-                    </th>
-                    <th class="table-cell-small">
-                        {% if orderBy == 'attack' %}
-                            <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=-attack" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">Atk<i class="fa-solid fa-arrow-up ms-2"></i></a>
-                        {% elif orderBy == '-attack' %}
-                            <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=attack" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">Atk<i class="fa-solid fa-arrow-down ms-2"></i></a>
-                        {% else %}
-                            <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=-attack" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">Atk</a>
-                        {% endif %}
-                    </th>
-                    <th class="table-cell-small">
-                        {% if orderBy == 'defense' %}
-                            <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=-defense" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">Def<i class="fa-solid fa-arrow-up ms-2"></i></a>
-                        {% elif orderBy == '-defense' %}
-                            <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=defense" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">Def<i class="fa-solid fa-arrow-down ms-2"></i></a>
-                        {% else %}
-                            <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=-defense" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">Def</a>
-                        {% endif %}
-                    </th>
-                    <th class="table-cell-small">
-                        {% if orderBy == 'special_attack' %}
-                            <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=-special_attack" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">SpA<i class="fa-solid fa-arrow-up ms-2"></i></a>
-                        {% elif orderBy == '-special_attack' %}
-                            <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=special_attack" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">SpA<i class="fa-solid fa-arrow-down ms-2"></i></a>
-                        {% else %}
-                            <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=-special_attack" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">SpA</a>
-                        {% endif %}
-                    </th>
-                    <th class="table-cell-small">
-                        {% if orderBy == 'special_defense' %}
-                            <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=-special_defense" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">SpD<i class="fa-solid fa-arrow-up ms-2"></i></a>
-                        {% elif orderBy == '-special_defense' %}
-                            <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=special_defense" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">SpD<i class="fa-solid fa-arrow-down ms-2"></i></a>
-                        {% else %}
-                            <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=-special_defense" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">SpD</a>
-                        {% endif %}
-                    </th>
-                    <th class="table-cell-small">
-                        {% if orderBy == 'speed' %}
-                            <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=-speed" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">Spd<i class="fa-solid fa-arrow-up ms-2"></i></a>
-                        {% elif orderBy == '-speed' %}
-                            <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=speed" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">Spd<i class="fa-solid fa-arrow-down ms-2"></i></a>
-                        {% else %}
-                            <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=-speed" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">Spd</a>
-                        {% endif %}
-                    </th>
-                    <th class="table-cell-small">
-                        {% if orderBy == 'base_stat_total' %}
-                            <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=-base_stat_total" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">BST<i class="fa-solid fa-arrow-up ms-2"></i></a>
-                        {% elif orderBy == '-base_stat_total' %}
-                            <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=base_stat_total" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">BST<i class="fa-solid fa-arrow-down ms-2"></i></a>
-                        {% else %}
-                            <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=-base_stat_total" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">BST</a>
-                        {% endif %}
-                    </th>
-                    <th class="table-cell-small">
-                        {% if orderBy == 'point_value' %}
-                            <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=-point_value" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">Pts<i class="fa-solid fa-arrow-up ms-2"></i></a>
-                        {% elif orderBy == '-point_value' %}
-                            <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=point_value" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">Pts<i class="fa-solid fa-arrow-down ms-2"></i></a>
-                        {% else %}
-                            <a class="w-100 d-inline-flex align-items-center justify-content-between" hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=team.id %}?order_by=-point_value" hx-trigger="click" hx-target="#team-matchup-team-table-{{team.id}}" hx-swap="outerHTML">Pts</a>
-                        {% endif %}
-                    </th>
+                    <td class="pokemon-sprite" style="position: sticky; left: 0;">
+                        <div>
+                            <img src="{{ p.sprite_url }}" alt="Pokemon Sprite" style="cursor: pointer" hx-get="{% url 'leagues:leaguePokemonModal' league_id=league.id pokemon_id=p.id %}" hx-trigger="click" hx-target="#pokemon-modal" hx-swap="innerHTML">
+                        </div>
+                    </td>
+                    <td class="table-cell-medium text-capitalize">
+                        <a href="{{ p.get_smogon_link }}" target="_blank">{{ p.name|truncatechars:12 }}</a>
+                    </td>
+                    <td class="table-cell-large">
+                        <div class="pokemon-types-container">
+                            {% for t in p.pokemon_types.all %}
+                                <div class="pokemon-pill" style="background-color: {{t.type.color}}">{{ t.type.name }}</div>
+                            {% endfor %}
+                        </div>
+                    </td>
+                    <td class="table-cell-xlarge">
+                        <div class="pokemon-abilities-container">
+                            {% for a in p.pokemon_abilities.all %}
+                                <div class="pokemon-pill">{{ a.name }}</div>
+                            {% endfor %}
+                        </div>
+                    </td>
+                    <td class="table-cell-small">{{ p.hp }}</td>
+                    <td class="table-cell-small">{{ p.attack }}</td>
+                    <td class="table-cell-small">{{ p.defense }}</td>
+                    <td class="table-cell-small">{{ p.special_attack }}</td>
+                    <td class="table-cell-small">{{ p.special_defense }}</td>
+                    <td class="table-cell-small">{{ p.speed }}</td>
+                    <td class="table-cell-small">{{ p.base_stat_total }}</td>
+                    <td class="table-cell-small">{{ p.point_value }}</td>
                 </tr>
-            </thead>
-            <tbody>
-                {% for p in pokemon %}
-                    <tr>
-                        <td class="pokemon-sprite" style="position: sticky; left: 0;">
-                            <div>
-                                <img src="{{ p.sprite_url }}" alt="Pokemon Sprite" style="cursor: pointer" hx-get="{% url 'leagues:leaguePokemonModal' league_id=league.id pokemon_id=p.id %}" hx-trigger="click" hx-target="#pokemon-modal" hx-swap="innerHTML">
-                            </div>
-                        </td>
-                        <td class="table-cell-medium text-capitalize">
-                            <a href="{{ p.get_smogon_link }}" target="_blank">{{ p.name|truncatechars:12 }}</a>
-                        </td>
-                        <td class="table-cell-large">
-                            <div class="pokemon-types-container">
-                                {% for t in p.pokemon_types.all %}
-                                    <div class="pokemon-pill" style="background-color: {{t.type.color}}">{{ t.type.name }}</div>
-                                {% endfor %}
-                            </div>
-                        </td>
-                        <td class="table-cell-xlarge">
-                            <div class="pokemon-abilities-container">
-                                {% for a in p.pokemon_abilities.all %}
-                                    <div class="pokemon-pill">{{ a.name }}</div>
-                                {% endfor %}
-                            </div>
-                        </td>
-                        <td class="table-cell-small">{{ p.hp }}</td>
-                        <td class="table-cell-small">{{ p.attack }}</td>
-                        <td class="table-cell-small">{{ p.defense }}</td>
-                        <td class="table-cell-small">{{ p.special_attack }}</td>
-                        <td class="table-cell-small">{{ p.special_defense }}</td>
-                        <td class="table-cell-small">{{ p.speed }}</td>
-                        <td class="table-cell-small">{{ p.base_stat_total }}</td>
-                        <td class="table-cell-small">{{ p.point_value }}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
