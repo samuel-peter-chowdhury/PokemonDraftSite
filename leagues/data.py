@@ -31,7 +31,7 @@ def initialize_schedule_data(data, season):
         week.save()
 
         for pair in value:
-            print(f'{pair['coach_one']} vs. {pair['coach_two']}')
+            print(f'{pair["coach_one"]} vs. {pair["coach_two"]}')
             names = [pair['coach_one'], pair['coach_two']]
             coaches = Team.objects.filter(name__iregex=r'(' + '|'.join(names) + ')').order_by('name')
             try:
