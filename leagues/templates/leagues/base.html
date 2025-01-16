@@ -32,6 +32,9 @@
                 <a class="nav-link" href="{%  url 'leagues:leagueRosters' id=league.id %}">Rosters</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="{%  url 'leagues:leagueSchedule' id=league.id %}">Schedule</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="{%  url 'leagues:teamMatchup' id=league.id %}">Team Matchup</a>
             </li>
             <li class="nav-item">
@@ -69,6 +72,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{%  url 'leagues:adminInitializeMoveData' id=league.id %}">Move Data</a>
                         </li>-->
+                        <li class="nav-item">
+                            <a class="nav-link" href="{%  url 'leagues:adminInitializeScheduleData' id=league.id %}">Schedule Data</a>
+                        </li>
                     {% endif %}
                 </ul>
             </div>

@@ -7,8 +7,23 @@ import csv
 
 from leagues.forms import PokemonSimpleSearchForm, DataUploadForm
 from leagues.models import League, Team
-from leagues.data import initialize_detailed_move_data, initialize_pokemon_data, initialize_point_value_data
+from leagues.data import initialize_detailed_move_data, initialize_pokemon_data, initialize_point_value_data, initialize_schedule_data
 from pokemons.models import Pokemon
+
+@user_passes_test(lambda u: u.is_superuser)
+def initialize_schedule_data_view(request, id):
+    league = League.objects.get(id=id)
+    activeSeason = league.get_active_season()
+    if request.method == "POST":
+        form = DataUploadForm(request.POST, request.FILES)
+        if form.is_valid() and activeSeason:
+            file = request.FILES['file']
+            decoded_file = file.read().decode('utf-8').splitlines()
+            csv_file = csv.reader(decoded_file)
+            initialize_schedule_data(csv_file, activeSeason)
+    else:
+        form = DataUploadForm()
+    return render(request, "leagues/admin/initialize_schedule_data.html", { "form": form, 'league': league, 'isLeagueModerator': request.user.is_league_moderator(league.id) })
 
 @user_passes_test(lambda u: u.is_superuser)
 def initialize_detailed_move_data_view(request, id):

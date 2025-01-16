@@ -2,6 +2,46 @@ import requests
 import json
 
 from pokemons.models import Pokemon, Type, PokemonType, PokemonTypeEffective, PokemonCoverageMove, PokemonSpecialMove, PokemonMove, PokemonAbility, DetailedMove, PokemonDetailedMove
+from .models import Week, Matchup, Team
+
+def initialize_schedule_data(data, season):
+    # Initialize week map and coach line
+    weekMap = {}
+    teamLine = []
+
+    # Wipe week data
+    Week.objects.all().delete()
+
+    for i, line in enumerate(data):
+        if i == 0:
+            teamLine = line
+        else:
+            weekName = line[0]
+            weekMap[weekName] = []
+            for j, cell in enumerate(line):
+                if j == 0:
+                    pass
+                else:
+                    weekMap[weekName].append({'coach_one': teamLine[j], 'coach_two': cell})
+
+    for key, value in weekMap.items():
+        week = Week()
+        week.name = key
+        week.season = season
+        week.save()
+
+        for pair in value:
+            print(f'{pair['coach_one']} vs. {pair['coach_two']}')
+            names = [pair['coach_one'], pair['coach_two']]
+            coaches = Team.objects.filter(name__iregex=r'(' + '|'.join(names) + ')').order_by('name')
+            try:
+                matchup = Matchup()
+                matchup.week = week
+                matchup.coach_one = coaches[0]
+                matchup.coach_two = coaches[1]
+                matchup.save()
+            except:
+                print(f'Duplicate: {week.name}: {coaches[0].name} vs. {coaches[1].name}')
 
 def initialize_detailed_move_data(season):
     # Initialize special move data

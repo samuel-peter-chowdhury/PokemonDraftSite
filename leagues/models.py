@@ -46,3 +46,30 @@ class Team(BaseModel):
 
     def __str__(self):
         return self.name
+    
+class Week(BaseModel):
+    name = models.CharField(max_length=50)
+    season = models.ForeignKey(Season, on_delete=models.CASCADE, related_name='weeks')
+
+    class Meta:
+        unique_together = ('name', 'season')
+
+    def __str__(self):
+        return self.name
+    
+class Matchup(BaseModel):
+    week = models.ForeignKey(Week, on_delete=models.CASCADE, related_name='week_matchups')
+    coach_one = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='coach_one_matchups')
+    coach_two = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='coach_two_matchups')
+    winner = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='winner_matchups', blank=True, null=True)
+    loser = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='loser_matchups', blank=True, null=True)
+
+    class Meta:
+        unique_together = ('week', 'coach_one', 'coach_two')
+
+class Game(BaseModel):
+    matchup = models.ForeignKey(Matchup, on_delete=models.CASCADE, related_name='games')
+    winner = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='winner_games')
+    loser = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='loser_games')
+    differential = models.IntegerField()
+    replay_link = models.TextField()

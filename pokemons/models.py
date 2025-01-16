@@ -1,7 +1,7 @@
 from django.db import models
 
 from core.models import BaseModel
-from leagues.models import Season, Team
+from leagues.models import Season, Team, Game
 
 # Create your models here.
 class SpecialMoveCategory(models.TextChoices):
@@ -125,3 +125,10 @@ class PokemonAbility(BaseModel):
 
     def __str__(self):
         return f'{self.pokemon}:{self.name}'
+
+class GameStat(BaseModel):
+    game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name='game_stats')
+    pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE, related_name='pokemon_game_stats')
+    direct_kills = models.IntegerField()
+    indirect_kills = models.IntegerField()
+    deaths = models.IntegerField()

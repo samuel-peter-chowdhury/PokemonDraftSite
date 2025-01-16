@@ -29,7 +29,7 @@ def league_pokemon_tiers_view(request, id):
     if request.user.has_league(id):
         league = League.objects.get(id=id)
         activeSeason = league.get_active_season()
-        tiers = [20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+        tiers = reversed(range(1, activeSeason.max_tier_value + 1))
 
         tierListZoom = request.GET.get('tier_list_zoom', None)
         if tierListZoom:

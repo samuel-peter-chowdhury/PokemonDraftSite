@@ -7,6 +7,7 @@ urlpatterns = [
     path('<int:id>', base_views.league_view, name="league"),
     path('<int:id>/rules', base_views.league_rules_view, name="leagueRules"),
     path('<int:id>/rosters', base_views.league_rosters_view, name="leagueRosters"),
+    path('<int:id>/schedule', base_views.league_schedule_view, name="leagueSchedule"),
     path('join', base_views.league_join_view, name="leagueJoin"),
 ]
 
@@ -40,6 +41,7 @@ urlpatterns += team_urlpatterns
 
 admin_urlpatterns = [
     # Data Initialization Paths
+    path('<int:id>/admin/initialize/schedule', admin_views.initialize_schedule_data_view, name="adminInitializeScheduleData"),
     path('<int:id>/admin/initialize/move', admin_views.initialize_detailed_move_data_view, name="adminInitializeMoveData"),
     path('<int:id>/admin/initialize/pokemon', admin_views.initialize_pokemon_data_view, name="adminInitializePokemonData"),
     path('<int:id>/admin/initialize/point', admin_views.initialize_point_data_view, name="adminInitializePointData"),

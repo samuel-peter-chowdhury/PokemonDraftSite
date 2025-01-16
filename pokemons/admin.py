@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Pokemon, Type, PokemonType, PokemonTypeEffective, PokemonCoverageMove, PokemonSpecialMove, PokemonMove, PokemonAbility, DetailedMove, PokemonDetailedMove
+from .models import Pokemon, Type, PokemonType, PokemonTypeEffective, PokemonCoverageMove, PokemonSpecialMove, PokemonMove, PokemonAbility, DetailedMove, PokemonDetailedMove, GameStat
 
 # Register your models here.
 class PokemonAdmin(admin.ModelAdmin):
@@ -52,3 +52,8 @@ class PokemonAbilityAdmin(admin.ModelAdmin):
     list_display = [field.name for field in PokemonAbility._meta.get_fields() if not field.is_relation]
     list_filter = [field.name for field in PokemonAbility._meta.get_fields() if not field.is_relation]
 admin.site.register(PokemonAbility, PokemonAbilityAdmin)
+
+class GameStatAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in GameStat._meta.get_fields() if not field.is_relation]
+    list_filter = [field.name for field in GameStat._meta.get_fields() if not field.is_relation]
+admin.site.register(GameStat, GameStatAdmin)
