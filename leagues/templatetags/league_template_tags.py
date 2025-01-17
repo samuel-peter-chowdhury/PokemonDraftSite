@@ -1,9 +1,6 @@
 from django.template.defaulttags import register
-from django.db.models import Subquery
-from pokemons.models import DetailedMove
 
 import math
-import operator
 
 @register.filter
 def get_item(dictionary, key):
@@ -96,34 +93,6 @@ def get_type_effective_total_color(total):
         return '#EA4C46'
     else:
         return '#DC1C13'
-    
-@register.filter
-def get_pokemon_special_move_dictionary(pokemon):
-    special_move_dictionary = {}
-    special_move_subquery = DetailedMove.objects.exclude(special_category__isnull=True).only('id').all()
-    special_moves = pokemon.pokemon_detailed_moves.filter(detailed_move__id__in=Subquery(special_move_subquery))
-    for sm in special_moves:
-        move = sm.detailed_move
-        if move.special_category not in special_move_dictionary:
-            special_move_dictionary[move.special_category] = []
-        special_move_dictionary[move.special_category].append({'name': move.name, 'category': move.category, 'color': move.type.color, 'id': move.id})
-    for key, value in special_move_dictionary.items():
-        special_move_dictionary[key] = sorted(value, key = lambda x: (x['color'], x['category'], x['name']))
-    return special_move_dictionary
-
-@register.filter
-def get_pokemon_coverage_move_dictionary(pokemon):
-    coverage_move_dictionary = {}
-    coverage_move_subquery = DetailedMove.objects.exclude(viable=False).only('id').all()
-    coverage_moves = pokemon.pokemon_detailed_moves.filter(detailed_move__id__in=Subquery(coverage_move_subquery))
-    for cm in coverage_moves:
-        move = cm.detailed_move
-        if move.type.name not in coverage_move_dictionary:
-            coverage_move_dictionary[move.type.name] = []
-        coverage_move_dictionary[move.type.name].append({'name': move.name, 'category': move.category, 'color': move.type.color, 'id': move.id})
-    for key, value in coverage_move_dictionary.items():
-        coverage_move_dictionary[key] = sorted(value, key = lambda x: (x['category'], x['name']))
-    return coverage_move_dictionary
 
 @register.filter
 def get_all_ordered_by(obj, order_by_field):
@@ -133,10 +102,6 @@ def get_all_ordered_by(obj, order_by_field):
 def get_remaining_points(team, season):
     points_spent = sum([p.point_value for p in team.pokemons.all()])
     return season.point_limit - points_spent
-
-@register.filter
-def get_sorted_keys(dict):
-    return sorted(list(dict.keys()))
 
 @register.filter
 def get_stat_value_length(value):

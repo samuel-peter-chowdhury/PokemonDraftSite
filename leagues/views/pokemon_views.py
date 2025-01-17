@@ -149,7 +149,29 @@ def league_pokemon_search_results(request, league_id):
 def get_pokemon_modal(request, league_id, pokemon_id):
     if request.user.has_league(league_id):
         league = League.objects.get(id=league_id)
-        pokemon = Pokemon.objects.get(id=pokemon_id)
-        return render(request, "leagues/pokemon/league_pokemon_modal.html", {'league': league, 'pokemon': pokemon})
+        pokemon = Pokemon.objects.prefetch_related('pokemon_detailed_moves__detailed_move__type').get(id=pokemon_id)
+        special_move_dict = get_pokemon_special_move_dictionary(pokemon)
+        coverage_move_dict = get_pokemon_coverage_move_dictionary(pokemon)
+        return render(request, "leagues/pokemon/league_pokemon_modal.html", {'league': league, 'pokemon': pokemon, 'special_move_dict': special_move_dict, 'coverage_move_dict': coverage_move_dict})
     else:
         return HttpResponse(status=400)
+    
+def get_pokemon_special_move_dictionary(pokemon):
+    special_move_dictionary = {}
+    special_moves = pokemon.pokemon_detailed_moves.filter(detailed_move__special_category__isnull=False).order_by('detailed_move__special_category', 'detailed_move__type__name', 'detailed_move__name')
+    for sm in special_moves:
+        move = sm.detailed_move
+        if move.special_category not in special_move_dictionary:
+            special_move_dictionary[move.special_category] = []
+        special_move_dictionary[move.special_category].append({'name': move.name, 'category': move.category, 'color': move.type.color, 'id': move.id})
+    return special_move_dictionary
+
+def get_pokemon_coverage_move_dictionary(pokemon):
+    coverage_move_dictionary = {}
+    coverage_moves = pokemon.pokemon_detailed_moves.filter(detailed_move__viable=True).order_by('detailed_move__type__name', 'detailed_move__category', 'detailed_move__name')
+    for cm in coverage_moves:
+        move = cm.detailed_move
+        if move.type.name not in coverage_move_dictionary:
+            coverage_move_dictionary[move.type.name] = []
+        coverage_move_dictionary[move.type.name].append({'name': move.name, 'category': move.category, 'color': move.type.color, 'id': move.id})
+    return coverage_move_dictionary

@@ -60,38 +60,34 @@
                     </div>
                 </div>
                 <div class="d-flex flex-row w-100" style="gap: 2rem; flex-wrap: wrap; margin-bottom: 2rem;">
-                    {% with pokemon|get_pokemon_special_move_dictionary as special_move_dict %}
-                        {% for category in special_move_dict|get_sorted_keys %}
-                            <div class="d-inline-flex align-items-center" style="gap: 0.5rem; flex-wrap: wrap;">
-                                <div class="fw-bold text-capitalize">{{ category }}:</div>
-                                {% for move in special_move_dict|get_item:category %}
-                                    <a href="{%  url 'leagues:leaguePokemonSearch' id=league.id %}?move_id={{ move|get_item:'id' }}" target="_blank" class="nav-link text-white d-flex align-items-center text-capitalize" style="white-space: nowrap; padding: 0.125rem 0.5rem; justify-content: center; border-radius: 0.75rem; background-color: {{ move|get_item:'color' }}">
-                                        {{ move|get_item:'name' }}
-                                        {% with move|get_item:'category' as category %}
-                                            <i class="fa-solid {{ category|get_category_icon }} ms-1"></i>
-                                        {% endwith %}
-                                    </a>
-                                {% endfor %}
-                            </div>
-                        {% endfor %}
-                    {% endwith %}
+                    {% for category, moves in special_move_dict.items %}
+                        <div class="d-inline-flex align-items-center" style="gap: 0.5rem; flex-wrap: wrap;">
+                            <div class="fw-bold text-capitalize">{{ category }}:</div>
+                            {% for move in moves %}
+                                <a href="{%  url 'leagues:leaguePokemonSearch' id=league.id %}?move_id={{ move|get_item:'id' }}" target="_blank" class="nav-link text-white d-flex align-items-center text-capitalize" style="white-space: nowrap; padding: 0.125rem 0.5rem; justify-content: center; border-radius: 0.75rem; background-color: {{ move|get_item:'color' }}">
+                                    {{ move|get_item:'name' }}
+                                    {% with move|get_item:'category' as category %}
+                                        <i class="fa-solid {{ category|get_category_icon }} ms-1"></i>
+                                    {% endwith %}
+                                </a>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
                 </div>
                 <div class="d-flex flex-row w-100" style="gap: 2rem; flex-wrap: wrap;">
-                    {% with pokemon|get_pokemon_coverage_move_dictionary as coverage_move_dict %}
-                        {% for type in coverage_move_dict|get_sorted_keys %}
-                            <div class="d-inline-flex align-items-center" style="gap: 0.5rem; flex-wrap: wrap;">
-                                <div class="fw-bold text-capitalize">{{ type }}:</div>
-                                {% for move in coverage_move_dict|get_item:type %}
-                                    <a href="{%  url 'leagues:leaguePokemonSearch' id=league.id %}?move_id={{ move|get_item:'id' }}" target="_blank" class="nav-link text-white d-flex align-items-center text-capitalize" style="white-space: nowrap; padding: 0.125rem 0.5rem; justify-content: center; border-radius: 0.75rem; background-color: {{ move|get_item:'color' }}">
-                                        {{ move|get_item:'name' }}
-                                        {% with move|get_item:'category' as category %}
-                                            <i class="fa-solid {{ category|get_category_icon }} ms-1"></i>
-                                        {% endwith %}
-                                    </a>
-                                {% endfor %}
-                            </div>
-                        {% endfor %}
-                    {% endwith %}
+                    {% for type, moves in coverage_move_dict.items %}
+                        <div class="d-inline-flex align-items-center" style="gap: 0.5rem; flex-wrap: wrap;">
+                            <div class="fw-bold text-capitalize">{{ type }}:</div>
+                            {% for move in moves %}
+                                <a href="{%  url 'leagues:leaguePokemonSearch' id=league.id %}?move_id={{ move|get_item:'id' }}" target="_blank" class="nav-link text-white d-flex align-items-center text-capitalize" style="white-space: nowrap; padding: 0.125rem 0.5rem; justify-content: center; border-radius: 0.75rem; background-color: {{ move|get_item:'color' }}">
+                                    {{ move|get_item:'name' }}
+                                    {% with move|get_item:'category' as category %}
+                                        <i class="fa-solid {{ category|get_category_icon }} ms-1"></i>
+                                    {% endwith %}
+                                </a>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
