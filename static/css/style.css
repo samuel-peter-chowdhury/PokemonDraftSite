@@ -525,13 +525,15 @@ div.speed-icon {
 }
 
 .spinner-border {
-    position: absolute;
-    color: white;
-    top: calc(50% - 5rem);
-    left: calc(50% - 5rem);
-    width: 10rem !important;
-    height: 10rem !important;
-    border-width: 0.5rem !important;
-    text-align: center;
-    font-size: 10px;
+    &.global {
+        position: absolute;
+        color: white;
+        top: calc(50% - 5rem);
+        left: calc(50% - 5rem);
+        width: 10rem !important;
+        height: 10rem !important;
+        border-width: 0.5rem !important;
+        text-align: center;
+        font-size: 10px;
+    }
 }
