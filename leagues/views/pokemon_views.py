@@ -166,7 +166,7 @@ def get_pokemon_special_move_dictionary(pokemon):
         for c in sm.get_special_categories():
             if c not in special_move_dictionary:
                 special_move_dictionary[c] = []
-            special_move_dictionary[c].append({'name': sm.name, 'category': sm.category, 'type': sm.type, 'id': sm.id, 'description': sm.description})
+            special_move_dictionary[c].append({'name': sm.name, 'category': sm.category, 'type': sm.type, 'id': sm.id, 'tooltip': get_move_tooltip(sm)})
     return special_move_dictionary
 
 def get_pokemon_coverage_move_dictionary(pokemon):
@@ -175,6 +175,14 @@ def get_pokemon_coverage_move_dictionary(pokemon):
     for cm in coverage_moves:
         if cm.type not in coverage_move_dictionary:
             coverage_move_dictionary[cm.type] = []
-        tooltip = f'Power: {cm.base_power}  |  Accuracy: {cm.accuracy}  |  {cm.description}'
-        coverage_move_dictionary[cm.type].append({'name': cm.name, 'category': cm.category, 'type': cm.type, 'id': cm.id, 'tooltip': tooltip})
+        coverage_move_dictionary[cm.type].append({'name': cm.name, 'category': cm.category, 'type': cm.type, 'id': cm.id, 'tooltip': get_move_tooltip(cm)})
     return coverage_move_dictionary
+
+def get_move_tooltip(move):
+    tooltipTokens = []
+    tooltipTokens.append(f'Power: {move.base_power if move.base_power > 0 else "-"}')
+    tooltipTokens.append(f'Accuracy: {str(move.accuracy) + "%" if move.accuracy > 0 else "-"}')
+    if move.priority != 0:
+        tooltipTokens.append(f'Priority: {"+" + str(move.priority) if move.priority > 0 else move.priority}')
+    tooltipTokens.append(move.description)
+    return ' | '.join(tooltipTokens)
