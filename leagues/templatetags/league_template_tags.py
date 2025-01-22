@@ -63,10 +63,6 @@ def get_type_color(type):
             return '#96D9D6'
         case _:
             return 'white'
-    
-@register.filter
-def get_type_effective_value(pokemon, type):
-    return pokemon.type_effectives.get(type=type).value
         
 @register.filter
 def get_stat_color(stat):

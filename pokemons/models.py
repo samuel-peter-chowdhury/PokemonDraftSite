@@ -102,6 +102,12 @@ class Pokemon(BaseModel):
         
     def get_types(self):
         return self.types.split(',')
+    
+    def get_type_effective_map(self):
+        type_effectives = {}
+        for te in self.type_effectives.all():
+            type_effectives[te.type] = te.value
+        return type_effectives
         
 class TypeEffective(BaseModel):
     pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE, related_name='type_effectives')

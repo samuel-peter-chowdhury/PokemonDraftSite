@@ -23,6 +23,7 @@
             </thead>
             <tbody style="font-size: 0.8rem">
                 {% for p in pokemon %}
+                {% with p.get_type_effective_map as typeMap %}
                     <tr>
                         <td class="pokemon-sprite" style="position: sticky; left: 0;">
                             <div>
@@ -30,11 +31,12 @@
                             </div>
                         </td>
                         {% for t in types %}
-                        {% with p|get_type_effective_value:t as value %}
+                        {% with typeMap|get_item:t as value %}
                             <td class="table-cell-small text-black" style="background-color: {{ value|get_type_effective_color }}; --bs-table-accent-bg: none;">{{ value }}</td>
                         {% endwith %}
                         {% endfor %}
                     </tr>
+                {% endwith %}
                 {% endfor %}
                 <tr class="border-top border-white border-2">
                     <td class="pokemon-sprite" style="position: sticky; left: 0;"><div>Total</div></td>
