@@ -1,4 +1,4 @@
-<div class="table-responsive pokemon-table responsive" id="team-matchup-team-table-{{team.id}}">
+<div class="table-responsive pokemon-table compact" id="team-matchup-team-table-{{team.id}}">
     <table class="table table-dark table-striped table-hover table-bordered">
         <thead>
             <tr>
@@ -113,14 +113,14 @@
                             {% endfor %}
                         </div>
                     </td>
-                    <td class="table-cell-small">{{ p.hp }}</td>
-                    <td class="table-cell-small">{{ p.attack }}</td>
-                    <td class="table-cell-small">{{ p.defense }}</td>
-                    <td class="table-cell-small">{{ p.special_attack }}</td>
-                    <td class="table-cell-small">{{ p.special_defense }}</td>
-                    <td class="table-cell-small">{{ p.speed }}</td>
-                    <td class="table-cell-small">{{ p.base_stat_total }}</td>
-                    <td class="table-cell-small">{{ p.point_value }}</td>
+                    <td class="table-cell-small text-black" style="font-size: 0.8rem; background-color: {{ p.hp|get_stat_color }}; --bs-table-accent-bg: none;">{{ p.hp }}</td>
+                    <td class="table-cell-small text-black" style="font-size: 0.8rem; background-color: {{ p.attack|get_stat_color }}; --bs-table-accent-bg: none;">{{ p.attack }}</td>
+                    <td class="table-cell-small text-black" style="font-size: 0.8rem; background-color: {{ p.defense|get_stat_color }}; --bs-table-accent-bg: none;">{{ p.defense }}</td>
+                    <td class="table-cell-small text-black" style="font-size: 0.8rem; background-color: {{ p.special_attack|get_stat_color }}; --bs-table-accent-bg: none;">{{ p.special_attack }}</td>
+                    <td class="table-cell-small text-black" style="font-size: 0.8rem; background-color: {{ p.special_defense|get_stat_color }}; --bs-table-accent-bg: none;">{{ p.special_defense }}</td>
+                    <td class="table-cell-small text-black" style="font-size: 0.8rem; background-color: {{ p.speed|get_stat_color }}; --bs-table-accent-bg: none;">{{ p.speed }}</td>
+                    <td class="table-cell-small" style="font-size: 0.8rem">{{ p.base_stat_total }}</td>
+                    <td class="table-cell-small" style="font-size: 0.8rem">{{ p.point_value }}</td>
                 </tr>
             {% endfor %}
         </tbody>
