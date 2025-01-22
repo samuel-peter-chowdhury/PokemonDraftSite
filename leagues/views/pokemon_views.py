@@ -162,7 +162,7 @@ def get_pokemon_special_move_dictionary(pokemon):
         for c in sm.get_special_categories():
             if c not in special_move_dictionary:
                 special_move_dictionary[c] = []
-            special_move_dictionary[c].append({'name': sm.name, 'category': sm.category, 'type': sm.type, 'id': sm.id})
+            special_move_dictionary[c].append({'name': sm.name, 'category': sm.category, 'type': sm.type, 'id': sm.id, 'description': sm.description})
     return special_move_dictionary
 
 def get_pokemon_coverage_move_dictionary(pokemon):
@@ -171,5 +171,6 @@ def get_pokemon_coverage_move_dictionary(pokemon):
     for cm in coverage_moves:
         if cm.type not in coverage_move_dictionary:
             coverage_move_dictionary[cm.type] = []
-        coverage_move_dictionary[cm.type].append({'name': cm.name, 'category': cm.category, 'type': cm.type, 'id': cm.id})
+        tooltip = f'Power: {cm.base_power}  |  Accuracy: {cm.accuracy}  |  {cm.description}'
+        coverage_move_dictionary[cm.type].append({'name': cm.name, 'category': cm.category, 'type': cm.type, 'id': cm.id, 'tooltip': tooltip})
     return coverage_move_dictionary
