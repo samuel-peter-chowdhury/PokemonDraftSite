@@ -39,65 +39,65 @@ class PokemonSearchForm(forms.Form):
     base_point_value__gte = forms.IntegerField(label="Min Pts", required=False, widget=forms.NumberInput(attrs={'style': 'width: 5rem'}))
     base_point_value__lte = forms.IntegerField(label="Max Pts", required=False, widget=forms.NumberInput(attrs={'style': 'width: 5rem'}))
 
-    and_pokemon_types__type__name__iexact = forms.MultipleChoiceField(
+    and_types__icontains = forms.MultipleChoiceField(
         label="Types (&)",
-        choices=Type,
+        choices=Type.choices,
         required=False,
         widget=forms.SelectMultiple(attrs={'style': 'width: 10rem'})
     )
-    or_pokemon_types__type__name__iexact = forms.MultipleChoiceField(
+    or_types__icontains = forms.MultipleChoiceField(
         label="Types (|)",
-        choices=Type,
+        choices=Type.choices,
         required=False,
         widget=forms.SelectMultiple(attrs={'style': 'width: 10rem'})
     )
 
-    and_pokemon_abilities__name__iexact = forms.MultipleChoiceField(
+    and_abilities__name__iexact = forms.MultipleChoiceField(
         label="Abilities (&)",
         choices=ABILITY_CHOICES,
         required=False,
         widget=forms.SelectMultiple(attrs={'style': 'width: 10rem'})
     )
-    or_pokemon_abilities__name__iexact = forms.MultipleChoiceField(
+    or_abilities__name__iexact = forms.MultipleChoiceField(
         label="Abilities (|)",
         choices=ABILITY_CHOICES,
         required=False,
         widget=forms.SelectMultiple(attrs={'style': 'width: 10rem'})
     )
 
-    and_pokemon_detailed_moves__detailed_move__name__iexact = forms.MultipleChoiceField(
+    and_moves__name__iexact = forms.MultipleChoiceField(
         label="Moves (&)",
         choices=MOVE_CHOICES,
         required=False,
         widget=forms.SelectMultiple(attrs={'style': 'width: 10rem'})
     )
-    or_pokemon_detailed_moves__detailed_move__name__iexact = forms.MultipleChoiceField(
+    or_moves__name__iexact = forms.MultipleChoiceField(
         label="Moves (|)",
         choices=MOVE_CHOICES,
         required=False,
         widget=forms.SelectMultiple(attrs={'style': 'width: 10rem'})
     )
 
-    and_pokemon_detailed_moves__detailed_move__type__name__iexact = forms.MultipleChoiceField(
+    and_moves__type__iexact = forms.MultipleChoiceField(
         label="Type Moves (&)",
-        choices=Type,
+        choices=Type.choices,
         required=False,
         widget=forms.SelectMultiple(attrs={'style': 'width: 10rem'})
     )
-    or_pokemon_detailed_moves__detailed_move__type__name__iexact = forms.MultipleChoiceField(
+    or_moves__type__iexact = forms.MultipleChoiceField(
         label="Type Moves (|)",
-        choices=Type,
+        choices=Type.choices,
         required=False,
         widget=forms.SelectMultiple(attrs={'style': 'width: 10rem'})
     )
 
-    and_pokemon_detailed_moves__detailed_move__special_category__iexact = forms.MultipleChoiceField(
+    and_moves__special_categories__icontains = forms.MultipleChoiceField(
         label="Special Moves (&)",
         choices=SpecialMoveCategory.choices,
         required=False,
         widget=forms.SelectMultiple(attrs={'style': 'width: 10rem'})
     )
-    or_pokemon_detailed_moves__detailed_move__special_category__iexact = forms.MultipleChoiceField(
+    or_moves__special_categories__icontains = forms.MultipleChoiceField(
         label="Special Moves (|)",
         choices=SpecialMoveCategory.choices,
         required=False,
@@ -106,39 +106,39 @@ class PokemonSearchForm(forms.Form):
 
     and_type_effectives__type__iexact___type_effectives__value__lt___1 = forms.MultipleChoiceField(
         label="Resisted Types (&)",
-        choices=Type,
+        choices=Type.choices,
         required=False,
         widget=forms.SelectMultiple(attrs={'style': 'width: 10rem'})
     )
     or_type_effectives__type__iexact___type_effectives__value__lt___1 = forms.MultipleChoiceField(
         label="Resisted Types (|)",
-        choices=Type,
+        choices=Type.choices,
         required=False,
         widget=forms.SelectMultiple(attrs={'style': 'width: 10rem'})
     )
 
     and_type_effectives__type__iexact___type_effectives__value__gt___1 = forms.MultipleChoiceField(
         label="Weak Types (&)",
-        choices=Type,
+        choices=Type.choices,
         required=False,
         widget=forms.SelectMultiple(attrs={'style': 'width: 10rem'})
     )
     or_type_effectives__type__iexact___type_effectives__value__gt___1 = forms.MultipleChoiceField(
         label="Weak Types (|)",
-        choices=Type,
+        choices=Type.choices,
         required=False,
         widget=forms.SelectMultiple(attrs={'style': 'width: 10rem'})
     )
 
     and_type_effectives__type__iexact___type_effectives__value___0 = forms.MultipleChoiceField(
         label="Immune Types (&)",
-        choices=Type,
+        choices=Type.choices,
         required=False,
         widget=forms.SelectMultiple(attrs={'style': 'width: 10rem'})
     )
     or_type_effectives__type__iexact___type_effectives__value___0 = forms.MultipleChoiceField(
         label="Immune Types (|)",
-        choices=Type,
+        choices=Type.choices,
         required=False,
         widget=forms.SelectMultiple(attrs={'style': 'width: 10rem'})
     )

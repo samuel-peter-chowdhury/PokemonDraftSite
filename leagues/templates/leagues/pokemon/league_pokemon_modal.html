@@ -14,7 +14,7 @@
                         <div class="d-inline-flex align-items-center" style="gap: 0.5rem">
                             <div class="fw-bold" style="width: 5rem">Type:</div>
                             {% for t in pokemon.get_types %}
-                                <a href="{%  url 'leagues:leaguePokemonSearch' id=league.id %}?type_id={{ t }}" target="_blank" class="nav-link text-white d-flex text-capitalize" style="padding: 0.125rem 0; width: 6rem; justify-content: center; border-radius: 0.75rem; background-color: {{ t|get_type_color }}">{{ t }}</a>
+                                <a href="{%  url 'leagues:leaguePokemonSearch' id=league.id %}?type={{ t }}" target="_blank" class="nav-link text-white d-flex text-capitalize" style="padding: 0.125rem 0; width: 6rem; justify-content: center; border-radius: 0.75rem; background-color: {{ t|get_type_color }}">{{ t }}</a>
                             {% endfor %}
                         </div>
                         <div class="d-inline-flex align-items-center" style="gap: 0.5rem">
