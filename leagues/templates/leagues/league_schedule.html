@@ -12,7 +12,7 @@
                             <th class="table-cell-medium">Coach 2</th>
                         </thead>
                         <tbody>
-                            {% for m in w.week_matchups.all %}
+                            {% for m in w.matchups.all %}
                                 <tr>
                                     <td class="table-cell-medium">{{ m.coach_one.name }}</td>
                                     <td class="table-cell-medium">{{ m.coach_two.name }}</td>

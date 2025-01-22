@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.db.models import Subquery
 from django.http import HttpResponse
 
 from leagues.models import League, Team
@@ -90,7 +89,7 @@ def speed_tier_matchup(request, league_id):
 def team_table(request, league_id, team_id):
     if request.user.has_league(league_id):
         league = League.objects.get(id=league_id)
-        orderBy = request.GET.get('order_by', '-speed')
+        orderBy = request.GET.get('order_by', '-point_value')
         team = Team.objects.get(id=team_id)
         pokemon = team.pokemons.order_by(orderBy)
         return render(request, "leagues/team/team_table.html", {'league': league, 'team': team, 'pokemon': pokemon, 'orderBy': orderBy})
@@ -103,27 +102,27 @@ def type_effective(request, league_id, team_id):
         league = League.objects.get(id=league_id)
         team = Team.objects.get(id=team_id)
         pokemon = team.pokemons.order_by('-point_value')
-        types = Type.objects.all()
+        types = [choice[0] for choice in Type.choices]
         totalTypeEffectiveMap = {}
         for p in pokemon:
             for pte in p.type_effectives.all():
-                if pte.type.id not in totalTypeEffectiveMap:
-                    totalTypeEffectiveMap[pte.type.id] = 0
+                if pte.type not in totalTypeEffectiveMap:
+                    totalTypeEffectiveMap[pte.type] = 0
                 if pte.value == 0:
-                    totalTypeEffectiveMap[pte.type.id] += 1.5 * get_type_effective_weight(p.point_value)
+                    totalTypeEffectiveMap[pte.type] += 1.5 * get_type_effective_weight(p.point_value)
                 elif pte.value == 0.25:
-                    totalTypeEffectiveMap[pte.type.id] += 1.25 * get_type_effective_weight(p.point_value)
+                    totalTypeEffectiveMap[pte.type] += 1.25 * get_type_effective_weight(p.point_value)
                 elif pte.value == 0.5:
-                    totalTypeEffectiveMap[pte.type.id] += 1 * get_type_effective_weight(p.point_value)
+                    totalTypeEffectiveMap[pte.type] += 1 * get_type_effective_weight(p.point_value)
                 elif pte.value == 1:
                     pass
                 elif pte.value == 2:
-                    totalTypeEffectiveMap[pte.type.id] += -1 * get_type_effective_weight(p.point_value)
+                    totalTypeEffectiveMap[pte.type] += -1 * get_type_effective_weight(p.point_value)
                 elif pte.value == 4:
-                    totalTypeEffectiveMap[pte.type.id] += -1.25 * get_type_effective_weight(p.point_value)
+                    totalTypeEffectiveMap[pte.type] += -1.25 * get_type_effective_weight(p.point_value)
         orderedTypeEffective = []
         for t in types:
-            orderedTypeEffective.append({'type': t, 'total': totalTypeEffectiveMap[t.id]})
+            orderedTypeEffective.append({'type': t, 'total': totalTypeEffectiveMap[t]})
         orderedTypeEffective = sorted(orderedTypeEffective, key = lambda x: (x['total']), reverse=True)
         return render(request, "leagues/team/type_effective.html", {'league': league, 'team': team, 'pokemon': pokemon, 'types': types, 'totalTypeEffective': totalTypeEffectiveMap, 'orderedTypeEffective': orderedTypeEffective})
     else:
@@ -148,13 +147,12 @@ def special_moves(request, league_id, team_id):
         categories = [choice[0] for choice in SpecialMoveCategory.choices]
         specialMoves = {}
         for p in pokemon:
-            special_move_subquery = Move.objects.exclude(special_category__isnull=True).only('id').all()
-            special_moves = p.pokemon_detailed_moves.filter(detailed_move__id__in=Subquery(special_move_subquery))
+            special_moves = p.moves.filter(special_categories__isnull=False)
             for sm in special_moves:
-                move = sm.detailed_move
-                if move.special_category not in specialMoves:
-                    specialMoves[move.special_category] = []
-                specialMoves[move.special_category].append({'pokemon': p, 'move': move.name, 'color': move.type.color})
+                for c in sm.get_special_categories():
+                    if c not in specialMoves:
+                        specialMoves[c] = []
+                    specialMoves[c].append({'pokemon': p, 'move': sm.name, 'type': sm.type})
         return render(request, "leagues/team/special_moves.html", {'league': league, 'team': team, 'categories': categories, 'specialMoves': specialMoves})
     else:
         return HttpResponse(status=400)

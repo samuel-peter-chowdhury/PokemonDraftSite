@@ -65,10 +65,8 @@ def get_type_color(type):
             return 'white'
     
 @register.filter
-def get_type_effective(pokemon_type_effectives, type):
-    for pte in pokemon_type_effectives:
-        if pte.type.id == type.id:
-            return pte.value
+def get_type_effective_value(pokemon, type):
+    return pokemon.type_effectives.get(type=type).value
         
 @register.filter
 def get_stat_color(stat):

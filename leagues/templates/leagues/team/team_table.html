@@ -101,14 +101,14 @@
                     </td>
                     <td class="table-cell-large">
                         <div class="pokemon-types-container">
-                            {% for t in p.pokemon_types.all %}
-                                <div class="pokemon-pill" style="background-color: {{t.type.color}}">{{ t.type.name }}</div>
+                            {% for t in p.get_types %}
+                                <div class="pokemon-pill" style="background-color: {{t|get_type_color}}">{{ t }}</div>
                             {% endfor %}
                         </div>
                     </td>
                     <td class="table-cell-xlarge">
                         <div class="pokemon-abilities-container">
-                            {% for a in p.pokemon_abilities.all %}
+                            {% for a in p.abilities.all %}
                                 <div class="pokemon-pill">{{ a.name }}</div>
                             {% endfor %}
                         </div>

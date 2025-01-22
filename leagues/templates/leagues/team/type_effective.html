@@ -4,7 +4,7 @@
         {% with te|get_item:'type' as type %}
         {% with te|get_item:'total' as total %}
             <div class="d-flex flex-column align-items-center" style="border-radius: 1rem; width: 6rem">
-                <div class="w-100 fw-bold text-white text-capitalize" style="text-align: center; background-color: {{ type.color }}; border-top-left-radius: 1rem; border-top-right-radius: 1rem; border-bottom: 2px solid white;">{{ type.name }}</div>
+                <div class="w-100 fw-bold text-white text-capitalize" style="text-align: center; background-color: {{ type|get_type_color }}; border-top-left-radius: 1rem; border-top-right-radius: 1rem; border-bottom: 2px solid white;">{{ type }}</div>
                 <div class="w-100 fw-bold" style="text-align: center; background-color: {{ total|get_type_effective_total_color }}; border-bottom-left-radius: 1rem; border-bottom-right-radius: 1rem;">{{ total|floatformat }}</div>
             </div>
         {% endwith %}
@@ -17,7 +17,7 @@
                 <tr>
                     <th class="pokemon-sprite" style="position: sticky; left: 0;"></th>
                     {% for t in types %}
-                        <th class="table-cell-small text-capitalize" style="background-color: {{t.color}}; border: none;">{{ t.name }}</th>
+                        <th class="table-cell-small text-capitalize" style="background-color: {{t|get_type_color}}; border: none;">{{ t }}</th>
                     {% endfor %}
                 </tr>
             </thead>
@@ -30,7 +30,7 @@
                             </div>
                         </td>
                         {% for t in types %}
-                        {% with p.type_effectives.all|get_type_effective:t as value %}
+                        {% with p|get_type_effective_value:t as value %}
                             <td class="table-cell-small text-black" style="background-color: {{ value|get_type_effective_color }}; --bs-table-accent-bg: none;">{{ value }}</td>
                         {% endwith %}
                         {% endfor %}
@@ -39,7 +39,7 @@
                 <tr class="border-top border-white border-2">
                     <td class="pokemon-sprite" style="position: sticky; left: 0;"><div>Total</div></td>
                     {% for t in types %}
-                        {% with totalTypeEffective|get_item:t.id as total %}
+                        {% with totalTypeEffective|get_item:t as total %}
                             <td class="table-cell-small fw-bold text-black" style="text-align: center; background-color: {{ total|get_type_effective_total_color }}; --bs-table-accent-bg: none;">{{ total|floatformat }}</td>
                         {% endwith %}
                     {% endfor %}
