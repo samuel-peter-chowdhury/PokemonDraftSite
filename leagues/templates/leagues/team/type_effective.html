@@ -30,7 +30,7 @@
                             </div>
                         </td>
                         {% for t in types %}
-                        {% with p.pokemon_type_effectives.all|get_type_effective:t as value %}
+                        {% with p.type_effectives.all|get_type_effective:t as value %}
                             <td class="table-cell-small text-black" style="background-color: {{ value|get_type_effective_color }}; --bs-table-accent-bg: none;">{{ value }}</td>
                         {% endwith %}
                         {% endfor %}

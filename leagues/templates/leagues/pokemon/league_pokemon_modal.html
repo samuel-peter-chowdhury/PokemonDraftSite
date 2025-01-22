@@ -13,14 +13,14 @@
                     <div class="d-flex flex-column" style="gap: 1rem">
                         <div class="d-inline-flex align-items-center" style="gap: 0.5rem">
                             <div class="fw-bold" style="width: 5rem">Type:</div>
-                            {% for t in pokemon.pokemon_types.all %}
-                                <a href="{%  url 'leagues:leaguePokemonSearch' id=league.id %}?type_id={{ t.type.id }}" target="_blank" class="nav-link text-white d-flex text-capitalize" style="padding: 0.125rem 0; width: 6rem; justify-content: center; border-radius: 0.75rem; background-color: {{ t.type.color }}">{{ t.type.name }}</a>
+                            {% for t in pokemon.get_types %}
+                                <a href="{%  url 'leagues:leaguePokemonSearch' id=league.id %}?type_id={{ t }}" target="_blank" class="nav-link text-white d-flex text-capitalize" style="padding: 0.125rem 0; width: 6rem; justify-content: center; border-radius: 0.75rem; background-color: {{ t|get_type_color }}">{{ t }}</a>
                             {% endfor %}
                         </div>
                         <div class="d-inline-flex align-items-center" style="gap: 0.5rem">
                             <div class="fw-bold" style="width: 5rem">Abilities:</div>
                             <div class="d-flex flex-column" style="gap: 0.5rem">
-                                {% for a in pokemon.pokemon_abilities.all %}
+                                {% for a in pokemon.abilities.all %}
                                     <a href="{%  url 'leagues:leaguePokemonSearch' id=league.id %}?ability_id={{ a.id }}" target="_blank" class="nav-link text-white d-flex text-capitalize" style="padding: 0.125rem 0.5rem; justify-content: center; border-radius: 0.75rem; background-color: var(--bs-secondary)">{{ a.name }}</a>
                                 {% endfor %}
                             </div>
@@ -64,12 +64,14 @@
                         <div class="d-inline-flex align-items-center" style="gap: 0.5rem; flex-wrap: wrap;">
                             <div class="fw-bold text-capitalize">{{ category }}:</div>
                             {% for move in moves %}
-                                <a href="{%  url 'leagues:leaguePokemonSearch' id=league.id %}?move_id={{ move|get_item:'id' }}" target="_blank" class="nav-link text-white d-flex align-items-center text-capitalize" style="white-space: nowrap; padding: 0.125rem 0.5rem; justify-content: center; border-radius: 0.75rem; background-color: {{ move|get_item:'color' }}">
+                            {% with move|get_item:'type' as type %}
+                                <a href="{%  url 'leagues:leaguePokemonSearch' id=league.id %}?move_id={{ move|get_item:'id' }}" target="_blank" class="nav-link text-white d-flex align-items-center text-capitalize" style="white-space: nowrap; padding: 0.125rem 0.5rem; justify-content: center; border-radius: 0.75rem; background-color: {{ type|get_type_color }}">
                                     {{ move|get_item:'name' }}
                                     {% with move|get_item:'category' as category %}
                                         <i class="fa-solid {{ category|get_category_icon }} ms-1"></i>
                                     {% endwith %}
                                 </a>
+                            {% endwith %}
                             {% endfor %}
                         </div>
                     {% endfor %}
@@ -79,12 +81,14 @@
                         <div class="d-inline-flex align-items-center" style="gap: 0.5rem; flex-wrap: wrap;">
                             <div class="fw-bold text-capitalize">{{ type }}:</div>
                             {% for move in moves %}
-                                <a href="{%  url 'leagues:leaguePokemonSearch' id=league.id %}?move_id={{ move|get_item:'id' }}" target="_blank" class="nav-link text-white d-flex align-items-center text-capitalize" style="white-space: nowrap; padding: 0.125rem 0.5rem; justify-content: center; border-radius: 0.75rem; background-color: {{ move|get_item:'color' }}">
+                            {% with move|get_item:'type' as type %}
+                                <a href="{%  url 'leagues:leaguePokemonSearch' id=league.id %}?move_id={{ move|get_item:'id' }}" target="_blank" class="nav-link text-white d-flex align-items-center text-capitalize" style="white-space: nowrap; padding: 0.125rem 0.5rem; justify-content: center; border-radius: 0.75rem; background-color: {{ type|get_type_color }}">
                                     {{ move|get_item:'name' }}
                                     {% with move|get_item:'category' as category %}
                                         <i class="fa-solid {{ category|get_category_icon }} ms-1"></i>
                                     {% endwith %}
                                 </a>
+                            {% endwith %}
                             {% endfor %}
                         </div>
                     {% endfor %}

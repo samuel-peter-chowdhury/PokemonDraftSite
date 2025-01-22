@@ -20,11 +20,57 @@ class SpecialMoveCategory(models.TextChoices):
 class MoveCategory(models.TextChoices):
     PHYSICAL = "physical",
     SPECIAL = "special",
-    STATUS = "status"
+    STATUS = "status",
+
+class Type(models.TextChoices):
+    FIRE = "fire",
+    WATER = "water",
+    GRASS = "grass",
+    ELECTRIC = "electric",
+    DARK = "dark",
+    GHOST = "ghost",
+    DRAGON = "dragon",
+    FAIRY = "fairy",
+    PSYCHIC = "psychic",
+    STEEL = "steel",
+    FIGHTING = "fighting",
+    BUG = "bug",
+    POISON = "poison",
+    NORMAL = "normal",
+    FLYING = "flying",
+    GROUND = "ground",
+    ROCK = "rock",
+    ICE = "ice",
+    
+class Move(BaseModel):
+    name =  models.CharField(max_length=50, unique=True)
+    base_power = models.IntegerField()
+    type = models.CharField(max_length=10, choices=Type.choices)
+    accuracy = models.IntegerField()
+    pp = models.IntegerField()
+    priority = models.IntegerField()
+    category = models.CharField(max_length=8, choices=MoveCategory.choices)
+    description = models.TextField(blank=True, null=True)
+    special_categories = models.TextField(blank=True, null=True)
+    viable = models.BooleanField()
+
+    def __str__(self):
+        return self.name
+    
+    def get_special_categories(self):
+        return self.special_categories.split(',')
+    
+class Ability(BaseModel):
+    name =  models.CharField(max_length=50, unique=True)
+    description = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.name
 
 class Pokemon(BaseModel):
     name = models.CharField(max_length=50, unique=True)
     dex_number = models.IntegerField(blank=True, null=True)
+    types = models.TextField(blank=True, null=True)
     hp = models.IntegerField()
     attack = models.IntegerField()
     defense = models.IntegerField()
@@ -39,6 +85,8 @@ class Pokemon(BaseModel):
     sprite_url = models.TextField(blank=True, null=True)
     season = models.ForeignKey(Season, on_delete=models.CASCADE, related_name='pokemons')
     team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='pokemons', blank=True, null=True)
+    moves = models.ManyToManyField(Move, related_name='pokemons')
+    abilities = models.ManyToManyField(Ability, related_name='pokemons')
 
     def __str__(self):
         return self.name
@@ -51,84 +99,21 @@ class Pokemon(BaseModel):
             return f'https://www.smogon.com/dex/sm/pokemon/{self.sprite_url.split("xy/")[1].split(".gif")[0]}'
         else:
             return f'https://www.smogon.com/dex/sv/pokemon/{self.sprite_url.split("xy/")[1].split(".gif")[0]}'
-
-class Type(BaseModel):
-    name = models.CharField(max_length=10, unique=True)
-    color = models.CharField(max_length=7)
-
-    def __str__(self):
-        return self.name
-    
-class DetailedMove(BaseModel):
-    name =  models.CharField(max_length=50, unique=True)
-    base_power = models.IntegerField()
-    type = models.ForeignKey(Type, on_delete=models.CASCADE, related_name='detailed_moves')
-    accuracy = models.IntegerField()
-    pp = models.IntegerField()
-    priority = models.IntegerField()
-    category = models.CharField(max_length=8, choices=MoveCategory.choices)
-    special_category = models.CharField(max_length=16, choices=SpecialMoveCategory.choices, blank=True, null=True)
-    viable = models.BooleanField()
-
-    def __str__(self):
-        return self.name
-
-class PokemonDetailedMove(BaseModel):
-    pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE, related_name='pokemon_detailed_moves')
-    detailed_move = models.ForeignKey(DetailedMove, on_delete=models.CASCADE, related_name='pokemon_detailed_moves')
-
-    def __str__(self):
-        return f'{self.pokemon}:{self.detailed_move}'
-
-
-class PokemonType(BaseModel):
-    pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE, related_name='pokemon_types')
-    type = models.ForeignKey(Type, on_delete=models.CASCADE, related_name='pokemon_types')
-
-    def __str__(self):
-        return f'{self.pokemon}:{self.type}'
-
-class PokemonTypeEffective(BaseModel):
-    pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE, related_name='pokemon_type_effectives')
-    type = models.ForeignKey(Type, on_delete=models.CASCADE, related_name='pokemon_type_effectives')
+        
+    def get_types(self):
+        return self.types.split(',')
+        
+class TypeEffective(BaseModel):
+    pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE, related_name='type_effectives')
+    type = models.CharField(max_length=10, choices=Type.choices)
     value = models.FloatField()
 
     def __str__(self):
         return f'{self.pokemon}:{self.type}:{self.value}'
 
-class PokemonCoverageMove(BaseModel):
-    pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE, related_name='pokemon_coverage_moves')
-    type = models.ForeignKey(Type, on_delete=models.CASCADE, related_name='pokemon_coverage_moves')
-    name = models.CharField(max_length=50)
-
-    def __str__(self):
-        return f'{self.pokemon}:{self.type}:{self.name}'
-    
-class PokemonSpecialMove(BaseModel):
-    pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE, related_name='pokemon_special_moves')
-    category = models.CharField(max_length=16, choices=SpecialMoveCategory.choices)
-    name = models.CharField(max_length=50)
-
-    def __str__(self):
-        return f'{self.pokemon}:{self.category}:{self.name}'
-
-class PokemonMove(BaseModel):
-    pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE, related_name='pokemon_moves')
-    name = models.CharField(max_length=50)
-
-    def __str__(self):
-        return f'{self.pokemon}:{self.name}'
-
-class PokemonAbility(BaseModel):
-    pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE, related_name='pokemon_abilities')
-    name = models.CharField(max_length=50)
-
-    def __str__(self):
-        return f'{self.pokemon}:{self.name}'
-
 class GameStat(BaseModel):
     game = models.ForeignKey(Game, on_delete=models.CASCADE, related_name='game_stats')
-    pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE, related_name='pokemon_game_stats')
+    pokemon = models.ForeignKey(Pokemon, on_delete=models.CASCADE, related_name='game_stats')
     direct_kills = models.IntegerField()
     indirect_kills = models.IntegerField()
     deaths = models.IntegerField()

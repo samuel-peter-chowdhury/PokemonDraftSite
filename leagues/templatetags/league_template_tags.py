@@ -8,16 +8,61 @@ def get_item(dictionary, key):
 
 @register.filter
 def get_speed(speed, type):
-    if type == '0':
-        return (speed * 2) + 36
-    elif type == '252':
-        return math.floor((speed * 2) + 36 + (252/4))
-    elif type == '252+':
-        return math.floor(((speed * 2) + 36 + (252/4)) * 1.1)
-    elif type == '+1':
-        return math.floor(math.floor((((speed * 2) + 36 + (252/4)) * 1.1)) * 1.5)
-    elif type == '+2':
-        return math.floor(math.floor((((speed * 2) + 36 + (252/4)) * 1.1)) * 2)
+    match type:
+        case '0':
+            return (speed * 2) + 36
+        case '252':
+            return math.floor((speed * 2) + 36 + (252/4))
+        case '252+':
+            return math.floor(((speed * 2) + 36 + (252/4)) * 1.1)
+        case '+1':
+            return math.floor(math.floor((((speed * 2) + 36 + (252/4)) * 1.1)) * 1.5)
+        case '+2':
+            return math.floor(math.floor((((speed * 2) + 36 + (252/4)) * 1.1)) * 2)
+        case _:
+            return 0
+        
+@register.filter
+def get_type_color(type):
+    match type:
+        case 'fire':
+            return '#EE8130'
+        case 'water':
+            return '#6390F0'
+        case 'grass':
+            return '#7AC74C'
+        case 'electric':
+              return '#F7D02C'
+        case 'dark':
+              return '#705746'
+        case 'ghost':
+              return '#735797'
+        case 'dragon':
+            return '#6F35FC'
+        case 'fairy':
+            return '#D685AD'
+        case 'psychic':
+            return '#F95587'
+        case 'steel':
+            return '#B7B7CE'
+        case 'fighting':
+            return '#C22E28'
+        case 'bug':
+            return '#A6B91A'
+        case 'poison':
+            return '#A33EA1'
+        case 'normal':
+            return '#A8A77A'
+        case 'flying':
+            return '#A98FF3'
+        case 'ground':
+            return '#E2BF65'
+        case 'rock':
+            return '#B6A136'
+        case 'ice':
+            return '#96D9D6'
+        case _:
+            return 'white'
     
 @register.filter
 def get_type_effective(pokemon_type_effectives, type):

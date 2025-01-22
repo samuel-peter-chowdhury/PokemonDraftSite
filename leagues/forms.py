@@ -1,12 +1,10 @@
 from django import forms
 
 from .models import Team
-from pokemons.models import SpecialMoveCategory, Type, PokemonAbility, PokemonMove, DetailedMove
+from pokemons.models import Type, SpecialMoveCategory, Ability, Move
 
-TYPE_CHOICES = [(t.name.capitalize(), t.name.capitalize()) for t in Type.objects.all().order_by('name')]
-ABILITY_CHOICES = [(x['name'].capitalize(), x['name'].capitalize()) for x in PokemonAbility.objects.values('name').distinct().order_by('name')]
-MOVE_CHOICES = [(x['name'].capitalize(), x['name'].capitalize()) for x in PokemonMove.objects.values('name').distinct().order_by('name')]
-DETAILED_MOVE_CHOICES = [(x['name'].capitalize(), x['name'].capitalize()) for x in DetailedMove.objects.values('name').distinct().order_by('name')]
+ABILITY_CHOICES = [(x['name'].capitalize(), x['name'].capitalize()) for x in Ability.objects.values('name').distinct().order_by('name')]
+MOVE_CHOICES = [(x['name'].capitalize(), x['name'].capitalize()) for x in Move.objects.values('name').distinct().order_by('name')]
 
 class LeagueJoinForm(forms.Form):
     league_name = forms.CharField(label="League Name", max_length=50)
@@ -43,13 +41,13 @@ class PokemonSearchForm(forms.Form):
 
     and_pokemon_types__type__name__iexact = forms.MultipleChoiceField(
         label="Types (&)",
-        choices=TYPE_CHOICES,
+        choices=Type,
         required=False,
         widget=forms.SelectMultiple(attrs={'style': 'width: 10rem'})
     )
     or_pokemon_types__type__name__iexact = forms.MultipleChoiceField(
         label="Types (|)",
-        choices=TYPE_CHOICES,
+        choices=Type,
         required=False,
         widget=forms.SelectMultiple(attrs={'style': 'width: 10rem'})
     )
@@ -69,26 +67,26 @@ class PokemonSearchForm(forms.Form):
 
     and_pokemon_detailed_moves__detailed_move__name__iexact = forms.MultipleChoiceField(
         label="Moves (&)",
-        choices=DETAILED_MOVE_CHOICES,
+        choices=MOVE_CHOICES,
         required=False,
         widget=forms.SelectMultiple(attrs={'style': 'width: 10rem'})
     )
     or_pokemon_detailed_moves__detailed_move__name__iexact = forms.MultipleChoiceField(
         label="Moves (|)",
-        choices=DETAILED_MOVE_CHOICES,
+        choices=MOVE_CHOICES,
         required=False,
         widget=forms.SelectMultiple(attrs={'style': 'width: 10rem'})
     )
 
     and_pokemon_detailed_moves__detailed_move__type__name__iexact = forms.MultipleChoiceField(
         label="Type Moves (&)",
-        choices=TYPE_CHOICES,
+        choices=Type,
         required=False,
         widget=forms.SelectMultiple(attrs={'style': 'width: 10rem'})
     )
     or_pokemon_detailed_moves__detailed_move__type__name__iexact = forms.MultipleChoiceField(
         label="Type Moves (|)",
-        choices=TYPE_CHOICES,
+        choices=Type,
         required=False,
         widget=forms.SelectMultiple(attrs={'style': 'width: 10rem'})
     )
@@ -106,41 +104,41 @@ class PokemonSearchForm(forms.Form):
         widget=forms.SelectMultiple(attrs={'style': 'width: 10rem'})
     )
 
-    and_pokemon_type_effectives__type__name__iexact___pokemon_type_effectives__value__lt___1 = forms.MultipleChoiceField(
+    and_type_effectives__type__iexact___type_effectives__value__lt___1 = forms.MultipleChoiceField(
         label="Resisted Types (&)",
-        choices=TYPE_CHOICES,
+        choices=Type,
         required=False,
         widget=forms.SelectMultiple(attrs={'style': 'width: 10rem'})
     )
-    or_pokemon_type_effectives__type__name__iexact___pokemon_type_effectives__value__lt___1 = forms.MultipleChoiceField(
+    or_type_effectives__type__iexact___type_effectives__value__lt___1 = forms.MultipleChoiceField(
         label="Resisted Types (|)",
-        choices=TYPE_CHOICES,
+        choices=Type,
         required=False,
         widget=forms.SelectMultiple(attrs={'style': 'width: 10rem'})
     )
 
-    and_pokemon_type_effectives__type__name__iexact___pokemon_type_effectives__value__gt___1 = forms.MultipleChoiceField(
+    and_type_effectives__type__iexact___type_effectives__value__gt___1 = forms.MultipleChoiceField(
         label="Weak Types (&)",
-        choices=TYPE_CHOICES,
+        choices=Type,
         required=False,
         widget=forms.SelectMultiple(attrs={'style': 'width: 10rem'})
     )
-    or_pokemon_type_effectives__type__name__iexact___pokemon_type_effectives__value__gt___1 = forms.MultipleChoiceField(
+    or_type_effectives__type__iexact___type_effectives__value__gt___1 = forms.MultipleChoiceField(
         label="Weak Types (|)",
-        choices=TYPE_CHOICES,
+        choices=Type,
         required=False,
         widget=forms.SelectMultiple(attrs={'style': 'width: 10rem'})
     )
 
-    and_pokemon_type_effectives__type__name__iexact___pokemon_type_effectives__value___0 = forms.MultipleChoiceField(
+    and_type_effectives__type__iexact___type_effectives__value___0 = forms.MultipleChoiceField(
         label="Immune Types (&)",
-        choices=TYPE_CHOICES,
+        choices=Type,
         required=False,
         widget=forms.SelectMultiple(attrs={'style': 'width: 10rem'})
     )
-    or_pokemon_type_effectives__type__name__iexact___pokemon_type_effectives__value___0 = forms.MultipleChoiceField(
+    or_type_effectives__type__iexact___type_effectives__value___0 = forms.MultipleChoiceField(
         label="Immune Types (|)",
-        choices=TYPE_CHOICES,
+        choices=Type,
         required=False,
         widget=forms.SelectMultiple(attrs={'style': 'width: 10rem'})
     )

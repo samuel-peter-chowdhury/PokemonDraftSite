@@ -58,7 +58,7 @@ class Week(BaseModel):
         return self.name
     
 class Matchup(BaseModel):
-    week = models.ForeignKey(Week, on_delete=models.CASCADE, related_name='week_matchups')
+    week = models.ForeignKey(Week, on_delete=models.CASCADE, related_name='matchups')
     coach_one = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='coach_one_matchups')
     coach_two = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='coach_two_matchups')
     winner = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='winner_matchups', blank=True, null=True)

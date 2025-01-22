@@ -7,59 +7,59 @@ import csv
 
 from leagues.forms import PokemonSimpleSearchForm, DataUploadForm
 from leagues.models import League, Team
-from leagues.data import initialize_detailed_move_data, initialize_pokemon_data, initialize_point_value_data, initialize_schedule_data
+#from leagues.data import initialize_all_pokemon_data, initialize_pokemon_data, initialize_point_value_data, initialize_schedule_data, export_pokemon_data
 from pokemons.models import Pokemon
 
-@user_passes_test(lambda u: u.is_superuser)
-def initialize_schedule_data_view(request, id):
-    league = League.objects.get(id=id)
-    activeSeason = league.get_active_season()
-    if request.method == "POST":
-        form = DataUploadForm(request.POST, request.FILES)
-        if form.is_valid() and activeSeason:
-            file = request.FILES['file']
-            decoded_file = file.read().decode('utf-8').splitlines()
-            csv_file = csv.reader(decoded_file)
-            initialize_schedule_data(csv_file, activeSeason)
-    else:
-        form = DataUploadForm()
-    return render(request, "leagues/admin/initialize_schedule_data.html", { "form": form, 'league': league, 'isLeagueModerator': request.user.is_league_moderator(league.id) })
+# @user_passes_test(lambda u: u.is_superuser)
+# def initialize_schedule_data_view(request, id):
+#     league = League.objects.get(id=id)
+#     activeSeason = league.get_active_season()
+#     if request.method == "POST":
+#         form = DataUploadForm(request.POST, request.FILES)
+#         if form.is_valid() and activeSeason:
+#             file = request.FILES['file']
+#             decoded_file = file.read().decode('utf-8').splitlines()
+#             csv_file = csv.reader(decoded_file)
+#             initialize_schedule_data(csv_file, activeSeason)
+#     else:
+#         form = DataUploadForm()
+#     return render(request, "leagues/admin/initialize_schedule_data.html", { "form": form, 'league': league, 'isLeagueModerator': request.user.is_league_moderator(league.id) })
 
-@user_passes_test(lambda u: u.is_superuser)
-def initialize_detailed_move_data_view(request, id):
-    league = League.objects.get(id=id)
-    activeSeason = league.get_active_season()
-    #initialize_detailed_move_data(activeSeason)
-    return render(request, "leagues/admin/initialize_detailed_move_data.html", { 'league': league, 'isLeagueModerator': request.user.is_league_moderator(league.id) })
+# @user_passes_test(lambda u: u.is_superuser)
+# def initialize_detailed_move_data_view(request, id):
+#     league = League.objects.get(id=id)
+#     activeSeason = league.get_active_season()
+#     initialize_all_pokemon_data(activeSeason)
+#     return render(request, "leagues/admin/initialize_detailed_move_data.html", { 'league': league, 'isLeagueModerator': request.user.is_league_moderator(league.id) })
 
-@user_passes_test(lambda u: u.is_superuser)
-def initialize_pokemon_data_view(request, id):
-    league = League.objects.get(id=id)
-    activeSeason = league.get_active_season()
-    if request.method == "POST":
-        form = DataUploadForm(request.POST, request.FILES)
-        if form.is_valid() and activeSeason:
-            file = request.FILES['file']
-            data = json.load(file)
-            initialize_pokemon_data(data, activeSeason)
-    else:
-        form = DataUploadForm()
-    return render(request, "leagues/admin/initialize_pokemon_data.html", { "form": form, 'league': league, 'isLeagueModerator': request.user.is_league_moderator(league.id) })
+# @user_passes_test(lambda u: u.is_superuser)
+# def initialize_pokemon_data_view(request, id):
+#     league = League.objects.get(id=id)
+#     activeSeason = league.get_active_season()
+#     if request.method == "POST":
+#         form = DataUploadForm(request.POST, request.FILES)
+#         if form.is_valid() and activeSeason:
+#             file = request.FILES['file']
+#             data = json.load(file)
+#             initialize_pokemon_data(data, activeSeason)
+#     else:
+#         form = DataUploadForm()
+#     return render(request, "leagues/admin/initialize_pokemon_data.html", { "form": form, 'league': league, 'isLeagueModerator': request.user.is_league_moderator(league.id) })
 
-@user_passes_test(lambda u: u.is_superuser)
-def initialize_point_data_view(request, id):
-    league = League.objects.get(id=id)
-    activeSeason = league.get_active_season()
-    if request.method == "POST":
-        form = DataUploadForm(request.POST, request.FILES)
-        if form.is_valid() and activeSeason:
-            file = request.FILES['file']
-            decoded_file = file.read().decode('utf-8').splitlines()
-            tsv_file = csv.reader(decoded_file, delimiter="\t")
-            initialize_point_value_data(tsv_file, activeSeason)
-    else:
-        form = DataUploadForm()
-    return render(request, "leagues/admin/initialize_point_data.html", { "form": form, 'league': league, 'isLeagueModerator': request.user.is_league_moderator(league.id) })
+# @user_passes_test(lambda u: u.is_superuser)
+# def initialize_point_data_view(request, id):
+#     league = League.objects.get(id=id)
+#     activeSeason = league.get_active_season()
+#     if request.method == "POST":
+#         form = DataUploadForm(request.POST, request.FILES)
+#         if form.is_valid() and activeSeason:
+#             file = request.FILES['file']
+#             decoded_file = file.read().decode('utf-8').splitlines()
+#             tsv_file = csv.reader(decoded_file, delimiter="\t")
+#             initialize_point_value_data(tsv_file, activeSeason)
+#     else:
+#         form = DataUploadForm()
+#     return render(request, "leagues/admin/initialize_point_data.html", { "form": form, 'league': league, 'isLeagueModerator': request.user.is_league_moderator(league.id) })
 
 @login_required(login_url="/users/login/")
 def modify_team_view(request, id):
@@ -134,7 +134,7 @@ def get_admin_modify_tier(request, league_id, tier):
         league = League.objects.get(id=league_id)
         activeSeason = league.get_active_season()
         orderBy = request.GET.get('order_by', 'name')
-        pokemon = Pokemon.objects.defer('pokemon_type_effectives', 'pokemon_detailed_moves', 'pokemon_coverage_moves', 'pokemon_special_moves', 'pokemon_moves').filter(season=activeSeason, point_value=tier).order_by(orderBy)
+        pokemon = Pokemon.objects.defer('type_effectives', 'moves', 'abilities').filter(season=activeSeason, point_value=tier).order_by(orderBy)
         return render(request, "leagues/admin/modify_tier.html", {'league': league, 'tier': tier, 'pokemon': pokemon, 'orderBy': orderBy})
     else:
         return HttpResponse(status=400)

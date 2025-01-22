@@ -7,7 +7,7 @@ from django.http import HttpResponse
 from leagues.models import League, Team
 from leagues.forms import TeamForm
 
-from pokemons.models import Type, SpecialMoveCategory, DetailedMove
+from pokemons.models import Type, SpecialMoveCategory, Move
 
 @login_required(login_url="/users/login/")
 def team_settings_view(request, id):
@@ -106,7 +106,7 @@ def type_effective(request, league_id, team_id):
         types = Type.objects.all()
         totalTypeEffectiveMap = {}
         for p in pokemon:
-            for pte in p.pokemon_type_effectives.all():
+            for pte in p.type_effectives.all():
                 if pte.type.id not in totalTypeEffectiveMap:
                     totalTypeEffectiveMap[pte.type.id] = 0
                 if pte.value == 0:
@@ -148,7 +148,7 @@ def special_moves(request, league_id, team_id):
         categories = [choice[0] for choice in SpecialMoveCategory.choices]
         specialMoves = {}
         for p in pokemon:
-            special_move_subquery = DetailedMove.objects.exclude(special_category__isnull=True).only('id').all()
+            special_move_subquery = Move.objects.exclude(special_category__isnull=True).only('id').all()
             special_moves = p.pokemon_detailed_moves.filter(detailed_move__id__in=Subquery(special_move_subquery))
             for sm in special_moves:
                 move = sm.detailed_move

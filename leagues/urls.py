@@ -20,7 +20,7 @@ pokemon_urlpatterns = [
 
     # HTMX Paths
     path('<int:league_id>/pokemon/tier/<int:tier>', pokemon_views.get_tier, name="leaguePokemonTier"),
-    path('<int:league_id>/pokemon/type/tier/<int:type_id>', pokemon_views.get_type_tier, name="leaguePokemonTypeTier"),
+    path('<int:league_id>/pokemon/type/tier', pokemon_views.get_type_tier, name="leaguePokemonTypeTier"),
     path('<int:league_id>/pokemon/search/results', pokemon_views.league_pokemon_search_results, name="leaguePokemonSearchResults"),
     path('<int:league_id>/pokemon/<int:pokemon_id>', pokemon_views.get_pokemon_modal, name="leaguePokemonModal"),
 ]
@@ -41,10 +41,10 @@ urlpatterns += team_urlpatterns
 
 admin_urlpatterns = [
     # Data Initialization Paths
-    path('<int:id>/admin/initialize/schedule', admin_views.initialize_schedule_data_view, name="adminInitializeScheduleData"),
-    path('<int:id>/admin/initialize/move', admin_views.initialize_detailed_move_data_view, name="adminInitializeMoveData"),
-    path('<int:id>/admin/initialize/pokemon', admin_views.initialize_pokemon_data_view, name="adminInitializePokemonData"),
-    path('<int:id>/admin/initialize/point', admin_views.initialize_point_data_view, name="adminInitializePointData"),
+    # path('<int:id>/admin/initialize/schedule', admin_views.initialize_schedule_data_view, name="adminInitializeScheduleData"),
+    # path('<int:id>/admin/initialize/move', admin_views.initialize_detailed_move_data_view, name="adminInitializeMoveData"),
+    # path('<int:id>/admin/initialize/pokemon', admin_views.initialize_pokemon_data_view, name="adminInitializePokemonData"),
+    # path('<int:id>/admin/initialize/point', admin_views.initialize_point_data_view, name="adminInitializePointData"),
 
     # Standard Paths
     path('<int:id>/admin/team', admin_views.modify_team_view, name="adminModifyTeam"),
