@@ -6,7 +6,6 @@
     
 {% block content %}
     <div class="d-flex flex-column flex-md-row align-items-center mb-3" style="gap: 0.5rem">
-        <h3 class="mb-0">Team Matchup:</h3>
         <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {% if userTeam %}
@@ -51,13 +50,13 @@
     </div>
     {% if userTeam and opponentTeam %}
         <div class="w-100 mt-2">
-            <button id="teamTableCollapseButton" class="btn btn-secondary expansion-button w-100" type="button" data-bs-toggle="collapse" data-bs-target="#teamTableCollapse" aria-expanded="false" aria-controls="teamTableCollapse">
-                <div hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=userTeam.id %}" hx-trigger="click" hx-target="#user-team-table" hx-swap="outerHTML">
-                    <div hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=opponentTeam.id %}" hx-trigger="click" hx-target="#opponent-team-table" hx-swap="outerHTML">
+            <div hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=userTeam.id %}" hx-trigger="click" hx-target="#user-team-table" hx-swap="outerHTML">
+                <div hx-get="{%  url 'leagues:teamMatchupTable' league_id=league.id team_id=opponentTeam.id %}" hx-trigger="click" hx-target="#opponent-team-table" hx-swap="outerHTML">
+                    <button id="teamTableCollapseButton" class="btn btn-secondary expansion-button w-100" type="button" data-bs-toggle="collapse" data-bs-target="#teamTableCollapse" aria-expanded="false" aria-controls="teamTableCollapse">
                         Team Table
-                    </div>
+                    </button>
                 </div>
-            </button>
+            </div>
             <div class="collapse" id="teamTableCollapse">
                 <div class="d-flex flex-column flex-md-row w-100" style="gap: 0.5rem">
                     <div class="team-matchup-panel">
@@ -78,13 +77,13 @@
             </div>
         </div>
         <div class="w-100 mt-2">
-            <button id="typeEffectiveCollapseButton" class="btn btn-secondary expansion-button w-100" type="button" data-bs-toggle="collapse" data-bs-target="#typeEffectiveCollapse" aria-expanded="false" aria-controls="typeEffectiveCollapse">
-                <div hx-get="{%  url 'leagues:teamMatchupTypeEffective' league_id=league.id team_id=userTeam.id %}" hx-trigger="click" hx-target="#user-type-effective" hx-swap="outerHTML">
-                    <div hx-get="{%  url 'leagues:teamMatchupTypeEffective' league_id=league.id team_id=opponentTeam.id %}" hx-trigger="click" hx-target="#opponent-type-effective" hx-swap="outerHTML">
+            <div hx-get="{%  url 'leagues:teamMatchupTypeEffective' league_id=league.id team_id=userTeam.id %}" hx-trigger="click" hx-target="#user-type-effective" hx-swap="outerHTML">
+                <div hx-get="{%  url 'leagues:teamMatchupTypeEffective' league_id=league.id team_id=opponentTeam.id %}" hx-trigger="click" hx-target="#opponent-type-effective" hx-swap="outerHTML">
+                    <button id="typeEffectiveCollapseButton" class="btn btn-secondary expansion-button w-100" type="button" data-bs-toggle="collapse" data-bs-target="#typeEffectiveCollapse" aria-expanded="false" aria-controls="typeEffectiveCollapse">
                         Type Effective
-                    </div>
+                    </button>
                 </div>
-            </button>
+            </div>
             <div class="collapse" id="typeEffectiveCollapse">
                 <div class="d-flex flex-column flex-md-row w-100" style="gap: 0.5rem">
                     <div class="team-matchup-panel">
@@ -105,13 +104,13 @@
             </div>
         </div>
         <div class="w-100 mt-2">
-            <button id="specialMovesCollapseButton" class="btn btn-secondary expansion-button w-100" type="button" data-bs-toggle="collapse" data-bs-target="#specialMovesCollapse" aria-expanded="false" aria-controls="specialMovesCollapse">
-                <div hx-get="{%  url 'leagues:teamMatchupSpecialMoves' league_id=league.id team_id=userTeam.id %}" hx-trigger="click" hx-target="#user-special-moves" hx-swap="outerHTML">
-                    <div hx-get="{%  url 'leagues:teamMatchupSpecialMoves' league_id=league.id team_id=opponentTeam.id %}" hx-trigger="click" hx-target="#opponent-special-moves" hx-swap="outerHTML">
+            <div hx-get="{%  url 'leagues:teamMatchupSpecialMoves' league_id=league.id team_id=userTeam.id %}" hx-trigger="click" hx-target="#user-special-moves" hx-swap="outerHTML">
+                <div hx-get="{%  url 'leagues:teamMatchupSpecialMoves' league_id=league.id team_id=opponentTeam.id %}" hx-trigger="click" hx-target="#opponent-special-moves" hx-swap="outerHTML">
+                    <button id="specialMovesCollapseButton" class="btn btn-secondary expansion-button w-100" type="button" data-bs-toggle="collapse" data-bs-target="#specialMovesCollapse" aria-expanded="false" aria-controls="specialMovesCollapse">
                         Special Moves
-                    </div>
+                    </button>
                 </div>
-            </button>
+            </div>
             <div class="collapse" id="specialMovesCollapse">
                 <div class="d-flex flex-column flex-md-row w-100" style="gap: 0.5rem">
                     <div class="team-matchup-panel">
