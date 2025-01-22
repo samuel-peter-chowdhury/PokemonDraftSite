@@ -7,7 +7,7 @@
             <button id="searchFormCollapseButton" class="btn btn-secondary expansion-button w-100 mb-2" style="position: sticky; top: 3.5rem; height: 3rem" type="button" data-bs-toggle="collapse" data-bs-target="#searchFormCollapse" aria-expanded="false" aria-controls="searchFormCollapse" hx-post="{%  url 'leagues:leaguePokemonSearchResults' league_id=league.id %}" hx-trigger="click">
                 <i class="fa-solid fa-magnifying-glass"></i>
             </button>
-            <div class="collapse show" id="searchFormCollapse">
+            <div class="collapse {{collapseState}}" id="searchFormCollapse">
                 <form id="pokemon-search-form" class="d-flex flex-row flex-wrap" style="gap: 1rem;">
                     {{ form|crispy }}
                 </form>

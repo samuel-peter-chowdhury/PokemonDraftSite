@@ -83,15 +83,19 @@ def league_pokemon_search(request, id):
         ability_id = request.GET.get('ability_id', None)
         type = request.GET.get('type', None)
         form = PokemonSearchForm()
+        collapseState = 'show'
         if move_id is not None:
             move = Move.objects.get(id=move_id)
             form['and_moves__name__iexact'].initial = [move.name.capitalize()]
+            collapseState = ''
         if ability_id is not None:
             ability = Ability.objects.get(id=ability_id)
             form['and_abilities__name__iexact'].initial = [ability.name.capitalize()]
+            collapseState = ''
         if type is not None:
             form['and_types__icontains'].initial = [type]
-        return render(request, "leagues/pokemon/league_pokemon_search.html", {'form': form, 'league': league, 'isLeagueModerator': request.user.is_league_moderator(league.id)})
+            collapseState = ''
+        return render(request, "leagues/pokemon/league_pokemon_search.html", {'form': form, 'league': league, 'isLeagueModerator': request.user.is_league_moderator(league.id), 'collapseState': collapseState})
     else:
         return HttpResponse(status=400)
 
