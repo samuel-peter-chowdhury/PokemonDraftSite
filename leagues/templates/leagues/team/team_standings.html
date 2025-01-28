@@ -1,0 +1,36 @@
+{% extends 'leagues/base.html' %}
+
+{% block content %}
+    <div class="table-responsive pokemon-table">
+        <table class="table table-dark table-striped table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th class="table-cell-small">Rank</th>
+                    <th class="table-cell-medium">Team</th>
+                    <th class="table-cell-small">Match Wins</th>
+                    <th class="table-cell-small">Match Losses</th>
+                    <th class="table-cell-small">Match Win %</th>
+                    <th class="table-cell-small">Game Wins</th>
+                    <th class="table-cell-small">Game Losses</th>
+                    <th class="table-cell-small">Game Win %</th>
+                    <th class="table-cell-small">Pokemon Diff</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ts in teamStandings %}
+                    <tr>
+                        <th class="table-cell-small text-dark" style="background-color: rgb{{ forloop.counter|get_team_standing_color }}; --bs-table-accent-bg: none;">{{ forloop.counter }}</th>
+                        <th class="table-cell-medium text-dark" style="background-color: rgb{{ forloop.counter|get_team_standing_color }}; --bs-table-accent-bg: none;">{{ ts|get_item:'team_name' }}</th>
+                        <th class="table-cell-small">{{ ts|get_item:'match_win_count' }}</th>
+                        <th class="table-cell-small">{{ ts|get_item:'match_loss_count' }}</th>
+                        <th class="table-cell-small">{{ ts|get_item:'match_win_percentage' }}%</th>
+                        <th class="table-cell-small">{{ ts|get_item:'game_win_count' }}</th>
+                        <th class="table-cell-small">{{ ts|get_item:'game_loss_count' }}</th>
+                        <th class="table-cell-small">{{ ts|get_item:'game_win_percentage' }}%</th>
+                        <th class="table-cell-small">{{ ts|get_item:'pokemon_differential' }}</th>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

@@ -156,3 +156,31 @@ def special_moves(request, league_id, team_id):
         return render(request, "leagues/team/special_moves.html", {'league': league, 'team': team, 'categories': categories, 'specialMoves': specialMoves})
     else:
         return HttpResponse(status=400)
+    
+@login_required(login_url="/users/login/")
+def team_standings_view(request, id):
+    if request.user.has_league(id):
+        league = League.objects.get(id=id)
+        activeSeason = league.get_active_season()
+        teamStandings = []
+        for t in activeSeason.teams.filter(is_active=True):
+            match_win_count = t.winner_matchups.all().count()
+            match_loss_count = t.loser_matchups.all().count()
+            total_match_count = match_win_count + match_loss_count
+            match_win_percentage = round((match_win_count / total_match_count) * 100) if total_match_count > 0 else 0
+            game_wins = t.winner_games.all()
+            game_win_count = game_wins.count()
+            game_losses = t.loser_games.all()
+            game_loss_count = game_losses.count()
+            total_game_count = game_win_count + game_loss_count
+            game_win_percentage = round((game_win_count / total_game_count) * 100) if total_game_count > 0 else 0
+            pokemon_differential = 0
+            for g in game_wins:
+                pokemon_differential += g.differential
+            for g in game_losses:
+                pokemon_differential -= g.differential
+            teamStandings.append({'team_name': t.name, 'match_win_count': match_win_count, 'match_loss_count': match_loss_count, 'match_win_percentage': match_win_percentage, 'game_win_count': game_win_count, 'game_loss_count': game_loss_count, 'game_win_percentage': game_win_percentage, 'pokemon_differential': pokemon_differential})
+        teamStandings = sorted(teamStandings, key = lambda x: (-x['match_win_percentage'], -x['game_win_percentage'], -x['pokemon_differential']))
+        return render(request, "leagues/team/team_standings.html", {'league': league, 'isLeagueModerator': request.user.is_league_moderator(league.id), 'activeSeason': activeSeason, 'teamStandings': teamStandings})
+    else:
+        return redirect("/")

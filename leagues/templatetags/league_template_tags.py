@@ -166,3 +166,15 @@ def get_pokemon_standing_size(place):
         return 5
     else:
         return max(1, 5 - place)
+    
+@register.filter
+def get_team_standing_color(place):
+    winning_color = (58, 116, 43)
+    losing_color = (153, 0, 0)
+    if place <= 8:
+        return lighten_color(*winning_color, place / 10)
+    else:
+        return lighten_color(*losing_color, (-1 * (place - 17)) / 10)
+
+def lighten_color(r, g, b, factor):
+    return tuple(int(c + (255 - c) * factor) for c in (r, g, b))
