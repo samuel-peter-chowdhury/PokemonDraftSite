@@ -1,10 +1,11 @@
 from django import forms
 
-from .models import Team
+from .models import Team, Week
 from pokemons.models import Type, SpecialMoveCategory, Ability, Move
 
 ABILITY_CHOICES = [(x['name'].capitalize(), x['name'].capitalize()) for x in Ability.objects.values('name').distinct().order_by('name')]
 MOVE_CHOICES = [(x['name'].capitalize(), x['name'].capitalize()) for x in Move.objects.values('name').distinct().order_by('name')]
+WEEK_CHOICES = [(x['name'].capitalize(), x['name'].capitalize()) for x in Week.objects.values('name').distinct().order_by('id')]
 
 class LeagueJoinForm(forms.Form):
     league_name = forms.CharField(label="League Name", max_length=50)
@@ -150,3 +151,25 @@ class PokemonSearchForm(forms.Form):
 
 class PokemonSimpleSearchForm(forms.Form):
     name__icontains = forms.CharField(label="Name Match", max_length=50, required=False)
+
+class SubmitMatchupForm(forms.Form):
+    week = forms.ChoiceField(
+        label="Select a Week",
+        choices=WEEK_CHOICES,
+        required=True
+    )
+    game_one = forms.CharField(
+        label="Game 1",
+        required=True,
+        widget=forms.Textarea()
+    )
+    game_two = forms.CharField(
+        label="Game 2",
+        required=True,
+        widget=forms.Textarea()
+    )
+    game_three = forms.CharField(
+        label="Game 3",
+        required=False,
+        widget=forms.Textarea()
+    )

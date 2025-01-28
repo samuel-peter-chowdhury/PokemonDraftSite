@@ -49,6 +49,7 @@ admin_urlpatterns = [
     # Standard Paths
     path('<int:id>/admin/team', admin_views.modify_team_view, name="adminModifyTeam"),
     path('<int:id>/admin/tiers', admin_views.admin_modify_tiers_view, name="adminModifyTiers"),
+    path('<int:id>/admin/submit/matchup', admin_views.submit_matchup_view, name="adminSubmitMatchup"),
 
     # HTMX Paths
     path('<int:league_id>/admin/team/<int:team_id>', admin_views.get_modifiable_team_view, name="adminModifiableTeam"),

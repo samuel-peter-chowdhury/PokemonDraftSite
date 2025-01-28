@@ -1,0 +1,17 @@
+{% extends 'leagues/base.html' %}
+
+{% block title %}
+    Submit Matchup
+{% endblock %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="container">
+        <h1>Submit Matchup</h1>
+        <form class="d-flex flex-column" action="{% url 'leagues:adminSubmitMatchup' id=league.id %}" method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button class="btn btn-secondary my-5">Submit</button>
+        </form>
+    </div>
+{% endblock %}
