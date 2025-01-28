@@ -1,0 +1,37 @@
+{% extends 'leagues/base.html' %}
+
+{% block content %}
+    <div class="d-flex flex-md-row flex-column w-100 bg-dark align-items-center justify-content-center" style="padding: 1em; gap: 2rem; flex-wrap: wrap;">
+        {% for ps in pokemonStandings %}
+        {% with forloop.counter as place %}
+        {% with place|get_pokemon_standing_size as pokemon_size %}
+            <div class="d-flex flex-column bg-secondary" style="padding: 1rem 2rem; border-radius: 1rem">
+                <div class="d-inline-flex">
+                    <div class="text-white" style="font-size: {{ pokemon_size }}rem; font-weight: bold">#{{ place }}</div>
+                    <div class="d-flex flex-column align-items-center">
+                        <div class="d-flex align-items-center justify-content-center" style="width: 8rem; height: 8rem">
+                            <img src="{{ ps|get_item:'pokemon_sprite' }}" alt="Pokemon Sprite" style="cursor: pointer; max-height: 8rem; max-width: 8rem;" hx-get="{% url 'leagues:leaguePokemonModal' league_id=league.id pokemon_id=ps.pokemon_id %}" hx-trigger="click" hx-target="#pokemon-modal" hx-swap="innerHTML"/>
+                        </div>
+                        <div class="text-white text-capitalize">{{ ps|get_item:'pokemon_name' }}</div>
+                    </div>
+                </div>
+                <div class="d-flex flex-column mt-4 text-secondary" style="gap: 0.5rem;">
+                    {% with ps|get_item:'kills' as kills %}
+                    {% with ps|get_item:'kd_diff' as kd_diff %}
+                    {% with ps|get_item:'games_played' as games_played %}
+                    {% with ps|get_item:'kills_per_game' as kills_per_game %}
+                        <div class="d-inline-flex align-items-center bg-dark" style="gap: 0.5rem; padding: 0 1rem; border-radius: 1rem; width: fit-content">Kills: <span class="fw-bold" style="font-size: 1.5rem; color: {{ kills|get_type_effective_total_color }}">{{ kills }}</span></div>
+                        <div class="d-inline-flex align-items-center bg-dark" style="gap: 0.5rem; padding: 0 1rem; border-radius: 1rem; width: fit-content">KD Diff: <span class="fw-bold" style="font-size: 1.5rem; color: {{ kd_diff|get_type_effective_total_color }}">{{ kd_diff }}</span></div>
+                        <div class="d-inline-flex align-items-center bg-dark" style="gap: 0.5rem; padding: 0 1rem; border-radius: 1rem; width: fit-content">Games Played: <span class="fw-bold" style="font-size: 1.5rem; color: {{ games_played|get_type_effective_total_color }}">{{ games_played }}</span></div>
+                        <div class="d-inline-flex align-items-center bg-dark" style="gap: 0.5rem; padding: 0 1rem; border-radius: 1rem; width: fit-content">Kills per Game: <span class="fw-bold" style="font-size: 1.5rem; color: {{ kills_per_game|get_type_effective_total_color }}">{{ kills_per_game }}</span></div>
+                    {% endwith %}
+                    {% endwith %}
+                    {% endwith %}
+                    {% endwith %}
+                </div>
+            </div>
+        {% endwith %}
+        {% endwith %}
+        {% endfor %}
+    </div>
+{% endblock %}

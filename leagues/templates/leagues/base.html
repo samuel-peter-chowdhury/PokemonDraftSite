@@ -19,15 +19,12 @@
             <li class="nav-item">
                 <a class="nav-link" href="{%  url 'leagues:leaguePokemonTiers' id=league.id %}">Tier List</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{%  url 'leagues:leaguePokemonTypeTiers' id=league.id %}">Type Tier List</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{%  url 'leagues:leaguePokemonSearch' id=league.id %}">Search</a>
-            </li>
             <!--<li class="nav-item">
                 <a class="nav-link" href="{%  url 'leagues:leaguePokemonList' id=league.id %}">Pokedex</a>
             </li>-->
+            <li class="nav-item">
+                <a class="nav-link" href="{%  url 'leagues:teamMatchup' id=league.id %}">Team Matchup</a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" href="{%  url 'leagues:leagueRosters' id=league.id %}">Rosters</a>
             </li>
@@ -35,13 +32,19 @@
                 <a class="nav-link" href="{%  url 'leagues:leagueSchedule' id=league.id %}">Schedule</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{%  url 'leagues:teamMatchup' id=league.id %}">Team Matchup</a>
+                <a class="nav-link" href="{%  url 'leagues:leaguePokemonStandings' id=league.id %}">Pokemon Standings</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{%  url 'leagues:teamSettings' id=league.id %}">Team Settings</a>
+                <a class="nav-link" href="{%  url 'leagues:leaguePokemonTypeTiers' id=league.id %}">Type Tier List</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{%  url 'leagues:leaguePokemonSearch' id=league.id %}">Search</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{%  url 'leagues:leagueRules' id=league.id %}">Rules</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{%  url 'leagues:teamSettings' id=league.id %}">Team Settings</a>
             </li>
             {% if isLeagueModerator %}
                 <li class="nav-item">

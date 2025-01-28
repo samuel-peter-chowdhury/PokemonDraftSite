@@ -17,6 +17,7 @@ pokemon_urlpatterns = [
     path('<int:id>/pokemon/tiers', pokemon_views.league_pokemon_tiers_view, name="leaguePokemonTiers"),
     path('<int:id>/pokemon/type/tiers', pokemon_views.league_pokemon_type_tiers_view, name="leaguePokemonTypeTiers"),
     path('<int:id>/pokemon/search', pokemon_views.league_pokemon_search, name="leaguePokemonSearch"),
+    path('<int:id>/pokemon/standings', pokemon_views.league_pokemon_standings_view, name="leaguePokemonStandings"),
 
     # HTMX Paths
     path('<int:league_id>/pokemon/tier/<int:tier>', pokemon_views.get_tier, name="leaguePokemonTier"),

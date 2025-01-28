@@ -13,10 +13,19 @@
                         </thead>
                         <tbody>
                             {% for m in w.matchups.all %}
-                                <tr>
-                                    <td class="table-cell-medium">{{ m.coach_one.name }}</td>
-                                    <td class="table-cell-medium">{{ m.coach_two.name }}</td>
-                                </tr>
+                            {% with m.winner as winner%}
+                                {% if winner %}
+                                    <tr>
+                                        <td class="table-cell-medium" style="background-color: green; --bs-table-accent-bg: none;">{{ m.coach_one.name }}</td>
+                                        <td class="table-cell-medium" style="background-color: green; --bs-table-accent-bg: none;">{{ m.coach_two.name }}</td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td class="table-cell-medium">{{ m.coach_one.name }}</td>
+                                        <td class="table-cell-medium">{{ m.coach_two.name }}</td>
+                                    </tr>
+                                {% endif %}
+                            {% endwith %}
                             {% endfor %}
                         </tbody>
                     </table>

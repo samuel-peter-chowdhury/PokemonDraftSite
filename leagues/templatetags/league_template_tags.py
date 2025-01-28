@@ -159,3 +159,10 @@ def get_category_icon(category):
 def even_ternary(value, token_value):
     tokens = token_value.split(',')
     return tokens[0] if value % 2 == 0 else tokens[1]
+
+@register.filter
+def get_pokemon_standing_size(place):
+    if place == 1:
+        return 5
+    else:
+        return max(1, 5 - place)

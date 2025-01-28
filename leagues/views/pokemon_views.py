@@ -186,3 +186,26 @@ def get_move_tooltip(move):
         tooltipTokens.append(f'Priority: {"+" + str(move.priority) if move.priority > 0 else move.priority}')
     tooltipTokens.append(move.description)
     return ' | '.join(tooltipTokens)
+
+@login_required(login_url="/users/login/")
+def league_pokemon_standings_view(request, id):
+    if request.user.has_league(id):
+        league = League.objects.get(id=id)
+        activeSeason = league.get_active_season()
+        pokemon = activeSeason.pokemons.filter(game_stats__isnull=False).distinct()
+        pokemon_standings = []
+        for p in pokemon:
+            direct_kills = 0
+            indirect_kills = 0
+            deaths = 0
+            game_stats = p.game_stats.all()
+            for gs in game_stats:
+                direct_kills += gs.direct_kills
+                indirect_kills += gs.indirect_kills
+                deaths += gs.deaths
+            num_games = len(game_stats)
+            pokemon_standings.append({'pokemon_id': p.id, 'pokemon_name': p.name, 'pokemon_sprite': p.sprite_url, 'kd_diff': direct_kills + indirect_kills - deaths, 'kills': direct_kills + indirect_kills, 'games_played': num_games, 'kills_per_game': round((direct_kills + indirect_kills) / num_games), 'direct_kills': direct_kills, 'indirect_kills': indirect_kills, 'deaths': deaths})
+        pokemon_standings = sorted(pokemon_standings, key = lambda x: (-x['kills'], -x['kd_diff']))
+        return render(request, "leagues/pokemon/league_pokemon_standings.html", {'league': league, 'isLeagueModerator': request.user.is_league_moderator(league.id), 'activeSeason': activeSeason, 'pokemonStandings': pokemon_standings})
+    else:
+        return redirect("/")
