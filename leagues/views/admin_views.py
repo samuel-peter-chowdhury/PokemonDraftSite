@@ -150,11 +150,11 @@ class PorygonPokemonLine:
         self.deaths = int(line.split('passive kills, and')[1].split('deaths')[0].strip())
         self.pokemon_model = None
 
-    def valid_check(self):
+    def valid_check(self, team):
         try:
-            self.pokemon_model = Pokemon.objects.get(name__iexact=self.pokemon)
+            self.pokemon_model = Pokemon.objects.get(name__icontains=self.pokemon, team=team)
         except:
-            raise Exception(f'Pokemon does not exist: {self.pokemon}')
+            raise Exception(f'Pokemon does not exist on the team {team.name}: {self.pokemon}')
         if not ((self.direct_kills >= 0 and self.direct_kills <= 6) and (self.passive_kills >= 0 and self.passive_kills <= 6) and (self.deaths == 0 or self.deaths == 1)):
             raise Exception(f'Pokemon stats are invalid: Direct Kills {self.direct_kills}, Passive Kills {self.passive_kills}, Deaths {self.deaths}')
         
@@ -204,9 +204,9 @@ class PorygonOutput:
         if self.differential > 6 or self.differential < 0:
             raise Exception(f'Differential is invalid: {self.differential}')
         for p in self.coach_one_pokemon:
-            p.valid_check()
+            p.valid_check(self.team_one)
         for p in self.coach_two_pokemon:
-            p.valid_check()
+            p.valid_check(self.team_two)
         if self.winner == self.coach_one:
             self.winning_team = self.team_one
             self.losing_team = self.team_two

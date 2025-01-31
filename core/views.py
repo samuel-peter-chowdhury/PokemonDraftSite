@@ -7,6 +7,6 @@ from pokemons.models import Pokemon
 def homepage(request):
     leagues = request.user.get_all_leagues()
     if len(leagues) > 0:
-        return redirect(reverse('leagues:leaguePokemonTiers', kwargs={'id': leagues[0].id}))
+        return redirect(reverse('leagues:teamMatchup', kwargs={'id': leagues[0].id}))
     else:
         return redirect(reverse('leagues:leagueJoin'))

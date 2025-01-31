@@ -17,79 +17,110 @@
                 <a class="nav-link" href="{%  url 'leagues:league' id=league.id %}">Home</a>
             </li>-->
             <li class="nav-item">
-                <a class="nav-link" href="{%  url 'leagues:leaguePokemonTiers' id=league.id %}">Tier List</a>
+                <a class="nav-link" href="{%  url 'leagues:teamMatchup' id=league.id %}">Team Matchup</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link toggle-expand-parent d-inline-flex align-items-center" data-bs-toggle="collapse" href="#collapseTiers" role="button" aria-expanded="false" aria-controls="collapseTiers">
+                    Tiers
+                    <i class="toggle-expand-icon fa-solid fa-chevron-down ms-2"></i>
+                    <i class="toggle-collapse-icon fa-solid fa-chevron-up ms-2"></i>
+                </a>
+            </li>
+            <div class="collapse ps-3" id="collapseTiers">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{%  url 'leagues:leaguePokemonTiers' id=league.id %}">Classic</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{%  url 'leagues:leaguePokemonTypeTiers' id=league.id %}">Type</a>
+                    </li>
+                </ul>
+            </div>
             <!--<li class="nav-item">
                 <a class="nav-link" href="{%  url 'leagues:leaguePokemonList' id=league.id %}">Pokedex</a>
             </li>-->
             <li class="nav-item">
-                <a class="nav-link" href="{%  url 'leagues:teamMatchup' id=league.id %}">Team Matchup</a>
+                <a class="nav-link toggle-expand-parent d-inline-flex align-items-center" data-bs-toggle="collapse" href="#collapseRank" role="button" aria-expanded="false" aria-controls="collapseRank">
+                    Rank
+                    <i class="toggle-expand-icon fa-solid fa-chevron-down ms-2"></i>
+                    <i class="toggle-collapse-icon fa-solid fa-chevron-up ms-2"></i>
+                </a>
             </li>
+            <div class="collapse ps-3" id="collapseRank">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{%  url 'leagues:teamStandings' id=league.id %}">Team</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{%  url 'leagues:leaguePokemonStandings' id=league.id %}">Poké</a>
+                    </li>
+                </ul>
+            </div>
             <li class="nav-item">
-                <a class="nav-link" href="{%  url 'leagues:leagueRosters' id=league.id %}">Rosters</a>
+                <a class="nav-link toggle-expand-parent d-inline-flex align-items-center" data-bs-toggle="collapse" href="#collapseTools" role="button" aria-expanded="false" aria-controls="collapseTools">
+                    Tools
+                    <i class="toggle-expand-icon fa-solid fa-chevron-down ms-2"></i>
+                    <i class="toggle-collapse-icon fa-solid fa-chevron-up ms-2"></i>
+                </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{%  url 'leagues:leagueSchedule' id=league.id %}">Schedule</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{%  url 'leagues:teamStandings' id=league.id %}">Team Standings</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{%  url 'leagues:leaguePokemonStandings' id=league.id %}">Pokemon Standings</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{%  url 'leagues:leaguePokemonTypeTiers' id=league.id %}">Type Tier List</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{%  url 'leagues:leaguePokemonSearch' id=league.id %}">Search</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{%  url 'leagues:leagueRules' id=league.id %}">Rules</a>
-            </li>
+            <div class="collapse ps-3" id="collapseTools">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{%  url 'leagues:leagueRosters' id=league.id %}">Rosters</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{%  url 'leagues:leagueSchedule' id=league.id %}">Schedule</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{%  url 'leagues:leaguePokemonSearch' id=league.id %}">Search</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{%  url 'leagues:leagueRules' id=league.id %}">Rules</a>
+                    </li>
+                </ul>
+            </div>
             <li class="nav-item">
                 <a class="nav-link" href="{%  url 'leagues:teamSettings' id=league.id %}">Team Settings</a>
             </li>
             {% if isLeagueModerator %}
                 <li class="nav-item">
-                    <a class="nav-link toggle-expand-parent d-inline-flex align-items-center" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    <a class="nav-link toggle-expand-parent d-inline-flex align-items-center" data-bs-toggle="collapse" href="#collapseAdminList" role="button" aria-expanded="false" aria-controls="collapseAdminList">
                         Admin
                         <i class="toggle-expand-icon fa-solid fa-chevron-down ms-2"></i>
                         <i class="toggle-collapse-icon fa-solid fa-chevron-up ms-2"></i>
                     </a>
                 </li>
+                <div class="collapse ps-3" id="collapseAdminList">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{%  url 'leagues:adminModifyTeam' id=league.id %}">Modify Team</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{%  url 'leagues:adminModifyTiers' id=league.id %}">Modify Tiers</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{%  url 'leagues:adminSubmitMatchup' id=league.id %}">Submit Match</a>
+                        </li>
+                        {% if user.is_superuser %}
+                        {% comment %}
+                            <!--<li class="nav-item">
+                                <a class="nav-link" href="{%  url 'leagues:adminInitializePokemonData' id=league.id %}">Pokemon Data</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{%  url 'leagues:adminInitializePointData' id=league.id %}">Point Data</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{%  url 'leagues:adminInitializeMoveData' id=league.id %}">Move Data</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{%  url 'leagues:adminInitializeScheduleData' id=league.id %}">Schedule Data</a>
+                            </li>-->
+                        {% endcomment %}
+                        {% endif %}
+                    </ul>
+                </div>
             {% endif %}
         </ul>
-        {% if isLeagueModerator %}
-            <div class="collapse ps-3" id="collapseExample">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{%  url 'leagues:adminModifyTeam' id=league.id %}">Modify Team</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{%  url 'leagues:adminModifyTiers' id=league.id %}">Modify Tiers</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{%  url 'leagues:adminSubmitMatchup' id=league.id %}">Submit Matchup</a>
-                    </li>
-                    {% if user.is_superuser %}
-                    {% comment %}
-                        <!--<li class="nav-item">
-                            <a class="nav-link" href="{%  url 'leagues:adminInitializePokemonData' id=league.id %}">Pokemon Data</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{%  url 'leagues:adminInitializePointData' id=league.id %}">Point Data</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{%  url 'leagues:adminInitializeMoveData' id=league.id %}">Move Data</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{%  url 'leagues:adminInitializeScheduleData' id=league.id %}">Schedule Data</a>
-                        </li>-->
-                    {% endcomment %}
-                    {% endif %}
-                </ul>
-            </div>
-        {% endif %}
     </nav>
 {% endblock %}
 
