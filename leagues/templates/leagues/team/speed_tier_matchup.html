@@ -7,25 +7,27 @@
             <div class="speed-tier-table-child">
                 <div class="d-flex flex-column" style="background-color: {{ colors|get_item:'header' }};">
                     <div class="speed-tier-table-header">
-                        <div class="speed-tier-table-header-cell" style="width: 2rem;"></div>
-                        <div class="speed-tier-table-header-cell mobile-none fw-bold ps-2 justify-content-start" style="width: 10rem;">Pokemon</div>
-                        <div class="speed-tier-table-header-cell">Spe</div>
-                        <div class="speed-tier-table-header-cell mobile-none">0</div>
-                        <div class="speed-tier-table-header-cell mobile-none">252</div>
-                        <div class="speed-tier-table-header-cell">252+</div>
+                        <div class="speed-tier-table-cell header pokemon-sprite"></div>
+                        <div class="speed-tier-table-cell header pokemon-name mobile-none fw-bold ps-2 justify-content-start">Pokemon</div>
+                        <div class="speed-tier-table-cell header">Spe</div>
+                        <div class="speed-tier-table-cell header mobile-none">0</div>
+                        <div class="speed-tier-table-cell header mobile-none">252</div>
+                        <div class="speed-tier-table-cell header">252+</div>
+                        <div class="speed-tier-table-cell header mobile-none">+1</div>
                     </div>
                     {% for p in pokemon %}
                     {% with forloop.counter0 as counter %}
                     {% with colors|get_item:'row' as row %}
                         <div class="d-inline-flex align-items-center">
-                            <div class="speed-tier-table-body-cell" style="width: 2rem; background-color: {{ colors|get_item:'sprite' }};">
-                                <img src="{{ p.sprite_url }}" alt="Pokemon Sprite" style="cursor: pointer; max-height: 2rem; max-width: 2rem" hx-get="{% url 'leagues:leaguePokemonModal' league_id=league.id pokemon_id=p.id %}" hx-trigger="click" hx-target="#pokemon-modal" hx-swap="innerHTML"/>
+                            <div class="speed-tier-table-cell body pokemon-sprite" style="background-color: {{ colors|get_item:'sprite' }};">
+                                <img src="{{ p.sprite_url }}" alt="Pokemon Sprite" style="cursor: pointer;" hx-get="{% url 'leagues:leaguePokemonModal' league_id=league.id pokemon_id=p.id %}" hx-trigger="click" hx-target="#pokemon-modal" hx-swap="innerHTML"/>
                             </div>
-                            <a href="{{ p.get_smogon_link }}" target="_blank" class="speed-tier-table-body-cell mobile-none nav-link text-black ps-2 justify-content-start" style="width: 10rem; background-color: {{ counter|even_ternary:row }};">{{ p.name|truncatechars:14 }}</a>
-                            <div class="speed-tier-table-body-cell fw-bold" style="background-color: {{ p.speed|get_stat_color }};">{{ p.speed }}</div>
-                            <div class="speed-tier-table-body-cell mobile-none" style="background-color: {{ counter|even_ternary:row }};">{{ p.speed|get_speed:'0' }}</div>
-                            <div class="speed-tier-table-body-cell mobile-none" style="background-color: {{ counter|even_ternary:row }};">{{ p.speed|get_speed:'252' }}</div>
-                            <div class="speed-tier-table-body-cell" style="background-color: {{ counter|even_ternary:row }};">{{ p.speed|get_speed:'252+' }}</div>
+                            <a href="{{ p.get_smogon_link }}" target="_blank" class="speed-tier-table-cell body pokemon-name mobile-none nav-link text-black ps-2 justify-content-start" style="background-color: {{ counter|even_ternary:row }};">{{ p.name|truncatechars:14 }}</a>
+                            <div class="speed-tier-table-cell body fw-bold" style="background-color: {{ p.speed|get_stat_color }};">{{ p.speed }}</div>
+                            <div class="speed-tier-table-cell body mobile-none" style="background-color: {{ counter|even_ternary:row }};">{{ p.speed|get_speed:'0' }}</div>
+                            <div class="speed-tier-table-cell body mobile-none" style="background-color: {{ counter|even_ternary:row }};">{{ p.speed|get_speed:'252' }}</div>
+                            <div class="speed-tier-table-cell body" style="background-color: {{ counter|even_ternary:row }};">{{ p.speed|get_speed:'252+' }}</div>
+                            <div class="speed-tier-table-cell body mobile-none" style="background-color: {{ counter|even_ternary:row }};">{{ p.speed|get_speed:'+1' }}</div>
                         </div>
                     {% endwith %}
                     {% endwith %}

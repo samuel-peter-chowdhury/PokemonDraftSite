@@ -486,31 +486,58 @@ div.speed-icon {
         border-bottom: black solid 2px;
     }
 
-    .speed-tier-table-header-cell {
+    .speed-tier-table-cell {
         display: flex;
         align-items: center;
-        font-weight: bold;
-        justify-content: center;
-        width: 3rem;
-        height: 2rem;
         white-space: nowrap;
-    }
-
-    .speed-tier-table-body-cell {
-        display: flex;
-        align-items: center;
-        text-transform: capitalize;
         justify-content: center;
-        font-size: 1.1rem;
-        width: 3rem;
-        height: 2rem;
-        white-space: nowrap;
-    }
-
-    .mobile-none {
+        width: 4rem;
+        height: 4rem;
+        
         @media only screen and (max-width: 768px) {
-            display: none;
-        }   
+            width: 3rem;
+            height: 2rem;
+        } 
+
+        &.header {
+            font-weight: bold;
+            height: 2rem;
+        }
+
+        &.body {
+            text-transform: capitalize;
+            font-size: 1.5rem;
+
+            @media only screen and (max-width: 768px) {
+                font-size: 1.1rem;
+            }
+        }
+
+        &.pokemon-sprite {
+            img {
+                max-width: 4rem;
+                max-height: 4rem;
+            }
+
+            @media only screen and (max-width: 768px) {
+                width: 2rem;
+
+                img {
+                    max-width: 2rem;
+                    max-height: 2rem;
+                }
+            }
+        }
+
+        &.pokemon-name {
+            width: 12rem;
+        }
+
+        &.mobile-none {
+            @media only screen and (max-width: 768px) {
+                display: none;
+            }   
+        }
     }
 }
 
