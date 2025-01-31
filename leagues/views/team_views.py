@@ -180,7 +180,7 @@ def team_standings_view(request, id):
             for g in game_losses:
                 pokemon_differential -= g.differential
             teamStandings.append({'team_name': t.name, 'match_win_count': match_win_count, 'match_loss_count': match_loss_count, 'match_win_percentage': match_win_percentage, 'game_win_count': game_win_count, 'game_loss_count': game_loss_count, 'game_win_percentage': game_win_percentage, 'pokemon_differential': pokemon_differential})
-        teamStandings = sorted(teamStandings, key = lambda x: (-x['match_win_percentage'], -x['game_win_percentage'], -x['pokemon_differential']))
+        teamStandings = sorted(teamStandings, key = lambda x: (-x['match_win_percentage'], -x['match_win_count'], -x['game_win_percentage'], -x['game_win_count'], -x['pokemon_differential']))
         return render(request, "leagues/team/team_standings.html", {'league': league, 'isLeagueModerator': request.user.is_league_moderator(league.id), 'activeSeason': activeSeason, 'teamStandings': teamStandings})
     else:
         return redirect("/")
