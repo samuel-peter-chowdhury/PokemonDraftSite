@@ -70,18 +70,26 @@ def speed_tier_matchup(request, league_id):
         league = League.objects.get(id=league_id)
         orderBy = request.GET.get('order_by', '-speed')
         teams = []
+        fastest = []
+        slowest = []
 
         user_team_id = request.GET.get('user_team_id', request.user.id)
         userTeam = Team.objects.get(id=user_team_id)
-        userPokemon = userTeam.pokemons.order_by(orderBy)
+        userPokemon = list(userTeam.pokemons.order_by(orderBy))
+        fastest.append(userPokemon[0].speed)
+        slowest.append(userPokemon[-1].speed)
         teams.append({'team': userTeam, 'pokemon': userPokemon, 'colors': {'header': '#279ff0', 'sprite': '#62bfff', 'row': '#a9d9f7,#cdebfc'}})
 
         opponent_team_id = request.GET.get('opponent_team_id', None)
         if opponent_team_id is not None and opponent_team_id != '':
             opponentTeam = Team.objects.get(id=opponent_team_id)
-            opponentPokemon = opponentTeam.pokemons.order_by(orderBy)
+            opponentPokemon = list(opponentTeam.pokemons.order_by(orderBy))
+            fastest.append(opponentPokemon[0].speed)
+            slowest.append(opponentPokemon[-1].speed)
             teams.append({'team': opponentTeam, 'pokemon': opponentPokemon, 'colors': {'header': '#ea4637', 'sprite': '#ff7c7b', 'row': '#febebd,#ffd3d1'}})
-        return render(request, "leagues/team/speed_tier_matchup.html", {'league': league, 'teams': teams, 'orderBy': orderBy})
+        colorGradient = "#ff0000, #ff3200, #ff6600, #ff9800, #ffcc00, #fffe00, #ccff00, #9aff00, #66ff00, #2aff08, #02ff2a, #02ff55, #02ff7f, #02ffaa, #02ffd4, #02ffff"
+        minMaxSpeed = f"{min(slowest)},{max(fastest)}"
+        return render(request, "leagues/team/speed_tier_matchup.html", {'league': league, 'teams': teams, 'orderBy': orderBy, 'colorGradient': colorGradient, 'minMaxSpeed': minMaxSpeed})
     else:
         return HttpResponse(status=400)
     

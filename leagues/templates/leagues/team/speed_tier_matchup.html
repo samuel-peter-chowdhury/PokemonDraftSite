@@ -39,4 +39,31 @@
         {% endwith %}
         {% endfor %}
     </div>
+    <div class="speed-tier-line-parent d-none d-md-flex flex-column bg-secondary justify-content-center" style="padding: 1rem 2rem; border-bottom-left-radius: 1rem; border-bottom-right-radius: 1rem;">
+        {% with teams.0 as t %}
+            <div class="d-inline-flex">
+                {% with t|get_item:'pokemon' as pokemon %}
+                    {% for p in pokemon %}
+                        <div style="width: 0rem; height: 2rem; position: relative; left: calc({{ p.speed|get_speed_position:minMaxSpeed }}% - 1rem)">
+                            <img src="{{ p.sprite_url }}" alt="Pokemon Sprite" style="cursor: pointer; max-width: 2rem; max-height: 2rem" hx-get="{% url 'leagues:leaguePokemonModal' league_id=league.id pokemon_id=p.id %}" hx-trigger="click" hx-target="#pokemon-modal" hx-swap="innerHTML"/>
+                        </div>
+                    {% endfor %}
+                {% endwith %}
+            </div>
+        {% endwith %}
+        <div class="w-100" style="height: 1rem; background: linear-gradient(0.25turn, {{colorGradient}}); border-radius: 1rem"></div>
+        {% if teams|length > 1 %}
+        {% with teams.1 as t %}
+            <div class="d-inline-flex">
+                {% with t|get_item:'pokemon' as pokemon %}
+                    {% for p in pokemon %}
+                        <div style="width: 0rem; height: 2rem; position: relative; left: calc({{ p.speed|get_speed_position:minMaxSpeed }}% - 1rem)">
+                            <img src="{{ p.sprite_url }}" alt="Pokemon Sprite" style="cursor: pointer; max-width: 2rem; max-height: 2rem" hx-get="{% url 'leagues:leaguePokemonModal' league_id=league.id pokemon_id=p.id %}" hx-trigger="click" hx-target="#pokemon-modal" hx-swap="innerHTML"/>
+                        </div>
+                    {% endfor %}
+                {% endwith %}
+            </div>
+        {% endwith %}
+        {% endif %}
+    </div>
 </div>

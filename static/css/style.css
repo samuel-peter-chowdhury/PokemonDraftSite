@@ -467,10 +467,10 @@ div.speed-icon {
     gap: 1rem;
     padding: 0 1rem;
     padding-bottom: 1rem;
-    border-bottom-left-radius: 1rem;
-    border-bottom-right-radius: 1rem;
 
     @media only screen and (max-width: 768px) {
+        border-bottom-left-radius: 1rem;
+        border-bottom-right-radius: 1rem;
         gap: 0;
     }
 

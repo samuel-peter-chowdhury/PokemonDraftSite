@@ -178,3 +178,10 @@ def get_team_standing_color(place):
 
 def lighten_color(r, g, b, factor):
     return tuple(int(c + (255 - c) * factor) for c in (r, g, b))
+
+@register.filter
+def get_speed_position(speed, minMaxSpeed):
+    tokens = minMaxSpeed.split(',')
+    min_speed = int(tokens[0])
+    max_speed = int(tokens[1])
+    return ((speed - min_speed) / (max_speed - min_speed)) * 100
