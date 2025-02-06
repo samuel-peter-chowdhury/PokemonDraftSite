@@ -155,7 +155,7 @@ def special_moves(request, league_id, team_id):
         categories = [choice[0] for choice in SpecialMoveCategory.choices]
         specialMoves = {}
         for p in pokemon:
-            special_moves = p.moves.filter(special_categories__isnull=False)
+            special_moves = p.moves.filter(special_categories__isnull=False).exclude(special_categories__exact='')
             for sm in special_moves:
                 for c in sm.get_special_categories():
                     if c not in specialMoves:

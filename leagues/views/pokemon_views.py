@@ -161,7 +161,7 @@ def get_pokemon_modal(request, league_id, pokemon_id):
     
 def get_pokemon_special_move_dictionary(pokemon):
     special_move_dictionary = {}
-    special_moves = pokemon.moves.filter(special_categories__isnull=False).order_by('special_categories', 'type', 'name')
+    special_moves = pokemon.moves.filter(special_categories__isnull=False).exclude(special_categories__exact='').order_by('special_categories', 'type', 'name')
     for sm in special_moves:
         for c in sm.get_special_categories():
             if c not in special_move_dictionary:
