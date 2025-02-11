@@ -50,6 +50,7 @@ class Team(BaseModel):
 class Week(BaseModel):
     name = models.CharField(max_length=50)
     season = models.ForeignKey(Season, on_delete=models.CASCADE, related_name='weeks')
+    order = models.IntegerField(default=1)
 
     class Meta:
         unique_together = ('name', 'season')

@@ -37,7 +37,7 @@ def league_schedule_view(request, id):
     if request.user.has_league(id):
         league = League.objects.get(id=id)
         activeSeason = league.get_active_season()
-        weeks = activeSeason.weeks.all()
+        weeks = activeSeason.weeks.all().order_by('order')
         return render(request, "leagues/league_schedule.html", {'league': league, 'isLeagueModerator': request.user.is_league_moderator(league.id), 'activeSeason': activeSeason, 'weeks': weeks})
     return redirect(reverse('users:settings'))
 
