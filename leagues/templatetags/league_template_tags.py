@@ -185,3 +185,15 @@ def get_speed_position(speed, minMaxSpeed):
     min_speed = int(tokens[0])
     max_speed = int(tokens[1])
     return ((speed - min_speed) / (max_speed - min_speed)) * 100
+
+@register.filter
+def match_outcome_color(team, winner):
+    return '#3C6930' if team.id == winner.id else '#AA4A44'
+
+@register.filter
+def game_outcome_color(team, winner):
+    return '#5fa64c' if team.id == winner.id else '#c5726d'
+
+@register.filter
+def game_diff_symbol(team, winner):
+    return '+' if team.id == winner.id else '-'

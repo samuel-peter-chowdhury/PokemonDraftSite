@@ -2,8 +2,9 @@ from django.shortcuts import render, redirect, reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import HttpResponse
+from django.db.models import Q
 
-from leagues.models import League, Team
+from leagues.models import League, Team, Matchup
 from leagues.forms import TeamForm
 
 from pokemons.models import Type, SpecialMoveCategory, Move
@@ -101,6 +102,44 @@ def team_table(request, league_id, team_id):
         team = Team.objects.get(id=team_id)
         pokemon = team.pokemons.order_by(orderBy)
         return render(request, "leagues/team/team_table.html", {'league': league, 'team': team, 'pokemon': pokemon, 'orderBy': orderBy})
+    else:
+        return HttpResponse(status=400)
+    
+@login_required(login_url="/users/login/")
+def team_info(request, league_id, team_id):
+    if request.user.has_league(league_id):
+        league = League.objects.get(id=league_id)
+        team = Team.objects.get(id=team_id)
+
+        killLeaderPokemon = None
+        killLeaderKills = 0
+        for p in team.pokemons.order_by('-point_value'):
+            kills = 0
+            for gs in p.game_stats.all():
+                kills += gs.direct_kills
+                kills += gs.indirect_kills
+            if kills > killLeaderKills:
+                killLeaderKills = kills
+                killLeaderPokemon = p
+
+        match_win_count = team.winner_matchups.all().count()
+        match_loss_count = team.loser_matchups.all().count()
+        total_match_count = match_win_count + match_loss_count
+        match_win_percentage = round((match_win_count / total_match_count) * 100) if total_match_count > 0 else 0
+        game_wins = team.winner_games.all()
+        game_win_count = game_wins.count()
+        game_losses = team.loser_games.all()
+        game_loss_count = game_losses.count()
+        total_game_count = game_win_count + game_loss_count
+        game_win_percentage = round((game_win_count / total_game_count) * 100) if total_game_count > 0 else 0
+        pokemon_differential = 0
+        for g in game_wins:
+            pokemon_differential += g.differential
+        for g in game_losses:
+            pokemon_differential -= g.differential
+        
+        matchups = Matchup.objects.filter(Q(Q(coach_one=team) | Q(coach_two=team)) & Q(winner__isnull=False)).distinct().order_by('week__order')
+        return render(request, "leagues/team/team_info.html", {'league': league, 'team': team, 'killLeader': killLeaderPokemon, 'matchWinPercentage': match_win_percentage, 'gameWinPercentage': game_win_percentage, 'matchups': matchups})
     else:
         return HttpResponse(status=400)
     

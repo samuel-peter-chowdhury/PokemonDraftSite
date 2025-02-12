@@ -1,0 +1,61 @@
+<div class="d-flex flex-column p-4 bg-dark text-white" style="border-bottom-left-radius: 1rem; border-bottom-right-radius: 1rem; gap: 1rem;">
+    <div class="d-flex flex-row align-items-center">
+        <div class="user-profile-picture compact me-5">
+            {% if team.logo %}
+                <img src="{{ team.logo.url }}" alt="Team Logo">
+            {% else %}
+                <img src="/media/defaults/default_team_logo.png" alt="Team Logo">
+            {% endif %}
+        </div>
+        <div class="fw-bold text-capitalize" style="font-size: 1.5rem">{{ team.name }}</div>
+    </div>
+    <div class="d-flex flex-row flex-wrap align-items-center" style="gap: 0.5rem">
+        <div class="d-inline-flex align-items-center px-3 bg-secondary" style="border-radius: 1rem;">
+            <div class="pe-3 py-1" style="border-right: 0.25rem solid var(--bs-dark)">Discord Username</div>
+            <div class="ps-3 py-1 fw-bold">{{ team.user.discord_username }}</div>
+        </div>
+        <div class="d-inline-flex align-items-center px-3 bg-secondary" style="border-radius: 1rem;">
+            <div class="pe-3 py-1" style="border-right: 0.25rem solid var(--bs-dark)">Showdown Name</div>
+            <div class="ps-3 py-1 fw-bold">{{ team.user.showdown_username }}</div>
+        </div>
+        <div class="d-inline-flex align-items-center px-3 bg-secondary" style="border-radius: 1rem;">
+            <div class="pe-3 py-1" style="border-right: 0.25rem solid var(--bs-dark)">Timezone</div>
+            <div class="ps-3 py-1 fw-bold text-uppercase">{{ team.user.timezone }}</div>
+        </div>
+    </div>
+    <div class="d-flex flex-row flex-wrap align-items-center" style="gap: 0.5rem">
+        <div class="d-inline-flex align-items-center px-3 bg-secondary" style="border-radius: 1rem;">
+            <div class="pe-3 py-1">Kill Leader</div>
+            <div class="ps-3 py-1" style="border-left: 0.25rem solid var(--bs-dark)">
+                <div class="d-flex align-items-center justify-content-center" style="width: 5rem; height: 5rem;">
+                    <img src="{{ killLeader.sprite_url }}" alt="Pokemon Sprite" style="max-height: 5rem; max-width: 5rem; cursor: pointer" hx-get="{% url 'leagues:leaguePokemonModal' league_id=league.id pokemon_id=killLeader.id %}" hx-trigger="click" hx-target="#pokemon-modal" hx-swap="innerHTML" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex flex-row flex-wrap align-items-center" style="gap: 0.5rem">
+        <div class="d-inline-flex align-items-center px-3 bg-secondary" style="border-radius: 1rem;">
+            <div class="pe-3 py-1">Match Record</div>
+            <div class="ps-3 py-1 fw-bold" style="font-size: 1.2rem; border-left: 0.25rem solid var(--bs-dark)">{{ matchWinPercentage }}%</div>
+        </div>
+        <div class="d-inline-flex align-items-center px-3 bg-secondary" style="border-radius: 1rem;">
+            <div class="pe-3 py-1">Game Record</div>
+            <div class="ps-3 py-1 fw-bold" style="font-size: 1.2rem; border-left: 0.25rem solid var(--bs-dark)">{{ gameWinPercentage }}%</div>
+        </div>
+    </div>
+    <div class="d-flex flex-column flex-wrap align-items-center" style="gap: 0.5rem">
+        {% for matchup in matchups %}
+            <div class="d-flex flex-column p-3 w-100" style="border-radius: 1rem; background-color: {{ team|match_outcome_color:matchup.winner }}; gap: 0.5rem">
+                <div class="d-inline-flex">
+                    <div>{{ matchup.week.name }}: <span class="fw-bold">{{ matchup.coach_one.name }}</span> vs <span class="fw-bold">{{ matchup.coach_two.name }}</span></div>
+                </div>
+                {% for game in matchup.games.all %}
+                    <div class="d-inline-flex align-items-center px-3 py-1 w-100" style="border-radius: 1rem; background-color: {{ team|game_outcome_color:game.winner }}; gap: 1rem">
+                        <div class="fw-bold" style="font-size: 1.2rem">{{ team|game_diff_symbol:game.winner }}{{ game.differential }}</div>
+                        <a class="text-white" href="{{ game.replay_link }}" target="_blank">{{ game.replay_link }}</a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+</div>
