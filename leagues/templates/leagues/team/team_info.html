@@ -52,7 +52,7 @@
                 {% for game in matchup.games.all %}
                     <div class="d-inline-flex align-items-center px-3 py-1 w-100" style="border-radius: 1rem; background-color: {{ team|game_outcome_color:game.winner }}; gap: 1rem">
                         <div class="fw-bold" style="font-size: 1.2rem">{{ team|game_diff_symbol:game.winner }}{{ game.differential }}</div>
-                        <a class="text-white" href="{{ game.replay_link }}" target="_blank">{{ game.replay_link }}</a>
+                        <a class="text-white" style="overflow-wrap: break-word; max-width: calc(100% - 2.5rem);" href="{{ game.replay_link }}" target="_blank">{{ game.replay_link }}</a>
                     </div>
                 {% endfor %}
             </div>

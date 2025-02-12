@@ -60,7 +60,7 @@ def team_matchup_view(request, id):
             else:
                 opponent_team = None
 
-        return render(request, "leagues/team/team_matchup.html", {'league': league, 'teams': activeSeason.teams.filter(is_active=True), 'isLeagueModerator': request.user.is_league_moderator(league.id),
+        return render(request, "leagues/team/team_matchup.html", {'league': league, 'teams': activeSeason.teams.filter(is_active=True).order_by('name'), 'isLeagueModerator': request.user.is_league_moderator(league.id),
                                                                   'userTeam': user_team, 'opponentTeam': opponent_team})
     else:
         return redirect("/")
