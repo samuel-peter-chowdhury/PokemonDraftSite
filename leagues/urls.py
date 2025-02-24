@@ -39,6 +39,7 @@ team_urlpatterns = [
     path('<int:league_id>/team/matchup/info/<int:team_id>', team_views.team_info, name="teamMatchupInfo"),
     path('<int:league_id>/team/matchup/type/effective/<int:team_id>', team_views.type_effective, name="teamMatchupTypeEffective"),
     path('<int:league_id>/team/matchup/special/moves/<int:team_id>', team_views.special_moves, name="teamMatchupSpecialMoves"),
+    path('<int:league_id>/team/matchup/coverage/moves/<int:team_id>', team_views.coverage_moves, name="teamMatchupCoverageMoves"),
 ]
 urlpatterns += team_urlpatterns
 

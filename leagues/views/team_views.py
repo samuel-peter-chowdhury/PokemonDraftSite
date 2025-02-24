@@ -205,6 +205,25 @@ def special_moves(request, league_id, team_id):
         return HttpResponse(status=400)
     
 @login_required(login_url="/users/login/")
+def coverage_moves(request, league_id, team_id):
+    if request.user.has_league(league_id):
+        league = League.objects.get(id=league_id)
+        team = Team.objects.get(id=team_id)
+        pokemon = team.pokemons.order_by('-point_value')
+        categories = [choice[0] for choice in Type.choices]
+        coverageMoves = {}
+        for p in pokemon:
+            coverage_moves = p.moves.filter(viable=True)
+            for cm in coverage_moves:
+                t = cm.type
+                if t not in coverageMoves:
+                    coverageMoves[t] = []
+                coverageMoves[t].append({'pokemon': p, 'move': cm.name})
+        return render(request, "leagues/team/coverage_moves.html", {'league': league, 'team': team, 'categories': categories, 'coverageMoves': coverageMoves})
+    else:
+        return HttpResponse(status=400)
+    
+@login_required(login_url="/users/login/")
 def team_standings_view(request, id):
     if request.user.has_league(id):
         league = League.objects.get(id=id)

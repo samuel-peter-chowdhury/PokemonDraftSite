@@ -157,5 +157,32 @@
                 </div>
             </div>
         </div>
+        <div class="w-100 mt-2">
+            <div hx-get="{%  url 'leagues:teamMatchupCoverageMoves' league_id=league.id team_id=userTeam.id %}" hx-trigger="click" hx-target="#user-coverage-moves" hx-swap="outerHTML">
+                <div hx-get="{%  url 'leagues:teamMatchupCoverageMoves' league_id=league.id team_id=opponentTeam.id %}" hx-trigger="click" hx-target="#opponent-coverage-moves" hx-swap="outerHTML">
+                    <button id="coverageMovesCollapseButton" class="btn btn-secondary expansion-button w-100" type="button" data-bs-toggle="collapse" data-bs-target="#coverageMovesCollapse" aria-expanded="false" aria-controls="coverageMovesCollapse">
+                        Coverage Moves
+                    </button>
+                </div>
+            </div>
+            <div class="collapse" id="coverageMovesCollapse">
+                <div class="d-flex flex-column flex-md-row w-100" style="gap: 0.5rem">
+                    <div class="team-matchup-panel">
+                        <div id="user-coverage-moves">
+                            <div class="spinner-border" style="margin-top: 0.5rem" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="team-matchup-panel">
+                        <div id="opponent-coverage-moves">
+                            <div class="spinner-border" style="margin-top: 0.5rem" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     {% endif %}
 {% endblock %}
