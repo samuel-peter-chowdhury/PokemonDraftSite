@@ -233,13 +233,13 @@ def team_standings_view(request, id):
             match_win_count = t.winner_matchups.all().count()
             match_loss_count = t.loser_matchups.all().count()
             total_match_count = match_win_count + match_loss_count
-            match_win_percentage = round((match_win_count / total_match_count) * 100) if total_match_count > 0 else 0
+            match_win_percentage = round((match_win_count / total_match_count) * 100, 1) if total_match_count > 0 else 0
             game_wins = t.winner_games.all()
             game_win_count = game_wins.count()
             game_losses = t.loser_games.all()
             game_loss_count = game_losses.count()
             total_game_count = game_win_count + game_loss_count
-            game_win_percentage = round((game_win_count / total_game_count) * 100) if total_game_count > 0 else 0
+            game_win_percentage = round((game_win_count / total_game_count) * 100, 1) if total_game_count > 0 else 0
             pokemon_differential = 0
             for g in game_wins:
                 pokemon_differential += g.differential
